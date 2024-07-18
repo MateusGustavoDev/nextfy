@@ -1,0 +1,37 @@
+import Link from 'next/link'
+import { Search } from './Search'
+import { Cart } from '../cart/cart'
+import { CircleUserRound } from 'lucide-react'
+
+export function Header() {
+  return (
+    <header className="w-full bg-zinc-900">
+      <div className="m-auto flex h-[70px] w-full max-w-screen-wrapper items-center justify-around px-6">
+        <Link href="/" className="ml-6 text-2xl font-semibold">
+          Nextfy
+        </Link>
+        <div className="flex w-full justify-center gap-8">
+          <Link href="#" className="hover:underline">
+            Inicio
+          </Link>
+          <Link href="#" className="hover:underline">
+            Todos os produtos
+          </Link>
+          <Link href="#" className="hover:underline">
+            Mais vendidos
+          </Link>
+          <Link href="#" className="hover:underline">
+            Contato
+          </Link>
+        </div>
+        <div className="flex shrink-0 items-center gap-7">
+          <Search />
+          <Link href="#" className="hover:underline">
+            <CircleUserRound size={24} />
+          </Link>
+          <Cart />
+        </div>
+      </div>
+    </header>
+  )
+}
