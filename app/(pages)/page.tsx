@@ -1,4 +1,4 @@
-import { Collection } from '@/components/collection/Collection'
+import { Collection } from '@/components/Collection/Collection'
 
 export default function Home() {
   return (

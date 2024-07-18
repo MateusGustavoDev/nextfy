@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Search } from './Search'
-import { Cart } from '../cart/cart'
+import { Cart } from '../Cart/Cart'
 import { CircleUserRound } from 'lucide-react'
 
 export function Header() {
@@ -26,7 +26,7 @@ export function Header() {
         </div>
         <div className="flex shrink-0 items-center gap-7">
           <Search />
-          <Link href="#" className="hover:underline">
+          <Link href="/account/login" className="hover:underline">
             <CircleUserRound size={24} />
           </Link>
           <Cart />

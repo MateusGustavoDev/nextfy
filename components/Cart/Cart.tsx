@@ -11,7 +11,7 @@ export function Cart() {
       </SheetTrigger>
       <SheetContent className="border-zinc-700 bg-zinc-900">
         <SheetHeader>
-          <SheetTitle>Carrinho de compras</SheetTitle>
+          <SheetTitle className="text-white">Carrinho de compras</SheetTitle>
         </SheetHeader>
       </SheetContent>
     </Sheet>
