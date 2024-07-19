@@ -5,8 +5,8 @@ import { CircleUserRound } from 'lucide-react'
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-zinc-700 bg-zinc-900 px-6">
-      <div className="m-auto flex h-[70px] w-full max-w-screen-wrapper items-center justify-around">
+    <header className="sticky top-0 z-50 w-full border-b border-zinc-700 bg-zinc-900">
+      <div className="m-auto flex h-[70px] w-full max-w-screen-wrapper items-center justify-around px-6">
         <Link href="/" className="text-2xl font-semibold">
           Nextfy
         </Link>
