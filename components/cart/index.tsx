@@ -9,7 +9,7 @@ export function Cart() {
           <ShoppingBag size={24} />
         </button>
       </SheetTrigger>
-      <SheetContent className="border-zinc-700 bg-zinc-900">
+      <SheetContent className="max-w-[400px] border-zinc-700 bg-zinc-900">
         <SheetHeader>
           <SheetTitle className="text-white">Carrinho de compras</SheetTitle>
         </SheetHeader>

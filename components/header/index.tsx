@@ -1,12 +1,12 @@
 import Link from 'next/link'
-import { Search } from './Search'
-import { Cart } from '../Cart/Cart'
+import { Search } from './search'
+import { Cart } from '../cart'
 import { CircleUserRound } from 'lucide-react'
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-zinc-700 bg-zinc-900">
-      <div className="m-auto flex h-[70px] w-full max-w-screen-wrapper items-center justify-around px-6">
+    <header className="sticky top-0 z-50 w-full border-b border-zinc-700 bg-zinc-900 px-6">
+      <div className="m-auto flex h-[70px] w-full max-w-screen-wrapper items-center justify-around">
         <Link href="/" className="text-2xl font-semibold">
           Nextfy
         </Link>
