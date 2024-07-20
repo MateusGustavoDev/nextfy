@@ -4,7 +4,7 @@ import Link from 'next/link'
 export function Collection() {
   return (
     <Link href="/product">
-      <div className="m-auto flex w-full max-w-screen-wrapper flex-col gap-4 px-5">
+      <div className="m-auto flex w-full max-w-screen-wrapper flex-col gap-4">
         <span className="text-2xl">Novidaddes</span>
         <div className="relative flex w-full gap-5 overflow-x-scroll">
           {products.map((product) => (
@@ -29,7 +29,7 @@ export function Collection() {
   )
 }
 
-const products = [
+export const products = [
   {
     title: 'Mackbook Air 13',
     price: 'R$ 12.599,00',

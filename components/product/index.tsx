@@ -3,9 +3,9 @@ import { Gallery } from './gallery'
 
 export function Product() {
   return (
-    <div className="relative m-auto mt-10 flex h-max w-full max-w-screen-wrapper bg-black p-5">
+    <div className="relative m-auto mt-10 flex h-max w-full max-w-screen-wrapper gap-2">
       <Gallery />
-      <div className="flex aspect-[700/600] w-full max-w-[600px] flex-col justify-between p-1 px-4">
+      <div className="flex aspect-[700/600] w-full max-w-[600px] flex-col justify-between bg-black p-5">
         <div>
           <div className="flex flex-col gap-2">
             <span className="text-3xl">Macbook Air</span>

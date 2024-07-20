@@ -1,6 +1,6 @@
 import { ProfileCard } from '@/components/profile-card'
 
-export default function ProfilePage() {
+export default function AddressPage() {
   return (
     <div className="m-auto mt-10 flex w-full max-w-screen-wrapper gap-4 px-6">
       <ProfileCard />

@@ -11,17 +11,14 @@ export function Header() {
           Nextfy
         </Link>
         <div className="flex w-full justify-center gap-8">
-          <Link href="#" className="hover:underline">
-            Inicio
-          </Link>
-          <Link href="#" className="hover:underline">
+          <Link href="/all-products" className="hover:underline">
             Todos os produtos
           </Link>
           <Link href="#" className="hover:underline">
             Mais vendidos
           </Link>
           <Link href="#" className="hover:underline">
-            Contato
+            Coleções
           </Link>
         </div>
         <div className="flex shrink-0 items-center gap-7">
