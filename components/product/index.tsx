@@ -3,7 +3,7 @@ import { Gallery } from './gallery'
 
 export function Product() {
   return (
-    <div className="relative m-auto mt-10 flex h-max w-full max-w-screen-wrapper bg-zinc-900 p-5">
+    <div className="relative m-auto mt-10 flex h-max w-full max-w-screen-wrapper bg-black p-5">
       <Gallery />
       <div className="flex aspect-[700/600] w-full max-w-[600px] flex-col justify-between p-1 px-4">
         <div>

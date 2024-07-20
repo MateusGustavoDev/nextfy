@@ -5,7 +5,7 @@ import { CircleUserRound } from 'lucide-react'
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-zinc-700 bg-zinc-900">
+    <header className="sticky top-0 z-50 w-full border-b border-zinc-700 bg-black">
       <div className="m-auto flex h-[70px] w-full max-w-screen-wrapper items-center justify-around px-6">
         <Link href="/" className="text-2xl font-semibold">
           Nextfy
@@ -26,7 +26,7 @@ export function Header() {
         </div>
         <div className="flex shrink-0 items-center gap-7">
           <Search />
-          <Link href="/account/login" className="hover:underline">
+          <Link href="/account/profile" className="hover:underline">
             <CircleUserRound size={24} />
           </Link>
           <Cart />

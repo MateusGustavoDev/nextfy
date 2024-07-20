@@ -1,4 +1,4 @@
-export default function PrivacyPage() {
+export default function PoliciesPage() {
   return (
     <div className="m-auto mt-20 flex w-full max-w-[800px] flex-col gap-2">
       <h1 className="text-2xl">Politica de privacidade</h1>
