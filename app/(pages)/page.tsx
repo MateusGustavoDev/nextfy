@@ -1,7 +1,7 @@
 import { Collection } from '@/components/collection'
 import { Wrapper } from '@/components/wrapper'
 
-export default function Home() {
+export default async function Home() {
   return (
     <div className="mt-10">
       <Wrapper>
