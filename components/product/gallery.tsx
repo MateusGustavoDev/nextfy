@@ -2,12 +2,12 @@ import Image from 'next/image'
 
 export function Gallery() {
   return (
-    <div className="relative aspect-[700/600] h-max w-full max-w-[700px] bg-black">
+    <div className="relative flex aspect-[700/600] h-max w-full max-w-[700px] items-center justify-center bg-black">
       <Image
         src="https://nextjs-commerce-psi-opal.vercel.app/_next/image?url=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F0656%2F1454%2F5036%2Ffiles%2Fmba13-m3-midnight-gallery1-202402.png%3Fv%3D1721267948&w=1920&q=75"
-        fill
+        width={600}
+        height={600}
         alt=""
-        style={{ objectFit: 'contain' }}
       />
       <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 gap-5">
         <button className="border border-zinc-700 bg-black p-2">
@@ -16,7 +16,6 @@ export function Gallery() {
             width={70}
             height={70}
             alt=""
-            style={{ objectFit: 'contain' }}
           />
         </button>
         <button className="border border-zinc-700 bg-black p-2">
@@ -25,7 +24,6 @@ export function Gallery() {
             width={70}
             height={70}
             alt=""
-            style={{ objectFit: 'contain' }}
           />
         </button>
         <button className="border border-zinc-700 bg-black p-2">
@@ -34,7 +32,6 @@ export function Gallery() {
             width={70}
             height={70}
             alt=""
-            style={{ objectFit: 'contain' }}
           />
         </button>
       </div>
