@@ -2,7 +2,7 @@ import { Wrapper } from '../wrapper'
 import { Description } from './description'
 import { Gallery } from './gallery'
 
-export function Product() {
+export function ProductItem() {
   return (
     <Wrapper>
       <div className="relative mt-10 flex h-max w-full gap-2">

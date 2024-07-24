@@ -25,7 +25,7 @@ export function Header() {
           </div>
           <div className="flex shrink-0 items-center gap-7">
             <Search />
-            <Link href="/account/profile" className="hover:underline">
+            <Link href="/profile" className="hover:underline">
               <CircleUserRound size={24} />
             </Link>
             <Cart />

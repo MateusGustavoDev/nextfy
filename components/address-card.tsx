@@ -1,6 +1,6 @@
 import { Dialog, DialogClose, DialogContent, DialogOverlay, DialogTrigger } from '@radix-ui/react-dialog'
 
-export default function Address() {
+export function AddressCard() {
   return (
     <div className="flex justify-between border border-zinc-700 p-4">
       <div className="flex flex-col">

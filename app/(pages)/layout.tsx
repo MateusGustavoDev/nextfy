@@ -1,17 +1,18 @@
 import '@/app/globals.css'
 import { Header } from '@/components/header/index'
 import { Footer } from '@/components/footer'
+import { ReactNode } from 'react'
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+interface PagesLayoutProps {
+  children: ReactNode
+}
+
+export default function PagesLayout({ children }: PagesLayoutProps) {
   return (
-    <div>
+    <>
       <Header />
-      <main className="min-h-screen">{children}</main>
+      <div className="min-h-screen">{children}</div>
       <Footer />
-    </div>
+    </>
   )
 }

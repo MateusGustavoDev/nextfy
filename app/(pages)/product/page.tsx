@@ -1,12 +1,12 @@
 import { Collection } from '@/components/collection'
-import { Product } from '@/components/product'
+import { ProductItem } from '@/components/product'
 import { Wrapper } from '@/components/wrapper'
 
-export default function ProductPage() {
+export default function Product() {
   return (
     <Wrapper>
       <div className="w-full px-6">
-        <Product />
+        <ProductItem />
         <div className="mt-10">
           <Collection />
         </div>

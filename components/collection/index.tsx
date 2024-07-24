@@ -7,7 +7,7 @@ export function Collection() {
     <Link href="/product">
       <Wrapper>
         <div className="flex w-full flex-col gap-4">
-          <span className="text-2xl">Novidaddes</span>
+          <span className="text-2xl">Novidades</span>
           <div className="relative flex w-full gap-5 overflow-x-scroll">
             {products.map((product) => (
               <div key={product.title} className="w-[400px]">

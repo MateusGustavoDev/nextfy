@@ -15,10 +15,10 @@ export function ProfileCard() {
         </div>
         <div>
           <div className="flex flex-col gap-8">
-            <Link href="/account/profile" className="text-neutral-300">
+            <Link href="/profile" className="text-neutral-300">
               Pedidos
             </Link>
-            <Link href="/account/address" className="text-neutral-300">
+            <Link href="/profile/address" className="text-neutral-300">
               Endereços
             </Link>
           </div>
