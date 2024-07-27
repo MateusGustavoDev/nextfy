@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function Address() {
   return (
     <Wrapper>
-      <div className="mt-10 flex w-full gap-4 px-6">
+      <div className="mt-10 flex w-full gap-4">
         <ProfileCard />
         <div className="relative h-[600px] w-full bg-black p-5">
           <span className="text-xl uppercase">Seus Endereços</span>

@@ -5,5 +5,5 @@ interface WrapperProps {
 }
 
 export function Wrapper({ children }: WrapperProps) {
-  return <div className="m-auto w-full max-w-screen-wrapper">{children}</div>
+  return <div className="m-auto w-full max-w-screen-wrapper px-5">{children}</div>
 }

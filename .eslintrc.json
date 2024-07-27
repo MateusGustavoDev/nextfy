@@ -16,5 +16,6 @@
         "endOfLine": "auto"
       }
     ]
-  }
+  },
+  "ignorePatterns": ["shopify/types"]
 }
