@@ -10,7 +10,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
-import { ProfileCard } from '@/components/profile-card'
+import { ProfileCard } from '@/app/(pages)/profile/components/profile-card'
 import { Wrapper } from '@/components/wrapper'
 
 export const metadata: Metadata = {
@@ -23,7 +23,7 @@ export default function Profile() {
     <Wrapper>
       <div className="mt-10 flex w-full gap-4">
         <ProfileCard />
-        <div className="h-[600px] w-full bg-black p-5">
+        <div className="h-[600px] w-full border border-black p-5">
           <span className="text-xl uppercase">Seus pedidos</span>
           <div className="flex h-full flex-col justify-between">
             <div className="mt-10 flex flex-col gap-4 overflow-auto">
@@ -88,24 +88,28 @@ export default function Profile() {
             <Pagination className="mb-5 justify-end">
               <PaginationContent>
                 <PaginationItem>
-                  <PaginationPrevious href="#" />
+                  <PaginationPrevious href="#" className="bg-white hover:bg-white hover:text-black" />
                 </PaginationItem>
                 <PaginationItem>
-                  <PaginationLink href="#">1</PaginationLink>
+                  <PaginationLink href="#" className="bg-white hover:bg-white hover:text-black">
+                    1
+                  </PaginationLink>
                 </PaginationItem>
                 <PaginationItem>
-                  <PaginationLink href="#" isActive>
+                  <PaginationLink href="#" className="bg-white hover:bg-white hover:text-black" isActive>
                     2
                   </PaginationLink>
                 </PaginationItem>
                 <PaginationItem>
-                  <PaginationLink href="#">3</PaginationLink>
+                  <PaginationLink href="#" className="bg-white hover:bg-white hover:text-black">
+                    3
+                  </PaginationLink>
                 </PaginationItem>
                 <PaginationItem>
                   <PaginationEllipsis />
                 </PaginationItem>
                 <PaginationItem>
-                  <PaginationNext href="#" />
+                  <PaginationNext href="#" className="bg-white hover:bg-white hover:text-black" />
                 </PaginationItem>
               </PaginationContent>
             </Pagination>

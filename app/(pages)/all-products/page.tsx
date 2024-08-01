@@ -44,12 +44,15 @@ export default function AllProducts() {
             <div className="flex w-full flex-wrap gap-3">
               {products.map((product, index) => (
                 <Link href="/product" key={index}>
-                  <div className="relative h-[370px] w-[370px] bg-black">
+                  <div className="h-[370px] w-[370px] border border-black">
                     <Image
                       src="https://nextjs-commerce-psi-opal.vercel.app/_next/image?url=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F0656%2F1454%2F5036%2Ffiles%2Fmba13-m3-midnight-gallery1-202402.png%3Fv%3D1721267948&w=1920&q=75 "
                       alt="Nome do produto"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      className="h-[360px] w-auto"
                       style={{ objectFit: 'contain' }}
-                      fill
                     />
                   </div>
                   <div className="flex flex-col gap-2 py-2">
@@ -62,24 +65,28 @@ export default function AllProducts() {
             <Pagination className="my-10">
               <PaginationContent>
                 <PaginationItem>
-                  <PaginationPrevious href="#" />
+                  <PaginationPrevious href="#" className="bg-white hover:bg-white hover:text-black" />
                 </PaginationItem>
                 <PaginationItem>
-                  <PaginationLink href="#">1</PaginationLink>
+                  <PaginationLink href="#" className="bg-white hover:bg-white hover:text-black">
+                    1
+                  </PaginationLink>
                 </PaginationItem>
                 <PaginationItem>
-                  <PaginationLink href="#" isActive>
+                  <PaginationLink href="#" className="bg-white hover:bg-white hover:text-black" isActive>
                     2
                   </PaginationLink>
                 </PaginationItem>
                 <PaginationItem>
-                  <PaginationLink href="#">3</PaginationLink>
+                  <PaginationLink href="#" className="bg-white hover:bg-white hover:text-black">
+                    3
+                  </PaginationLink>
                 </PaginationItem>
                 <PaginationItem>
                   <PaginationEllipsis />
                 </PaginationItem>
                 <PaginationItem>
-                  <PaginationNext href="#" />
+                  <PaginationNext href="#" className="bg-white hover:bg-white hover:text-black" />
                 </PaginationItem>
               </PaginationContent>
             </Pagination>

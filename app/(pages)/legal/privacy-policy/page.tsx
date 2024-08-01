@@ -10,7 +10,7 @@ export default function PrivacyPolicy() {
   return (
     <div className="m-auto mt-20 flex w-full max-w-[800px] flex-col gap-2">
       <h1 className="text-2xl">Politica de privacidade</h1>
-      <p className="text-neutral-300">
+      <p className="text-black">
         The standard Lorem Ipsum passage, used since the 1500s Lorem ipsum dolor sit amet, consectetur adipiscing elit,
         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
         exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in

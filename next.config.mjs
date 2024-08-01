@@ -4,9 +4,9 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'nextjs-commerce-psi-opal.vercel.app',
-        port: '',
+        hostname: 'cdn.shopify.com',
       },
+      { protocol: 'https', hostname: 'nextjs-commerce-psi-opal.vercel.app' },
     ],
   },
 }

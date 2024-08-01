@@ -1,5 +1,5 @@
 import '@/app/globals.css'
-import { Header } from '@/components/header/index'
+import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { ReactNode } from 'react'
 

@@ -7,7 +7,7 @@ export default {
     default: shopifyApiProject({
       apiType: ApiType.Storefront,
       documents: ['./lib/shopify/graphql/**/*.ts'],
-      apiVersion: '2023-10',
+      apiVersion: '2024-07',
       outputDir: './lib/shopify/types',
     }),
   },
