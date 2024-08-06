@@ -14,6 +14,7 @@ export default function Login() {
         Nextfy
       </Link>
       <div className="absolute left-1/2 top-1/2 w-full max-w-[500px] -translate-x-1/2 -translate-y-1/2">
+        <h1 className="mb-4">Fazer login</h1>
         <form className="flex flex-col gap-4">
           <input placeholder="Email" className="w-full border border-zinc-700 px-4 py-2" />
           <input placeholder="Senha" className="w-full border border-zinc-700 px-4 py-2" />

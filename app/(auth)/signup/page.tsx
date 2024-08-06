@@ -14,6 +14,7 @@ export default function SignUp() {
         Nextfy
       </Link>
       <div className="absolute left-1/2 top-1/2 w-full max-w-[500px] -translate-x-1/2 -translate-y-1/2">
+        <h1 className="mb-4">Criar conta</h1>
         <form className="flex flex-col gap-4">
           <input placeholder="Nome" className="w-full border px-4 py-2" />
           <input placeholder="Sobrenome" className="w-full border px-4 py-2" />

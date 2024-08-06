@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Wrapper } from '@/components/wrapper'
 import { GetCollectionProductsQuery } from '@/lib/shopify/types/storefront.generated'
-import { formatPriceBrl } from '@/utils/format-price'
+import { formatPriceBrl, productFirstVariantUrl } from '@/lib/utils'
 
 interface CollectionProps {
   collection: GetCollectionProductsQuery
@@ -21,8 +21,10 @@ export function Carousel({ collection }: CollectionProps) {
           {products.map((product) => {
             const minPrice = product.node.priceRange.minVariantPrice
             const compareAtPrice = product.node.compareAtPriceRange.maxVariantPrice
+            const productUrl = productFirstVariantUrl(product.node)
+
             return (
-              <Link key={product.node.id} href={`/product/${product.node.handle}`}>
+              <Link key={product.node.id} href={productUrl}>
                 <div className="relative flex h-[270px] w-[270px] items-center justify-center border border-black bg-white">
                   <Image
                     src={product.node.featuredImage?.url}

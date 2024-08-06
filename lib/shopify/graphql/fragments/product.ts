@@ -1,7 +1,7 @@
 import { imageFragment } from './image'
 
 export const productFragment = /* GraphQL */ `
-  fragment product on Product {
+  fragment Product on Product {
     id
     handle
     availableForSale

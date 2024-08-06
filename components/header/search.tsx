@@ -1,45 +1,9 @@
-import Link from 'next/link'
-import { Wrapper } from '@/components/wrapper'
-import { Cart } from '@/components/cart'
-import { Dialog } from '@/components/ui/dialog'
-import { DialogContent, DialogTrigger } from '@radix-ui/react-dialog'
-import { CircleUserRound } from 'lucide-react'
+import { Dialog, DialogContent, DialogOverlay, DialogTitle, DialogTrigger } from '@radix-ui/react-dialog'
+import { DialogHeader } from '../ui/dialog'
 import { SearchIcon } from 'lucide-react'
 import Image from 'next/image'
 
-export function Header() {
-  return (
-    <header className="sticky top-0 z-50 w-full border-b border-black bg-white">
-      <Wrapper>
-        <div className="flex h-[70px] w-full items-center justify-around">
-          <Link href="/" className="text-2xl font-semibold">
-            Nextfy
-          </Link>
-          <div className="flex w-full justify-center gap-8">
-            <Link href="/all-products" className="hover:underline">
-              Todos os produtos
-            </Link>
-            <Link href="#" className="hover:underline">
-              Mais vendidos
-            </Link>
-            <Link href="#" className="hover:underline">
-              Coleções
-            </Link>
-          </div>
-          <div className="flex shrink-0 items-center gap-7">
-            <Search />
-            <Link href="/profile" className="hover:underline">
-              <CircleUserRound size={24} />
-            </Link>
-            <Cart />
-          </div>
-        </div>
-      </Wrapper>
-    </header>
-  )
-}
-
-function Search() {
+export function Search() {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -47,8 +11,12 @@ function Search() {
           <SearchIcon size={24} />
         </button>
       </DialogTrigger>
-      <DialogContent className="absolute left-1/2 top-20 z-50 w-full max-w-[700px] -translate-x-1/2 border border-black bg-white p-6">
-        <input placeholder="Pesquisar produto" className="w-full border border-zinc-600 bg-white px-4 py-2" />
+      <DialogOverlay className="fixed inset-0 z-50 bg-black/80" />
+      <DialogContent className="absolute left-1/2 top-20 z-50 w-full max-w-[700px] -translate-x-1/2 translate-y-0 flex-col bg-white p-6">
+        <DialogHeader className="mb-4">
+          <DialogTitle>Pesquisar produtos</DialogTitle>
+        </DialogHeader>
+        <input placeholder="Nome ou marca" className="w-full border border-zinc-600 bg-white px-4 py-2" />
         <div className="mt-6 flex max-h-[400px] flex-col gap-2 overflow-auto">
           <div className="flex gap-4">
             <div className="relative flex h-20 w-20 items-center justify-center border border-black">

@@ -7,10 +7,19 @@ export const getCollectionProductsQuery = /* GraphQL */ `
       products(sortKey: $sortKey, reverse: $reverse, first: 100) {
         edges {
           node {
-            ...product
+            ...Product
           }
         }
       }
+    }
+  }
+  ${productFragment}
+`
+
+export const getProductByHandleQuery = /* GraphQL */ `
+  query getProductByHandle($handle: String) {
+    product(handle: $handle) {
+      ...Product
     }
   }
   ${productFragment}

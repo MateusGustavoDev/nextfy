@@ -1,5 +1,5 @@
 import 'server-only'
-import { getCollectionProductsQuery } from '../graphql/queries/product'
+import { getCollectionProductsQuery, getProductByHandleQuery } from '../graphql/queries/products'
 import { client } from '../storefront-api-client'
 
 type GetCollectionProducts = {
@@ -15,29 +15,27 @@ export async function getCollectionProducts({ collection }: GetCollectionProduct
     },
   })
 
-  if (errors) {
-    return {
-      data: undefined,
-      errorMessage: errors.message,
-    }
-  }
-
-  if (!data?.collection) {
-    return {
-      data: undefined,
-      errorMessage: `Collection não encontrada: ${collection}`,
-    }
+  if (!data?.collection || errors) {
+    return undefined
   }
 
   if (data) {
-    return {
-      data: data,
-      errorMessage: undefined,
-    }
+    return data
+  }
+}
+
+export async function getProductByHandle({ handle }: { handle: string }) {
+  const { data, errors } = await client.request(getProductByHandleQuery, {
+    variables: {
+      handle: handle,
+    },
+  })
+
+  if (!data?.product || errors) {
+    return undefined
   }
 
-  return {
-    data: undefined,
-    errorMessage: `Falha ao buscar a collection: ${collection}`,
+  if (data) {
+    return data
   }
 }
