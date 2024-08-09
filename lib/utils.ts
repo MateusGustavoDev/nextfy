@@ -2,7 +2,7 @@ import { type ClassValue, clsx } from 'clsx'
 import { ReadonlyURLSearchParams } from 'next/navigation'
 import { twMerge } from 'tailwind-merge'
 import { SelectedOption } from './shopify/types/storefront.types'
-import { Product } from './shopify/types'
+import { ProductFragment } from './shopify/types/storefront.generated'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -23,8 +23,10 @@ export function formatPriceBrl(price: string): string {
   })
 }
 
-export function productFirstVariantUrl(product: Product) {
-  const firstVariant = product.variants.edges[0].node
+export function firstProductVariantUrl(product: ProductFragment) {
+  const productVariants = removeEdgesAndNodes(product.variants)
+
+  const firstVariant = productVariants[0]
   const firstVariantIsDefault = Boolean(
     firstVariant.selectedOptions.find(
       (option: SelectedOption) => option.name === 'Title' && option.value === 'Default Title',
@@ -43,4 +45,16 @@ export function productFirstVariantUrl(product: Product) {
     .join('&')
 
   return `/product/${product.handle}?${queryParams}`
+}
+
+type Connection<T> = {
+  edges: Array<Edge<T>>
+}
+
+type Edge<T> = {
+  node: T
+}
+
+export const removeEdgesAndNodes = <T>(array: Connection<T>) => {
+  return array.edges.map((edge) => edge?.node)
 }

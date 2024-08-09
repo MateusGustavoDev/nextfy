@@ -1,4 +1,4 @@
-import { ProductItem } from '../components/product/product'
+import { ProductItem } from '../components/product/product-item'
 import { getProductByHandle } from '@/lib/shopify/fetch/products'
 
 export default async function Product({ params }: { params: { handle: string } }) {

@@ -5,12 +5,10 @@ export type ProductOptions = Pick<ProductOption, 'id' | 'name' | 'values'>[] | u
 
 export type Product = ProductFragment
 
-export type ProductVariants =
-  | {
-      node: Pick<ProductVariant, 'id' | 'availableForSale' | 'title'> & {
-        selectedOptions: Pick<SelectedOption, 'name' | 'value'>[]
-        price: Pick<MoneyV2, 'amount' | 'currencyCode'>
-        image?: Maybe<Pick<Image, 'url'>> | undefined
-      }
-    }[]
-  | undefined
+export type ProductVariants = (Pick<ProductVariant, 'id' | 'availableForSale' | 'title'> & {
+  selectedOptions: Pick<SelectedOption, 'name' | 'value'>[]
+  price: Pick<MoneyV2, 'amount' | 'currencyCode'>
+  image?: Maybe<Pick<Image, 'url'>> | undefined
+})[]
+
+export type Images = { node: Pick<Image, 'url' | 'altText' | 'height' | 'width'> }[] | undefined

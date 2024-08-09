@@ -1,42 +1,80 @@
+'use client'
+import { Images, ProductOptions } from '@/lib/shopify/types'
+import { createUrl } from '@/lib/utils'
 import Image from 'next/image'
+import Link from 'next/link'
+import { usePathname, useSearchParams } from 'next/navigation'
 
-export function Gallery() {
+interface GalleryProps {
+  images: Images
+  options: ProductOptions
+  title: string | undefined
+}
+
+export function Gallery({ images, options, title }: GalleryProps) {
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
+  const colorSearchParam = searchParams.get('cor')
+  const imageSearchParam = searchParams.get('image')
+
+  if (!images) return null
+
+  const theColorOptionExists = options?.find((option) => option.name.toLocaleLowerCase() === 'cor')
+
+  function imagesByColorSelected() {
+    if (theColorOptionExists && !colorSearchParam && images) return [images[0]]
+
+    if (!theColorOptionExists) return images
+
+    const imagesByColor = images?.filter((image) => image.node.altText === colorSearchParam)
+
+    return imagesByColor
+  }
+
+  const productImages = imagesByColorSelected()
+
+  const imageIndex = imageSearchParam ? parseInt(imageSearchParam) : 0
+
   return (
-    <div className="relative flex aspect-[700/600] h-max w-full max-w-[700px] items-center justify-center border border-black bg-white">
-      <Image
-        src="https://nextjs-commerce-psi-opal.vercel.app/_next/image?url=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F0656%2F1454%2F5036%2Ffiles%2Fmba13-m3-midnight-gallery1-202402.png%3Fv%3D1721267948&w=1920&q=75"
-        width={0}
-        height={0}
-        sizes="100vw"
-        className="h-690 w-auto"
-        alt=""
-      />
-      <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 gap-5">
-        <button className="border border-black bg-white p-2">
+    <div className="relative flex h-max w-full max-w-[700px] flex-col items-center justify-center border border-black p-10">
+      <div className="relative aspect-[700/600] w-full">
+        {productImages && (
           <Image
-            src="https://nextjs-commerce-psi-opal.vercel.app/_next/image?url=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F0656%2F1454%2F5036%2Ffiles%2Fmba13-m3-midnight-gallery1-202402.png%3Fv%3D1721267948&w=1920&q=75"
-            width={70}
-            height={70}
-            alt=""
+            src={productImages.length > 0 ? productImages[imageIndex].node.url : images[0].node.url}
+            alt={title as string}
+            fill
+            sizes="600px"
+            style={{ objectFit: 'contain' }}
           />
-        </button>
-        <button className="border border-black bg-white p-2">
-          <Image
-            src="https://nextjs-commerce-psi-opal.vercel.app/_next/image?url=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F0656%2F1454%2F5036%2Ffiles%2Fmba13-m3-midnight-gallery1-202402.png%3Fv%3D1721267948&w=1920&q=75"
-            width={70}
-            height={70}
-            alt=""
-          />
-        </button>
-        <button className="border border-black bg-white p-2">
-          <Image
-            src="https://nextjs-commerce-psi-opal.vercel.app/_next/image?url=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F0656%2F1454%2F5036%2Ffiles%2Fmba13-m3-midnight-gallery1-202402.png%3Fv%3D1721267948&w=1920&q=75"
-            width={70}
-            height={70}
-            alt=""
-          />
-        </button>
+        )}
       </div>
+      {productImages && productImages.length > 1 && (
+        <div className="mt-6 flex gap-5">
+          {productImages?.map((image, index) => {
+            const isActive = index === imageIndex
+            const imageSearchParams = new URLSearchParams(searchParams.toString())
+
+            imageSearchParams.set('image', index.toString())
+
+            return (
+              <Link
+                key={image.node.url}
+                href={createUrl(pathname, imageSearchParams)}
+                scroll={false}
+                data-active={isActive}
+                className="relative flex h-[80px] w-[80px] items-center justify-center border border-black bg-white p-2 data-[active=true]:border-2"
+              >
+                <Image
+                  src={image.node.url}
+                  alt={title as string}
+                  fill
+                  style={{ objectFit: 'contain', padding: '8px' }}
+                />
+              </Link>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }

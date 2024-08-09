@@ -1,7 +1,8 @@
 'use client'
 import { ProductOptions, ProductVariants } from '@/lib/shopify/types'
 import { cn, createUrl } from '@/lib/utils'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import Link from 'next/link'
+import { usePathname, useSearchParams } from 'next/navigation'
 
 interface VariantSelectorProps {
   options: ProductOptions
@@ -15,7 +16,6 @@ export type Combination = {
 }
 
 export function VariantSelector({ options, variants }: VariantSelectorProps) {
-  const router = useRouter()
   const searchParams = useSearchParams()
   const pathname = usePathname()
 
@@ -24,9 +24,9 @@ export function VariantSelector({ options, variants }: VariantSelectorProps) {
   if (hasNoOptionsOrJustOneOption || !variants) return null
 
   const combinations: Combination[] = variants.map((variant) => ({
-    id: variant.node.id,
-    availableForSale: variant.node.availableForSale,
-    ...variant.node.selectedOptions.reduce(
+    id: variant.id,
+    availableForSale: variant.availableForSale,
+    ...variant.selectedOptions.reduce(
       (accumulator, option) => ({ ...accumulator, [option.name.toLowerCase()]: option.value }),
       {},
     ),
@@ -58,22 +58,19 @@ export function VariantSelector({ options, variants }: VariantSelectorProps) {
                   const isActive = searchParams.get(optionNameLowerCase) === value
 
                   return (
-                    <button
+                    <Link
+                      href={optionUrl}
                       key={value}
                       aria-disabled={!isAvailableForSale}
-                      disabled={!isAvailableForSale}
                       data-active={isActive}
-                      onClick={() => {
-                        router.replace(optionUrl, { scroll: false })
-                      }}
                       className={cn('w-max border border-black px-2 py-1 text-sm', {
                         'cursor-default bg-black text-white': isActive,
                         'hover:bg-neutral-200': !isActive && isAvailableForSale,
-                        'border-neutral-400 bg-neutral-200 text-neutral-400': !isAvailableForSale,
+                        'pointer-events-none border-neutral-400 bg-neutral-200 text-neutral-400': !isAvailableForSale,
                       })}
                     >
                       {value}
-                    </button>
+                    </Link>
                   )
                 })}
               </div>

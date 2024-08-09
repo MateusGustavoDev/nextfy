@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Wrapper } from '@/components/wrapper'
 import { GetCollectionProductsQuery } from '@/lib/shopify/types/storefront.generated'
-import { formatPriceBrl, productFirstVariantUrl } from '@/lib/utils'
+import { firstProductVariantUrl, formatPriceBrl, removeEdgesAndNodes } from '@/lib/utils'
 
 interface CollectionProps {
   collection: GetCollectionProductsQuery
@@ -11,7 +11,7 @@ interface CollectionProps {
 export function Carousel({ collection }: CollectionProps) {
   if (!collection.collection) return
 
-  const products = collection.collection.products.edges
+  const products = removeEdgesAndNodes(collection.collection.products)
 
   return (
     <Wrapper>
@@ -19,25 +19,23 @@ export function Carousel({ collection }: CollectionProps) {
         <span className="text-2xl">{collection.collection.title}</span>
         <div className="relative flex w-full gap-5 overflow-x-scroll">
           {products.map((product) => {
-            const minPrice = product.node.priceRange.minVariantPrice
-            const compareAtPrice = product.node.compareAtPriceRange.maxVariantPrice
-            const productUrl = productFirstVariantUrl(product.node)
+            const minPrice = product.priceRange.minVariantPrice
+            const compareAtPrice = product.compareAtPriceRange.maxVariantPrice
+            const productUrl = firstProductVariantUrl(product)
 
             return (
-              <Link key={product.node.id} href={productUrl}>
-                <div className="relative flex h-[270px] w-[270px] items-center justify-center border border-black bg-white">
+              <Link key={product.id} href={productUrl}>
+                <div className="relative flex h-[270px] w-[270px] items-center justify-center border border-black bg-white p-4">
                   <Image
-                    src={product.node.featuredImage?.url}
-                    alt={product.node.title}
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    className="h-[240px] w-auto"
-                    style={{ objectFit: 'contain' }}
+                    src={product.featuredImage?.url}
+                    alt={product.title}
+                    fill
+                    sizes="270px"
+                    style={{ objectFit: 'contain', padding: '16px' }}
                   />
                 </div>
                 <div className="flex flex-col gap-2 py-2">
-                  <span className="flex w-[270px] text-balance">{product.node.title}</span>
+                  <span className="flex w-[270px] text-balance">{product.title}</span>
                   <div className="flex gap-2">
                     <span className="text-lg font-bold">{formatPriceBrl(minPrice.amount)}</span>
                     {compareAtPrice.amount > minPrice.amount && (

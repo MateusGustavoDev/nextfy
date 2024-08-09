@@ -22,12 +22,10 @@ export function Search() {
             <div className="relative flex h-20 w-20 items-center justify-center border border-black">
               <Image
                 src="https://nextjs-commerce-psi-opal.vercel.app/_next/image?url=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F0656%2F1454%2F5036%2Ffiles%2Fmba13-m3-midnight-gallery1-202402.png%3Fv%3D1721267948&w=1920&q=75"
-                width={0}
-                height={0}
-                sizes="100vw"
-                className="h-16 w-auto"
-                style={{ objectFit: 'contain' }}
                 alt=""
+                fill
+                sizes="80px"
+                style={{ objectFit: 'contain' }}
               />
             </div>
             <div className="flex flex-col">
@@ -39,12 +37,10 @@ export function Search() {
             <div className="relative flex h-20 w-20 items-center justify-center border border-black">
               <Image
                 src="https://nextjs-commerce-psi-opal.vercel.app/_next/image?url=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F0656%2F1454%2F5036%2Ffiles%2Fmba13-m3-midnight-gallery1-202402.png%3Fv%3D1721267948&w=1920&q=75"
-                width={0}
-                height={0}
-                sizes="100vw"
-                className="h-16 w-auto"
-                style={{ objectFit: 'contain' }}
                 alt=""
+                fill
+                sizes="80px"
+                style={{ objectFit: 'contain' }}
               />
             </div>
             <div className="flex flex-col">

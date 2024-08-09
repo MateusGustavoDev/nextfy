@@ -7,8 +7,9 @@ export function CartItem() {
       <div className="relative h-24 w-24 shrink-0 border border-black bg-white">
         <Image
           src="https://nextjs-commerce-psi-opal.vercel.app/_next/image?url=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F0656%2F1454%2F5036%2Ffiles%2Fmba13-m3-midnight-gallery1-202402.png%3Fv%3D1721267948&w=1920&q=75"
-          fill
           alt=""
+          fill
+          sizes="24px"
           style={{ objectFit: 'contain' }}
         />
         <button className="absolute -right-2 -top-2 z-50 flex h-5 w-5 items-center justify-center rounded-full bg-black p-1 text-xs text-white">

@@ -14,12 +14,13 @@ export function AddToCart({ variants, availableForSale }: AddToCartProps) {
 
   if (!variants) return null
 
-  const defaultVariantId = variants.length === 1 ? variants[0]?.node.id : undefined
+  const defaultVariantId = variants.length === 1 ? variants[0]?.id : undefined
 
   const variant = variants.find((variant) =>
-    variant.node.selectedOptions.every((option) => option.value === searchParams.get(option.name.toLowerCase())),
+    variant.selectedOptions.every((option) => option.value === searchParams.get(option.name.toLowerCase())),
   )
-  const selectedVariantId = variant?.node.id || defaultVariantId
+
+  const selectedVariantId = variant?.id || defaultVariantId
 
   if (!availableForSale) {
     return (
@@ -34,10 +35,10 @@ export function AddToCart({ variants, availableForSale }: AddToCartProps) {
       <button
         aria-label="Please select an option"
         aria-disabled
-        className="cursor-not-allowed bg-black py-2 text-white"
+        className="cursor-not-allowed bg-black/70 py-2 text-white"
       >
         <div className="absolute left-0 ml-4"></div>
-        Adicionar ao carrinho
+        Selecione a variante
       </button>
     )
   }
