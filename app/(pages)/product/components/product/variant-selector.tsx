@@ -39,7 +39,7 @@ export function VariantSelector({ options, variants }: VariantSelectorProps) {
           <div key={option.id}>
             <div className="flex flex-col gap-2">
               <span className="text-sm">{option.name.toLocaleUpperCase()}</span>
-              <div className="flex gap-4">
+              <ul className="flex gap-4">
                 {option.values.map((value) => {
                   const optionNameLowerCase = option.name.toLocaleLowerCase()
                   const optionSearchParams = new URLSearchParams(searchParams.toString())
@@ -58,22 +58,23 @@ export function VariantSelector({ options, variants }: VariantSelectorProps) {
                   const isActive = searchParams.get(optionNameLowerCase) === value
 
                   return (
-                    <Link
-                      href={optionUrl}
-                      key={value}
-                      aria-disabled={!isAvailableForSale}
-                      data-active={isActive}
-                      className={cn('w-max border border-black px-2 py-1 text-sm', {
-                        'cursor-default bg-black text-white': isActive,
-                        'hover:bg-neutral-200': !isActive && isAvailableForSale,
-                        'pointer-events-none border-neutral-400 bg-neutral-200 text-neutral-400': !isAvailableForSale,
-                      })}
-                    >
-                      {value}
-                    </Link>
+                    <li key={value}>
+                      <Link
+                        href={optionUrl}
+                        aria-disabled={!isAvailableForSale}
+                        data-active={isActive}
+                        className={cn('w-max border border-black px-2 py-1 text-sm', {
+                          'cursor-default bg-black text-white': isActive,
+                          'hover:bg-neutral-200': !isActive && isAvailableForSale,
+                          'pointer-events-none border-neutral-400 bg-neutral-200 text-neutral-400': !isAvailableForSale,
+                        })}
+                      >
+                        {value}
+                      </Link>
+                    </li>
                   )
                 })}
-              </div>
+              </ul>
             </div>
           </div>
         )

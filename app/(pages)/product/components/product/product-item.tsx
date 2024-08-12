@@ -2,10 +2,10 @@ import { Wrapper } from '@/components/wrapper'
 import { GetProductByHandleQuery } from '@/lib/shopify/types/storefront.generated'
 import { VariantSelector } from './variant-selector'
 import { Description } from './description'
-
 import { AddToCart } from '@/components/cart/add-to-cart'
 import { Gallery } from './gallery'
 import { removeEdgesAndNodes } from '@/lib/utils'
+import { Price } from './price'
 
 interface ProductItemProps {
   product: GetProductByHandleQuery
@@ -14,6 +14,7 @@ interface ProductItemProps {
 export function ProductItem({ product }: ProductItemProps) {
   if (!product.product) return null
 
+  const productPrice = product.product.priceRange.minVariantPrice.amount
   const productVariants = removeEdgesAndNodes(product.product?.variants)
   const productOptions = product.product?.options
 
@@ -25,7 +26,7 @@ export function ProductItem({ product }: ProductItemProps) {
           <div>
             <div className="flex flex-col gap-2">
               <span className="text-3xl">{product.product?.title}</span>
-              <span className="text-3xl font-bold">R$ 12.599,00</span>
+              <Price amount={productPrice} variants={productVariants} options={productOptions} />
             </div>
             <VariantSelector variants={productVariants} options={productOptions} />
             <Description />

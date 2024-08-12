@@ -24,7 +24,7 @@ export function AddToCart({ variants, availableForSale }: AddToCartProps) {
 
   if (!availableForSale) {
     return (
-      <button aria-disabled className="cursor-not-allowed bg-black/70 py-2 text-white">
+      <button aria-disabled disabled className="cursor-not-allowed bg-black/70 py-2 text-white">
         Fora de estoque
       </button>
     )
@@ -35,10 +35,11 @@ export function AddToCart({ variants, availableForSale }: AddToCartProps) {
       <button
         aria-label="Please select an option"
         aria-disabled
+        disabled
         className="cursor-not-allowed bg-black/70 py-2 text-white"
       >
         <div className="absolute left-0 ml-4"></div>
-        Selecione a variante
+        Selecione as opções
       </button>
     )
   }

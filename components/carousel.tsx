@@ -17,36 +17,38 @@ export function Carousel({ collection }: CollectionProps) {
     <Wrapper>
       <div className="flex w-full flex-col gap-4">
         <span className="text-2xl">{collection.collection.title}</span>
-        <div className="relative flex w-full gap-5 overflow-x-scroll">
+        <ul className="relative flex w-full gap-5 overflow-x-scroll">
           {products.map((product) => {
             const minPrice = product.priceRange.minVariantPrice
             const compareAtPrice = product.compareAtPriceRange.maxVariantPrice
             const productUrl = firstProductVariantUrl(product)
 
             return (
-              <Link key={product.id} href={productUrl}>
-                <div className="relative flex h-[270px] w-[270px] items-center justify-center border border-black bg-white p-4">
-                  <Image
-                    src={product.featuredImage?.url}
-                    alt={product.title}
-                    fill
-                    sizes="270px"
-                    style={{ objectFit: 'contain', padding: '16px' }}
-                  />
-                </div>
-                <div className="flex flex-col gap-2 py-2">
-                  <span className="flex w-[270px] text-balance">{product.title}</span>
-                  <div className="flex gap-2">
-                    <span className="text-lg font-bold">{formatPriceBrl(minPrice.amount)}</span>
-                    {compareAtPrice.amount > minPrice.amount && (
-                      <span className="line-through">{formatPriceBrl(compareAtPrice.amount)}</span>
-                    )}
+              <li key={product.id}>
+                <Link href={productUrl}>
+                  <div className="relative flex h-[270px] w-[270px] items-center justify-center border border-black bg-white p-4">
+                    <Image
+                      src={product.featuredImage?.url}
+                      alt={product.title}
+                      fill
+                      sizes="270px"
+                      style={{ objectFit: 'contain', padding: '16px' }}
+                    />
                   </div>
-                </div>
-              </Link>
+                  <div className="flex flex-col gap-2 py-2">
+                    <span className="flex w-[270px] text-balance">{product.title}</span>
+                    <div className="flex gap-2">
+                      <span className="text-lg font-bold">{formatPriceBrl(minPrice.amount)}</span>
+                      {compareAtPrice.amount > minPrice.amount && (
+                        <span className="line-through">{formatPriceBrl(compareAtPrice.amount)}</span>
+                      )}
+                    </div>
+                  </div>
+                </Link>
+              </li>
             )
           })}
-        </div>
+        </ul>
       </div>
     </Wrapper>
   )
