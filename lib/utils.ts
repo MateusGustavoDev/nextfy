@@ -3,6 +3,7 @@ import { ReadonlyURLSearchParams } from 'next/navigation'
 import { twMerge } from 'tailwind-merge'
 import { SelectedOption } from './shopify/types/storefront.types'
 import { ProductFragment } from './shopify/types/storefront.generated'
+import { DEFAULT_OPTION } from './constants'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -29,7 +30,7 @@ export function firstProductVariantUrl(product: ProductFragment) {
   const firstVariant = productVariants[0]
   const firstVariantIsDefault = Boolean(
     firstVariant.selectedOptions.find(
-      (option: SelectedOption) => option.name === 'Title' && option.value === 'Default Title',
+      (option: SelectedOption) => option.name === 'Title' && option.value === DEFAULT_OPTION,
     ),
   )
 

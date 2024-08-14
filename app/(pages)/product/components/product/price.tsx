@@ -1,4 +1,5 @@
 'use client'
+import { DEFAULT_OPTION } from '@/lib/constants'
 import { ProductOptions, ProductVariants } from '@/lib/shopify/types'
 import { formatPriceBrl } from '@/lib/utils'
 import { useSearchParams } from 'next/navigation'
@@ -17,7 +18,13 @@ export function Price({ amount, variants, options }: PriceProps) {
   const searchParams = useSearchParams()
 
   function getSelectedVariantPrice() {
-    if (!variants || !options) return amount
+    if (!variants || !options) return null
+
+    const firstVariantIsDefault = Boolean(
+      options.find((option) => option.name === 'Title' && option.values[0] === DEFAULT_OPTION),
+    )
+
+    if (firstVariantIsDefault) return amount
 
     const paramsObj: ParamsObj = {}
 
@@ -35,17 +42,13 @@ export function Price({ amount, variants, options }: PriceProps) {
     })
 
     if (matchedVariant) return matchedVariant.price.amount
-
-    return amount
   }
 
   const price = getSelectedVariantPrice()
 
   return (
     <div>
-      <div>
-        <span className="text-3xl font-bold">{formatPriceBrl(price)}</span>
-      </div>
+      <div>{price && <span className="text-3xl font-bold">{formatPriceBrl(price)}</span>}</div>
     </div>
   )
 }

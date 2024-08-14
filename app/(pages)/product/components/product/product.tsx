@@ -11,7 +11,7 @@ interface ProductItemProps {
   product: GetProductByHandleQuery
 }
 
-export function ProductItem({ product }: ProductItemProps) {
+export function Product({ product }: ProductItemProps) {
   if (!product.product) return null
 
   const productPrice = product.product.priceRange.minVariantPrice.amount
