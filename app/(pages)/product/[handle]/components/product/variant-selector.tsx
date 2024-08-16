@@ -1,12 +1,12 @@
 'use client'
-import { ProductOptions, ProductVariants } from '@/lib/shopify/types'
+import { ProductOptionsType, ProductVariantsType } from '@/lib/shopify/fetch/types'
 import { cn, createUrl } from '@/lib/utils'
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
 
 interface VariantSelectorProps {
-  options: ProductOptions
-  variants: ProductVariants
+  options: ProductOptionsType
+  variants: ProductVariantsType
 }
 
 export type Combination = {

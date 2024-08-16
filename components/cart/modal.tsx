@@ -4,11 +4,11 @@ import { CartResume } from './resume'
 import { CartItem } from './item'
 import { cookies } from 'next/headers'
 import { getCart } from '@/lib/shopify/fetch/cart'
-import { CartQueryQuery } from '@/lib/shopify/types/storefront.generated'
+import { CartType } from '@/lib/shopify/fetch/types'
 
 export async function CartModal() {
   const cartId = cookies().get('cartId')?.value
-  let cart: CartQueryQuery | undefined
+  let cart: CartType
 
   if (cartId) {
     cart = await getCart(cartId)
@@ -18,9 +18,9 @@ export async function CartModal() {
     <Sheet>
       <SheetTrigger asChild>
         <button className="relative">
-          {cart?.cart && cart.cart.totalQuantity > 0 && (
+          {cart && cart.totalQuantity > 0 && (
             <div className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-black text-sm text-white">
-              {cart.cart.totalQuantity}
+              {cart.totalQuantity}
             </div>
           )}
           <ShoppingBag size={24} />
@@ -30,10 +30,10 @@ export async function CartModal() {
         <SheetHeader>
           <SheetTitle className="text-black">Carrinho de compras</SheetTitle>
         </SheetHeader>
-        {cart?.cart && cart.cart.lines.edges.length > 0 ? (
+        {cart && cart.lines.edges.length > 0 ? (
           <div className="flex h-full flex-col justify-between">
             <ul className="mt-6 flex flex-col gap-4 overflow-auto py-2">
-              {cart.cart.lines.edges.map((item) => {
+              {cart.lines.edges.map((item) => {
                 const selectedVariant = item.node.merchandise.product.variants.edges.find(
                   (variant) => variant.node.id === item.node.merchandise.id,
                 )
@@ -41,7 +41,8 @@ export async function CartModal() {
                   <li key={item.node.id}>
                     <CartItem
                       id={item.node.id}
-                      cartId={cart.cart?.id as string}
+                      merchandiseId={item.node.merchandise.id}
+                      cartId={cart.id as string}
                       title={item.node.merchandise.product.title}
                       variantTitle={item.node.merchandise.title}
                       price={selectedVariant?.node.price.amount}
@@ -53,9 +54,9 @@ export async function CartModal() {
               })}
             </ul>
             <CartResume
-              subtotal={cart.cart.cost.subtotalAmount.amount}
-              total={cart.cart.cost.totalAmount.amount}
-              fee={cart.cart?.cost.totalTaxAmount?.amount}
+              subtotal={cart.cost.subtotalAmount.amount}
+              total={cart.cost.totalAmount.amount}
+              fee={cart.cost.totalTaxAmount?.amount}
             />
           </div>
         ) : (

@@ -2,11 +2,12 @@
 import { DEFAULT_OPTION } from '@/lib/constants'
 import { removeCartItem } from '@/lib/shopify/fetch/cart'
 import { formatPriceBrl } from '@/lib/utils'
-import { Minus, Plus } from 'lucide-react'
 import Image from 'next/image'
+import { EditItemQuantityButton } from './edit-item-quantity'
 
 interface CartItemProps {
   id: string
+  merchandiseId: string
   cartId: string
   price: string
   title: string
@@ -15,7 +16,7 @@ interface CartItemProps {
   quantity: number
 }
 
-export function CartItem({ id, cartId, title, variantTitle, price, image, quantity }: CartItemProps) {
+export function CartItem({ id, merchandiseId, cartId, title, variantTitle, price, image, quantity }: CartItemProps) {
   return (
     <div className="flex w-full gap-3">
       <div className="relative h-24 w-24 shrink-0 border border-black bg-white">
@@ -37,13 +38,9 @@ export function CartItem({ id, cartId, title, variantTitle, price, image, quanti
           <div className="flex flex-col">
             <span>{formatPriceBrl(price)}</span>
             <div className="mt-2 flex h-max items-center justify-center gap-4 border border-black py-1">
-              <button className="h-max">
-                <Minus size={18} />
-              </button>
+              <EditItemQuantityButton type="minus" id={id} merchandiseId={merchandiseId} quantity={quantity} />
               <span>{quantity}</span>
-              <button className="h-max">
-                <Plus size={18} />
-              </button>
+              <EditItemQuantityButton type="plus" id={id} merchandiseId={merchandiseId} quantity={quantity} />
             </div>
           </div>
         </div>

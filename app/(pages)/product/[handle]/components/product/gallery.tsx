@@ -1,13 +1,13 @@
 'use client'
-import { Images, ProductOptions } from '@/lib/shopify/types'
+import { ImagesType, ProductOptionsType } from '@/lib/shopify/fetch/types'
 import { createUrl } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
 
 interface GalleryProps {
-  images: Images
-  options: ProductOptions
+  images: ImagesType
+  options: ProductOptionsType
   title: string | undefined
 }
 

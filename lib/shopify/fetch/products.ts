@@ -22,7 +22,7 @@ export async function getCollectionProducts({ collection }: GetCollectionProduct
   }
 
   if (data) {
-    return data
+    return data.collection
   }
 }
 
@@ -39,6 +39,6 @@ export async function getProductByHandle({ handle }: { handle: string }) {
   }
 
   if (data) {
-    return data
+    return data.product
   }
 }

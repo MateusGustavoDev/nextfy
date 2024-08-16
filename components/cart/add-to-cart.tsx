@@ -1,11 +1,11 @@
 'use client'
 import { addProductToCart } from '@/lib/shopify/fetch/cart'
-import { ProductVariants } from '@/lib/shopify/types'
+import { ProductVariantsType } from '@/lib/shopify/fetch/types'
 import { Image } from '@/lib/shopify/types/storefront.types'
 import { useSearchParams } from 'next/navigation'
 
 interface AddToCartProps {
-  variants: ProductVariants
+  variants: ProductVariantsType
   availableForSale: boolean | undefined
   images?: Image
 }
