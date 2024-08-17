@@ -18,8 +18,6 @@ export function Price({ amount, variants, options }: PriceProps) {
   const searchParams = useSearchParams()
 
   function getSelectedVariantPrice() {
-    if (!variants || !options) return null
-
     const firstVariantIsDefault = Boolean(
       options.find((option) => option.name === 'Title' && option.values[0] === DEFAULT_OPTION),
     )

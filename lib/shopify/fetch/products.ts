@@ -2,6 +2,7 @@ import 'server-only'
 import { getCollectionProductsQuery, getProductByHandleQuery } from '../graphql/queries/products'
 import { shopifyFetch } from './shopify-fetch'
 import { GetCollectionProductsQuery, GetProductByHandleQuery } from '../types/storefront.generated'
+import { CollectionType, ProductType } from './types'
 
 type GetCollectionProducts = {
   collection: string
@@ -9,7 +10,9 @@ type GetCollectionProducts = {
   sortKey?: string
 }
 
-export async function getCollectionProducts({ collection }: GetCollectionProducts) {
+export async function getCollectionProducts({
+  collection,
+}: GetCollectionProducts): Promise<CollectionType | undefined> {
   const { data, errors } = await shopifyFetch<GetCollectionProductsQuery>({
     query: getCollectionProductsQuery,
     variables: {
@@ -26,7 +29,7 @@ export async function getCollectionProducts({ collection }: GetCollectionProduct
   }
 }
 
-export async function getProductByHandle({ handle }: { handle: string }) {
+export async function getProductByHandle({ handle }: { handle: string }): Promise<ProductType | undefined> {
   const { data, errors } = await shopifyFetch<GetProductByHandleQuery>({
     query: getProductByHandleQuery,
     variables: {

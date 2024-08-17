@@ -12,8 +12,6 @@ interface ProductItemProps {
 }
 
 export function Product({ product }: ProductItemProps) {
-  if (!product) return null
-
   const productPrice = product.priceRange.minVariantPrice.amount
   const productVariants = removeEdgesAndNodes(product.variants)
   const productOptions = product.options

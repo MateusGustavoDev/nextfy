@@ -7,9 +7,16 @@ interface EditItemQuantityButtonProps {
   merchandiseId: string
   quantity: number
   type: 'minus' | 'plus'
+  quantityAvailable?: number
 }
 
-export function EditItemQuantityButton({ id, merchandiseId, quantity, type }: EditItemQuantityButtonProps) {
+export function EditItemQuantityButton({
+  id,
+  merchandiseId,
+  quantity,
+  type,
+  quantityAvailable,
+}: EditItemQuantityButtonProps) {
   const [message, formAction] = useFormState(updateItemQuantity, null)
 
   const payload = {
@@ -22,16 +29,18 @@ export function EditItemQuantityButton({ id, merchandiseId, quantity, type }: Ed
 
   return (
     <form action={actionWithVariant} className="flex items-center">
-      <SubmitButton type={type} />
+      <SubmitButton type={type} quantity={quantity} quantityAvailable={quantityAvailable} />
     </form>
   )
 }
 
 interface SubmitButtonProps {
   type: 'minus' | 'plus'
+  quantity: number
+  quantityAvailable: number | undefined
 }
 
-function SubmitButton({ type }: SubmitButtonProps) {
+function SubmitButton({ type, quantity, quantityAvailable }: SubmitButtonProps) {
   return (
     <>
       {type === 'minus' && (
@@ -40,7 +49,12 @@ function SubmitButton({ type }: SubmitButtonProps) {
         </button>
       )}
       {type === 'plus' && (
-        <button type="submit">
+        <button
+          type="submit"
+          disabled={quantity === quantityAvailable}
+          data-max-quantity={quantity === quantityAvailable}
+          className="data-[max-quantity=true]:text-zinc-400"
+        >
           <Plus size={18} />
         </button>
       )}

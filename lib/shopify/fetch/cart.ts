@@ -19,19 +19,19 @@ import { revalidateTag } from 'next/cache'
 import { TAGS } from '@/lib/constants'
 import { CartType } from './types'
 
-// Tratar os userErros
-
-export async function createCart() {
+export async function createCart(): Promise<CartType | undefined> {
   const { data, errors } = await shopifyFetch<CreateCartMutation>({ query: createCartMutation })
 
-  if (!data?.cartCreate || errors) {
+  if (!data?.cartCreate || errors || data.cartCreate.userErrors[0]) {
     return undefined
   }
 
-  if (data) return data.cartCreate.cart
+  if (data.cartCreate.cart) {
+    return data.cartCreate.cart
+  }
 }
 
-export async function getCart(cartId: string) {
+export async function getCart(cartId: string): Promise<CartType | undefined> {
   const { data, errors } = await shopifyFetch<CartQueryQuery>({
     query: getCartQuery,
     variables: { cartId },
@@ -42,30 +42,30 @@ export async function getCart(cartId: string) {
     return undefined
   }
 
-  if (data) {
+  if (data.cart) {
     return data.cart
   }
 }
 
-export async function addCartLine(cartId: string, merchandiseId: string) {
+export async function addCartLine(cartId: string, merchandiseId: string): Promise<CartType | undefined> {
   const { data, errors } = await shopifyFetch<AddCartLinesMutation>({
     query: addCartLinesMutation,
     variables: { cartId: cartId, lines: { merchandiseId: merchandiseId, quantity: 1 } },
     cache: 'no-store',
   })
 
-  if (!data?.cartLinesAdd || errors) {
+  if (!data?.cartLinesAdd?.cart || errors || data.cartLinesAdd.userErrors[0]) {
     return undefined
   }
 
-  if (data) {
-    return data
+  if (data.cartLinesAdd.cart) {
+    return data.cartLinesAdd.cart
   }
 }
 
-export async function addProductToCart(merchandiseId: string) {
+export async function addProductToCart(merchandiseId: string): Promise<{ success: boolean }> {
   let cartId = cookies().get('cartId')?.value
-  let cart: CartType
+  let cart: CartType | undefined
 
   if (cartId) {
     cart = await getCart(cartId)
@@ -77,13 +77,21 @@ export async function addProductToCart(merchandiseId: string) {
     cookies().set('cartId', cartId as string)
   }
 
-  if (!cartId) return null
+  if (!cartId) {
+    return { success: false }
+  }
 
-  await addCartLine(cartId, merchandiseId)
-  revalidateTag(TAGS.cart)
+  const data = await addCartLine(cartId, merchandiseId)
+
+  if (data) {
+    revalidateTag(TAGS.cart)
+    return { success: true }
+  }
+
+  return { success: false }
 }
 
-export async function removeCartItem(cartId: string, lineId: string) {
+export async function removeCartItem(cartId: string, lineId: string): Promise<{ success: boolean }> {
   const { data, errors } = await shopifyFetch<RemoveFromCartMutation>({
     query: removeFromCartMutation,
     variables: {
@@ -92,17 +100,22 @@ export async function removeCartItem(cartId: string, lineId: string) {
     },
   })
 
-  if (!data?.cartLinesRemove || errors) {
-    return undefined
+  if (!data?.cartLinesRemove || errors || data.cartLinesRemove.userErrors[0]) {
+    return { success: false }
   }
 
-  if (data) {
+  if (data.cartLinesRemove.cart) {
     revalidateTag(TAGS.cart)
-    return data
+    return { success: true }
   }
+
+  return { success: false }
 }
 
-export async function updateCart(cartId: string, lines: { id: string; merchandiseId: string; quantity: number }[]) {
+export async function updateCart(
+  cartId: string,
+  lines: { id: string; merchandiseId: string; quantity: number }[],
+): Promise<{ success: boolean }> {
   const { data, errors } = await shopifyFetch<EditCartItemsMutation>({
     query: editCartItemsMutation,
     variables: {
@@ -113,11 +126,12 @@ export async function updateCart(cartId: string, lines: { id: string; merchandis
   })
 
   if (errors) {
-    console.log('Erro em updateCart')
-    return null
+    return { success: false }
   }
 
-  if (data) return data.cartLinesUpdate?.cart
+  if (data?.cartLinesUpdate?.cart) return { success: true }
+
+  return { success: false }
 }
 
 export async function updateItemQuantity(
@@ -127,31 +141,33 @@ export async function updateItemQuantity(
     variantId: string
     quantity: number
   },
-) {
+): Promise<{ success: boolean }> {
   const cartId = cookies().get('cartId')?.value
 
   if (!cartId) {
-    return null
+    return { success: false }
   }
 
   const { lineId, variantId, quantity } = payload
 
-  try {
-    if (quantity === 0) {
-      await removeCartItem(cartId, lineId)
-      revalidateTag(TAGS.cart)
-      return
-    }
-
-    await updateCart(cartId, [
-      {
-        id: lineId,
-        merchandiseId: variantId,
-        quantity,
-      },
-    ])
+  if (quantity === 0) {
+    await removeCartItem(cartId, lineId)
     revalidateTag(TAGS.cart)
-  } catch (e) {
-    return 'Error updating item quantity'
+    return { success: true }
   }
+
+  const { success } = await updateCart(cartId, [
+    {
+      id: lineId,
+      merchandiseId: variantId,
+      quantity,
+    },
+  ])
+
+  if (success) {
+    revalidateTag(TAGS.cart)
+    return { success: true }
+  }
+
+  return { success: false }
 }

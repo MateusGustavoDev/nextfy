@@ -14,9 +14,20 @@ interface CartItemProps {
   variantTitle: string
   image: string
   quantity: number
+  quantityAvailable: number
 }
 
-export function CartItem({ id, merchandiseId, cartId, title, variantTitle, price, image, quantity }: CartItemProps) {
+export function CartItem({
+  id,
+  merchandiseId,
+  cartId,
+  title,
+  variantTitle,
+  price,
+  image,
+  quantity,
+  quantityAvailable,
+}: CartItemProps) {
   return (
     <div className="flex w-full gap-3">
       <div className="relative h-24 w-24 shrink-0 border border-black bg-white">
@@ -40,7 +51,13 @@ export function CartItem({ id, merchandiseId, cartId, title, variantTitle, price
             <div className="mt-2 flex h-max items-center justify-center gap-4 border border-black py-1">
               <EditItemQuantityButton type="minus" id={id} merchandiseId={merchandiseId} quantity={quantity} />
               <span>{quantity}</span>
-              <EditItemQuantityButton type="plus" id={id} merchandiseId={merchandiseId} quantity={quantity} />
+              <EditItemQuantityButton
+                type="plus"
+                id={id}
+                merchandiseId={merchandiseId}
+                quantity={quantity}
+                quantityAvailable={quantityAvailable}
+              />
             </div>
           </div>
         </div>

@@ -8,7 +8,7 @@ import { CartType } from '@/lib/shopify/fetch/types'
 
 export async function CartModal() {
   const cartId = cookies().get('cartId')?.value
-  let cart: CartType
+  let cart: CartType | undefined
 
   if (cartId) {
     cart = await getCart(cartId)
@@ -37,6 +37,7 @@ export async function CartModal() {
                 const selectedVariant = item.node.merchandise.product.variants.edges.find(
                   (variant) => variant.node.id === item.node.merchandise.id,
                 )
+
                 return (
                   <li key={item.node.id}>
                     <CartItem
@@ -48,6 +49,7 @@ export async function CartModal() {
                       price={selectedVariant?.node.price.amount}
                       image={selectedVariant?.node.image?.url}
                       quantity={item.node.quantity}
+                      quantityAvailable={selectedVariant?.node.quantityAvailable as number}
                     />
                   </li>
                 )
@@ -57,6 +59,7 @@ export async function CartModal() {
               subtotal={cart.cost.subtotalAmount.amount}
               total={cart.cost.totalAmount.amount}
               fee={cart.cost.totalTaxAmount?.amount}
+              checkoutUrl={cart.checkoutUrl}
             />
           </div>
         ) : (

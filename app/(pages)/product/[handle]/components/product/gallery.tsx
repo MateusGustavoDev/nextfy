@@ -17,18 +17,16 @@ export function Gallery({ images, options, title }: GalleryProps) {
   const colorSearchParam = searchParams.get('cor')
   const imageSearchParam = searchParams.get('image')
 
-  if (!images) return null
-
   const theColorOptionExists = options?.find((option) => option.name.toLocaleLowerCase() === 'cor')
 
   function getImagesBySelectedColor() {
     if (!theColorOptionExists) return images
 
-    if (theColorOptionExists && !colorSearchParam && images) return [images[0]]
+    if (theColorOptionExists && !colorSearchParam) return [images[0]]
 
     const imagesByColor = images?.filter((image) => image.node.altText === colorSearchParam)
 
-    if (imagesByColor?.length === 0 && images) return [images[0]]
+    if (imagesByColor?.length === 0) return [images[0]]
 
     return imagesByColor
   }

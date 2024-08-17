@@ -21,7 +21,7 @@ export function VariantSelector({ options, variants }: VariantSelectorProps) {
 
   const hasNoOptionsOrJustOneOption = !options?.length || (options.length === 1 && options[0].values.length === 1)
 
-  if (hasNoOptionsOrJustOneOption || !variants) return null
+  if (hasNoOptionsOrJustOneOption) return null
 
   const combinations: Combination[] = variants.map((variant) => ({
     id: variant.id,

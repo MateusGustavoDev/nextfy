@@ -45,8 +45,12 @@ export function AddToCart({ variants, availableForSale }: AddToCartProps) {
     )
   }
 
+  async function handleAddProductToCart(variantId: string) {
+    const { success } = await addProductToCart(variantId)
+  }
+
   return (
-    <form action={() => addProductToCart(selectedVariantId)} className="w-full">
+    <form action={() => handleAddProductToCart(selectedVariantId)} className="w-full">
       <button type="submit" aria-label="Adicionar ao carrinho" className="w-full bg-black py-2 text-white">
         Adicionar ao carrinho
       </button>

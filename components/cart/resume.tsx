@@ -4,9 +4,10 @@ interface CartResumeProps {
   subtotal: string
   total: string
   fee: string
+  checkoutUrl: string
 }
 
-export function CartResume({ subtotal, total, fee }: CartResumeProps) {
+export function CartResume({ subtotal, total, fee, checkoutUrl }: CartResumeProps) {
   return (
     <div className="mb-8">
       <div className="flex w-full items-center justify-between">
@@ -28,7 +29,9 @@ export function CartResume({ subtotal, total, fee }: CartResumeProps) {
         <span>Total</span>
         <span>{formatPriceBrl(total)}</span>
       </div>
-      <button className="mt-6 w-full bg-black py-2 text-white">Finalizar compra</button>
+      <a href={checkoutUrl}>
+        <button className="mt-6 w-full bg-black py-2 text-white">Finalizar compra</button>
+      </a>
     </div>
   )
 }

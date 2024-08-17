@@ -48,7 +48,7 @@ export async function shopifyFetch<T>({
     if (body.errors) {
       return {
         data: undefined,
-        errors: body.errors,
+        errors: { message: 'shopifyFetch error' },
       }
     }
 
@@ -61,13 +61,13 @@ export async function shopifyFetch<T>({
 
     return {
       data: undefined,
-      errors: body.errors,
+      errors: { message: 'shopifyFetch error' },
     }
   } catch (error) {
     console.error('shopifyFetch error: ' + error)
     return {
       data: undefined,
-      errors: 'shopifyFetch error',
+      errors: { message: 'shopifyFetch error' },
     }
   }
 }
