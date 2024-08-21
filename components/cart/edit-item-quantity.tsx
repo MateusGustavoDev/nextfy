@@ -17,7 +17,7 @@ export function EditItemQuantityButton({
   type,
   quantityAvailable,
 }: EditItemQuantityButtonProps) {
-  const [message, formAction] = useFormState(updateItemQuantity, null)
+  const [status, formAction] = useFormState(updateItemQuantity, null)
 
   const payload = {
     lineId: id,

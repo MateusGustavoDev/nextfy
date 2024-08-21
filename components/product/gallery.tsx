@@ -24,7 +24,7 @@ export function Gallery({ images, options, title }: GalleryProps) {
 
     if (theColorOptionExists && !colorSearchParam) return [images[0]]
 
-    const imagesByColor = images?.filter((image) => image.node.altText === colorSearchParam)
+    const imagesByColor = images?.filter((image) => image.altText === colorSearchParam)
 
     if (imagesByColor?.length === 0) return [images[0]]
 
@@ -40,7 +40,7 @@ export function Gallery({ images, options, title }: GalleryProps) {
       <div className="relative aspect-[700/600] w-full">
         {productImages && (
           <Image
-            src={productImages[imageIndex >= productImages.length || imageIndex < 0 ? 0 : imageIndex].node.url}
+            src={productImages[imageIndex >= productImages.length || imageIndex < 0 ? 0 : imageIndex].url}
             alt={title as string}
             fill
             sizes="600px"
@@ -57,19 +57,14 @@ export function Gallery({ images, options, title }: GalleryProps) {
             imageSearchParams.set('image', index.toString())
 
             return (
-              <li key={image.node.url}>
+              <li key={image.url}>
                 <Link
                   href={createUrl(pathname, imageSearchParams)}
                   scroll={false}
                   data-active={isActive}
                   className="relative flex h-[80px] w-[80px] items-center justify-center border border-black bg-white p-2 data-[active=true]:border-2"
                 >
-                  <Image
-                    src={image.node.url}
-                    alt={title as string}
-                    fill
-                    style={{ objectFit: 'contain', padding: '8px' }}
-                  />
+                  <Image src={image.url} alt={title as string} fill style={{ objectFit: 'contain', padding: '8px' }} />
                 </Link>
               </li>
             )

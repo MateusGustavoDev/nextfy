@@ -10,8 +10,8 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
-import { ProfileCard } from '@/app/(pages)/profile/components/profile-card'
 import { Wrapper } from '@/components/wrapper'
+import { ProfileCard } from '@/components/profile/profile-card'
 
 export const metadata: Metadata = {
   title: `${SITE_NAME} | Conta`,

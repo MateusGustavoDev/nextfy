@@ -135,7 +135,7 @@ export async function updateCart(
 }
 
 export async function updateItemQuantity(
-  prevState: any,
+  prevState: null | { success: boolean },
   payload: {
     lineId: string
     variantId: string

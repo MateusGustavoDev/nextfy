@@ -14,12 +14,13 @@ interface ProductItemProps {
 export function Product({ product }: ProductItemProps) {
   const productPrice = product.priceRange.minVariantPrice.amount
   const productVariants = removeEdgesAndNodes(product.variants)
+  const productImages = removeEdgesAndNodes(product.images)
   const productOptions = product.options
 
   return (
     <Wrapper>
       <div className="relative mt-10 flex h-max w-full gap-2">
-        <Gallery images={product.images.edges} options={productOptions} title={product.title} />
+        <Gallery images={productImages} options={productOptions} title={product.title} />
         <div className="flex aspect-[700/600] w-full max-w-[600px] flex-col justify-between border border-black bg-white p-5">
           <div>
             <div className="flex flex-col gap-2">

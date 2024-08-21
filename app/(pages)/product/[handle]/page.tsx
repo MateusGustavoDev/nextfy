@@ -1,4 +1,4 @@
-import { Product } from './components/product/product'
+import { Product } from '@/components/product/product'
 import { getProductByHandle } from '@/lib/shopify/fetch/products'
 
 export default async function ProductPage({ params }: { params: { handle: string } }) {

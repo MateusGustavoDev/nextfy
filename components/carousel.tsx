@@ -9,8 +9,6 @@ interface CollectionProps {
 }
 
 export function Carousel({ collection }: CollectionProps) {
-  if (!collection) return
-
   const products = removeEdgesAndNodes(collection.products)
 
   return (
@@ -21,7 +19,7 @@ export function Carousel({ collection }: CollectionProps) {
           {products.map((product) => {
             const minPrice = product.priceRange.minVariantPrice
             const compareAtPrice = product.compareAtPriceRange.maxVariantPrice
-            const productUrl = firstProductVariantUrl(product)
+            const productUrl = firstProductVariantUrl(removeEdgesAndNodes(product.variants), product.handle)
 
             return (
               <li key={product.id}>

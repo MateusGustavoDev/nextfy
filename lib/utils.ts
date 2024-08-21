@@ -2,8 +2,8 @@ import { type ClassValue, clsx } from 'clsx'
 import { ReadonlyURLSearchParams } from 'next/navigation'
 import { twMerge } from 'tailwind-merge'
 import { SelectedOption } from './shopify/types/storefront.types'
-import { ProductFragment } from './shopify/types/storefront.generated'
 import { DEFAULT_OPTION } from './constants'
+import { ProductVariantsType } from './shopify/fetch/types'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -24,17 +24,15 @@ export function formatPriceBrl(price: string): string {
   })
 }
 
-export function firstProductVariantUrl(product: ProductFragment) {
-  const productVariants = removeEdgesAndNodes(product.variants)
-
-  const firstVariant = productVariants[0]
+export function firstProductVariantUrl(variants: ProductVariantsType, productHandle: string) {
+  const firstVariant = variants[0]
   const firstVariantIsDefault = Boolean(
     firstVariant.selectedOptions.find(
       (option: SelectedOption) => option.name === 'Title' && option.value === DEFAULT_OPTION,
     ),
   )
 
-  if (firstVariantIsDefault) return `/product/${product.handle}`
+  if (firstVariantIsDefault) return `/product/${productHandle}`
 
   const queryParams = firstVariant.selectedOptions
     .map((option) => {
@@ -45,7 +43,7 @@ export function firstProductVariantUrl(product: ProductFragment) {
     })
     .join('&')
 
-  return `/product/${product.handle}?${queryParams}`
+  return `/product/${productHandle}?${queryParams}`
 }
 
 type Connection<T> = {

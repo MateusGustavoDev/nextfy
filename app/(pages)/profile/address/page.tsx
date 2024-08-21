@@ -1,5 +1,5 @@
-import { ProfileCard } from '@/app/(pages)/profile/components/profile-card'
-import { AddressCard } from '@/app/(pages)/profile/components/address-card'
+import { AddressCard } from '@/components/profile/address-card'
+import { ProfileCard } from '@/components/profile/profile-card'
 import { Wrapper } from '@/components/wrapper'
 import { Metadata } from 'next'
 const { SITE_NAME } = process.env

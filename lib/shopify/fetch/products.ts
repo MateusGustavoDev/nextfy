@@ -1,8 +1,8 @@
-import 'server-only'
-import { getCollectionProductsQuery, getProductByHandleQuery } from '../graphql/queries/products'
+'use server'
+import { getCollectionProductsQuery, getProductByHandleQuery, searchProductsQuery } from '../graphql/queries/products'
 import { shopifyFetch } from './shopify-fetch'
-import { GetCollectionProductsQuery, GetProductByHandleQuery } from '../types/storefront.generated'
-import { CollectionType, ProductType } from './types'
+import { GetCollectionProductsQuery, GetProductByHandleQuery, SearchProductsQuery } from '../types/storefront.generated'
+import { CollectionType, ProductType, SearchResultType } from './types'
 
 type GetCollectionProducts = {
   collection: string
@@ -41,7 +41,25 @@ export async function getProductByHandle({ handle }: { handle: string }): Promis
     return undefined
   }
 
-  if (data) {
+  if (data.product) {
     return data.product
+  }
+}
+
+export async function searchProducts(query: string, first: number): Promise<SearchResultType | undefined> {
+  const { data, errors } = await shopifyFetch<SearchProductsQuery>({
+    query: searchProductsQuery,
+    variables: {
+      query: query,
+      first: first,
+    },
+  })
+
+  if (!data?.search || errors) {
+    return undefined
+  }
+
+  if (data.search) {
+    return data.search.edges
   }
 }

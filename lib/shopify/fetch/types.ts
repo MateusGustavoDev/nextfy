@@ -23,7 +23,7 @@ export type ProductVariantsType = (Pick<ProductVariant, 'id' | 'availableForSale
   image?: Maybe<Pick<Image, 'url'>>
 })[]
 
-export type ImagesType = { node: Pick<Image, 'url' | 'altText' | 'height' | 'width'> }[]
+export type ImagesType = Pick<Image, 'url' | 'altText' | 'height' | 'width'>[]
 
 export type ProductType = Pick<
   Product,
@@ -173,3 +173,17 @@ export type CartType = Maybe<
     }
   }
 >
+
+export type SearchResultType = {
+  node: Pick<Product, 'id' | 'title' | 'handle'> & {
+    variants: {
+      edges: {
+        node: Pick<ProductVariant, 'id' | 'title' | 'availableForSale' | 'quantityAvailable'> & {
+          selectedOptions: Pick<SelectedOption, 'name' | 'value'>[]
+          price: Pick<MoneyV2, 'amount' | 'currencyCode'>
+          image?: Maybe<Pick<Image, 'url'>> | undefined
+        }
+      }[]
+    }
+  }
+}[]
