@@ -12,7 +12,7 @@ export function AddressCard() {
       <div className="flex flex-col gap-2">
         <Dialog>
           <DialogTrigger asChild>
-            <button className="underline">Editar</button>
+            <button>Editar</button>
           </DialogTrigger>
           <DialogOverlay />
 
@@ -34,14 +34,14 @@ export function AddressCard() {
               Endereço padrão
             </label>
             <div className="mt-4 flex w-full gap-5">
-              <button className="underline">Salvar</button>
+              <button>Salvar</button>
               <DialogClose asChild>
-                <button className="underline">Cancelar</button>
+                <button>Cancelar</button>
               </DialogClose>
             </div>
           </DialogContent>
         </Dialog>
-        <button className="underline">Deletar</button>
+        <button>Deletar</button>
       </div>
     </div>
   )

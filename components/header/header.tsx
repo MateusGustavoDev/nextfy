@@ -3,8 +3,11 @@ import { Wrapper } from '@/components/wrapper'
 import { CartModal } from '@/components/cart/modal'
 import { CircleUserRound } from 'lucide-react'
 import { Search } from './search'
+import { getCollections } from '@/lib/shopify/fetch/collections'
 
-export function Header() {
+export async function Header() {
+  const collections = await getCollections()
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-black bg-white">
       <Wrapper>
@@ -12,20 +15,18 @@ export function Header() {
           <Link href="/" className="text-2xl font-semibold">
             Nextfy
           </Link>
-          <div className="flex w-full justify-center gap-8">
-            <Link href="/all-products" className="hover:underline">
-              Todos os produtos
-            </Link>
-            <Link href="#" className="hover:underline">
-              Mais vendidos
-            </Link>
-            <Link href="#" className="hover:underline">
-              Coleções
-            </Link>
-          </div>
+          <ul className="flex w-full justify-center gap-8">
+            {collections?.edges.map((collection) => (
+              <li key={collection.node.id}>
+                <Link href={`/collections/${collection.node.handle}`} className="hover:underline">
+                  {collection.node.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
           <div className="flex shrink-0 items-center gap-7">
             <Search />
-            <Link href="/profile" className="hover:underline">
+            <Link href="/orders" className="hover:underline">
               <CircleUserRound size={24} />
             </Link>
             <CartModal />

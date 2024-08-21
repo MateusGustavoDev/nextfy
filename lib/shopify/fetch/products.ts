@@ -24,7 +24,7 @@ export async function getCollectionProducts({
     return undefined
   }
 
-  if (data) {
+  if (data.collection) {
     return data.collection
   }
 }

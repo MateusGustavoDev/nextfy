@@ -15,13 +15,17 @@ export function ProfileCard() {
         </div>
         <div>
           <div className="flex flex-col gap-8">
-            <Link href="/profile">Pedidos</Link>
-            <Link href="/profile/address">Endereços</Link>
+            <Link href="/orders" className="hover:underline">
+              Pedidos
+            </Link>
+            <Link href="/address" className="hover:underline">
+              Endereços
+            </Link>
           </div>
         </div>
       </div>
       <div>
-        <button className="w-max underline">Sair da conta</button>
+        <button className="w-max">Sair da conta</button>
       </div>
     </div>
   )

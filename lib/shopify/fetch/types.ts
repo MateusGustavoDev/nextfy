@@ -4,10 +4,12 @@ import {
   Cart,
   CartLine,
   Collection,
+  CollectionEdge,
   ComponentizableCartLine,
   Image,
   Maybe,
   MoneyV2,
+  PageInfo,
   ProductOption,
   ProductVariant,
   SelectedOption,
@@ -187,3 +189,10 @@ export type SearchResultType = {
     }
   }
 }[]
+
+export type CollectionsType = {
+  edges: (Pick<CollectionEdge, 'cursor'> & {
+    node: Pick<Collection, 'id' | 'title' | 'handle'>
+  })[]
+  pageInfo: Pick<PageInfo, 'hasNextPage' | 'hasPreviousPage'>
+}
