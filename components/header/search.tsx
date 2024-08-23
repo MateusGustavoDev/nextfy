@@ -14,7 +14,7 @@ export function Search() {
   const [searchResult, setSearchResult] = useState<SearchResultType | undefined>(undefined)
 
   async function handleSearchProducts(query: string) {
-    const products = await searchProducts(query, 4)
+    const products = await searchProducts(query, 5)
     setSearchResult(products)
   }
 

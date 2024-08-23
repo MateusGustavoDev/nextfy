@@ -11,8 +11,19 @@ import { Wrapper } from '@/components/wrapper'
 import { getCollectionProducts } from '@/lib/shopify/fetch/products'
 import { ProductCard } from '@/components/collections/product-card'
 import { Filter } from '@/components/collections/filter'
+const { SITE_NAME } = process.env
 
-export default async function Collection({ params }: { params: { handle: string } }) {
+interface Props {
+  params: { handle: string }
+}
+
+export async function generateMetadata({ params }: Props) {
+  return {
+    title: `${SITE_NAME} - ${params.handle}`,
+  }
+}
+
+export default async function Collection({ params }: Props) {
   const products = await getCollectionProducts({ collection: params.handle })
 
   return (

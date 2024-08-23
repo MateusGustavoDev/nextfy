@@ -1,7 +1,20 @@
 import { Product } from '@/components/product/product'
 import { getProductByHandle } from '@/lib/shopify/fetch/products'
+const { SITE_NAME } = process.env
 
-export default async function ProductPage({ params }: { params: { handle: string } }) {
+interface Props {
+  params: { handle: string }
+}
+
+export async function generateMetadata({ params }: Props) {
+  const product = await getProductByHandle({ handle: params.handle })
+
+  return {
+    title: `${SITE_NAME} - ${product?.title}`,
+  }
+}
+
+export default async function ProductPage({ params }: Props) {
   const product = await getProductByHandle({ handle: params.handle })
 
   return (

@@ -1,5 +1,11 @@
 import { Carousel } from '@/components/carousel'
 import { getCollectionProducts } from '@/lib/shopify/fetch/products'
+import { Metadata } from 'next'
+const { SITE_NAME } = process.env
+
+export const metadata: Metadata = {
+  title: SITE_NAME,
+}
 
 export default async function Home() {
   const smartphones = await getCollectionProducts({ collection: 'Smartphones' })

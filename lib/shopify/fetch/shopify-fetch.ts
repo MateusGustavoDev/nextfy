@@ -1,5 +1,4 @@
 import { SHOPIFY_GRAPHQL_API_ENDPOINT } from '@/lib/constants'
-
 const { SHOPIFY_STORE_DOMAIN } = process.env
 
 const endpoint = `https://${SHOPIFY_STORE_DOMAIN}${SHOPIFY_GRAPHQL_API_ENDPOINT}`
