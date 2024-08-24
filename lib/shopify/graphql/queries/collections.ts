@@ -1,6 +1,6 @@
 export const getCollectionQuery = /* GraphQL */ `
-  query getCollections {
-    collections(first: 10) {
+  query getCollections($first: Int) {
+    collections(first: $first) {
       edges {
         cursor
         node {

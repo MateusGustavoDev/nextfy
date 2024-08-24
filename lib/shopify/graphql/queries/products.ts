@@ -2,10 +2,10 @@ import { productFragment } from '../fragments/product'
 import { ProductVariantFragment } from '../fragments/variants'
 
 export const getCollectionProductsQuery = /* GraphQL */ `
-  query getCollectionProducts($handle: String!, $sortKey: ProductCollectionSortKeys, $reverse: Boolean) {
+  query getCollectionProducts($handle: String!, $sortKey: ProductCollectionSortKeys, $reverse: Boolean, $first: Int) {
     collection(handle: $handle) {
       title
-      products(sortKey: $sortKey, reverse: $reverse, first: 100) {
+      products(sortKey: $sortKey, reverse: $reverse, first: $first) {
         edges {
           node {
             ...Product

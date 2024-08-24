@@ -8,15 +8,18 @@ type GetCollectionProducts = {
   collection: string
   reverse?: boolean
   sortKey?: string
+  first: number
 }
 
 export async function getCollectionProducts({
   collection,
+  first,
 }: GetCollectionProducts): Promise<CollectionType | undefined> {
   const { data, errors } = await shopifyFetch<GetCollectionProductsQuery>({
     query: getCollectionProductsQuery,
     variables: {
       handle: collection,
+      first: first,
     },
   })
 

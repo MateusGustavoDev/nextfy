@@ -10,7 +10,7 @@ export async function generateMetadata({ params }: Props) {
   const product = await getProductByHandle({ handle: params.handle })
 
   return {
-    title: `${SITE_NAME} - ${product?.title}`,
+    title: `${product?.title} | ${SITE_NAME}`,
   }
 }
 

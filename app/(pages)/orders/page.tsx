@@ -14,7 +14,7 @@ import { Wrapper } from '@/components/wrapper'
 import { ProfileCard } from '@/components/profile/profile-card'
 
 export const metadata: Metadata = {
-  title: `${SITE_NAME} - Pedidos`,
+  title: `Pedidos | ${SITE_NAME}`,
 }
 
 export default function Orders() {

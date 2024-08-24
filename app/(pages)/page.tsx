@@ -8,8 +8,8 @@ export const metadata: Metadata = {
 }
 
 export default async function Home() {
-  const smartphones = await getCollectionProducts({ collection: 'Smartphones' })
-  const watches = await getCollectionProducts({ collection: 'Watches' })
+  const smartphones = await getCollectionProducts({ collection: 'Smartphones', first: 10 })
+  const watches = await getCollectionProducts({ collection: 'Watches', first: 10 })
 
   return (
     <div className="mt-10">

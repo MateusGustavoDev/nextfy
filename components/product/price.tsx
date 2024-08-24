@@ -16,37 +16,34 @@ type ParamsObj = {
 
 export function Price({ amount, variants, options }: PriceProps) {
   const searchParams = useSearchParams()
+  let price: string
 
-  function getSelectedVariantPrice() {
-    const firstVariantIsDefault = Boolean(
-      options.find((option) => option.name === 'Title' && option.values[0] === DEFAULT_OPTION),
-    )
+  const firstVariantIsDefault = Boolean(
+    options.find((option) => option.name === 'Title' && option.values[0] === DEFAULT_OPTION),
+  )
 
-    if (firstVariantIsDefault) return amount
+  if (firstVariantIsDefault) price = amount
 
-    const paramsObj: ParamsObj = {}
+  const paramsObj: ParamsObj = {}
 
-    options.forEach((option) => {
-      const paramValue = searchParams.get(option.name.toLowerCase())
-      if (paramValue && option.values.includes(paramValue)) {
-        paramsObj[option.name] = paramValue
-      }
+  options.forEach((option) => {
+    const paramValue = searchParams.get(option.name.toLowerCase())
+    if (paramValue && option.values.includes(paramValue)) {
+      paramsObj[option.name] = paramValue
+    }
+  })
+
+  const matchedVariant = variants.find((variant) => {
+    return variant.selectedOptions.every((option) => {
+      return paramsObj[option.name] === option.value
     })
+  })
 
-    const matchedVariant = variants.find((variant) => {
-      return variant.selectedOptions.every((option) => {
-        return paramsObj[option.name] === option.value
-      })
-    })
-
-    if (matchedVariant) return matchedVariant.price.amount
-  }
-
-  const price = getSelectedVariantPrice()
+  price = matchedVariant ? matchedVariant.price.amount : amount
 
   return (
     <div>
-      <div>{price && <span className="text-3xl font-bold">{formatPriceBrl(price)}</span>}</div>
+      <div>{<span className="text-3xl font-bold">{formatPriceBrl(price)}</span>}</div>
     </div>
   )
 }

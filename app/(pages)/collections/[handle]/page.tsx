@@ -19,7 +19,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props) {
   return {
-    title: `${SITE_NAME} - ${params.handle}`,
+    title: `${params.handle} | ${SITE_NAME}`,
   }
 }
 

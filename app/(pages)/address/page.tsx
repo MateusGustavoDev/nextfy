@@ -5,7 +5,7 @@ import { Metadata } from 'next'
 const { SITE_NAME } = process.env
 
 export const metadata: Metadata = {
-  title: `${SITE_NAME} - Endereços`,
+  title: `Endereços | ${SITE_NAME} `,
 }
 
 export default function Address() {

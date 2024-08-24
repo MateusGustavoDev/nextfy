@@ -44,13 +44,6 @@ export async function shopifyFetch<T>({
 
     const body = await result.json()
 
-    if (body.errors) {
-      return {
-        data: undefined,
-        errors: { message: 'shopifyFetch error' },
-      }
-    }
-
     if (body.data) {
       return {
         data: body.data,

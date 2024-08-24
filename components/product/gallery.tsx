@@ -8,7 +8,15 @@ import { usePathname, useSearchParams } from 'next/navigation'
 interface GalleryProps {
   images: ImagesType
   options: ProductOptionsType
-  title: string | undefined
+  title: string
+}
+
+function productImagesBySelectedColor(images: ImagesType, colorParam: string | null) {
+  if (!colorParam) return [images[0]]
+
+  const imagesByColor = images.filter((image) => image.altText === colorParam)
+
+  return imagesByColor.length > 0 ? imagesByColor : [images[0]]
 }
 
 export function Gallery({ images, options, title }: GalleryProps) {
@@ -17,38 +25,24 @@ export function Gallery({ images, options, title }: GalleryProps) {
   const colorSearchParam = searchParams.get('cor')
   const imageSearchParam = searchParams.get('image')
 
-  const theColorOptionExists = options?.find((option) => option.name.toLocaleLowerCase() === 'cor')
+  const theColorOptionExists = options.find((option) => option.name.toLocaleLowerCase() === 'cor')
 
-  function getImagesBySelectedColor() {
-    if (!theColorOptionExists) return images
-
-    if (theColorOptionExists && !colorSearchParam) return [images[0]]
-
-    const imagesByColor = images?.filter((image) => image.altText === colorSearchParam)
-
-    if (imagesByColor?.length === 0) return [images[0]]
-
-    return imagesByColor
-  }
-
-  const productImages = getImagesBySelectedColor()
+  const productImages = theColorOptionExists ? productImagesBySelectedColor(images, colorSearchParam) : images
 
   const imageIndex = imageSearchParam ? parseInt(imageSearchParam) : 0
 
   return (
     <div className="relative flex h-max w-full max-w-[700px] flex-col items-center justify-center border border-black p-10">
       <div className="relative aspect-[700/600] w-full">
-        {productImages && (
-          <Image
-            src={productImages[imageIndex >= productImages.length || imageIndex < 0 ? 0 : imageIndex].url}
-            alt={title as string}
-            fill
-            sizes="600px"
-            style={{ objectFit: 'contain' }}
-          />
-        )}
+        <Image
+          src={productImages[imageIndex >= productImages.length || imageIndex < 0 ? 0 : imageIndex].url}
+          alt={title}
+          fill
+          sizes="600px"
+          style={{ objectFit: 'contain' }}
+        />
       </div>
-      {productImages && productImages.length > 1 && (
+      {productImages.length > 1 && (
         <ul className="mt-6 flex gap-5">
           {productImages?.map((image, index) => {
             const isActive = index === imageIndex
@@ -64,7 +58,7 @@ export function Gallery({ images, options, title }: GalleryProps) {
                   data-active={isActive}
                   className="relative flex h-[80px] w-[80px] items-center justify-center border border-black bg-white p-2 data-[active=true]:border-2"
                 >
-                  <Image src={image.url} alt={title as string} fill style={{ objectFit: 'contain', padding: '8px' }} />
+                  <Image src={image.url} alt={title} fill style={{ objectFit: 'contain', padding: '8px' }} />
                 </Link>
               </li>
             )

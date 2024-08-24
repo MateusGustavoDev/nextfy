@@ -34,13 +34,13 @@ export function AddToCart({ variants, availableForSale }: AddToCartProps) {
   if (!selectedVariantId) {
     return (
       <button
-        aria-label="Selecione a opção"
+        aria-label="Selecione a variante"
         aria-disabled
         disabled
         className="cursor-not-allowed bg-black/70 py-2 text-white"
       >
         <div className="absolute left-0 ml-4"></div>
-        Selecione a opção
+        Selecione a variante
       </button>
     )
   }

@@ -6,7 +6,7 @@ import { Search } from './search'
 import { getCollections } from '@/lib/shopify/fetch/collections'
 
 export async function Header() {
-  const collections = await getCollections()
+  const collections = await getCollections({ first: 10 })
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-black bg-white">
