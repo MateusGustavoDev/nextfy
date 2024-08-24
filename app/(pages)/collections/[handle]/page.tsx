@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export default async function Collection({ params }: Props) {
-  const products = await getCollectionProducts({ collection: params.handle })
+  const products = await getCollectionProducts({ collection: params.handle, first: 10 })
 
   return (
     <Wrapper>
