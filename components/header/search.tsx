@@ -49,8 +49,8 @@ export function Search() {
             placeholder="Nome do produto"
             className="w-full border border-zinc-600 bg-white px-4 py-2"
           />
-          <button onClick={() => fetch('/api/teste')}>GET</button>
         </form>
+        <button onClick={() => fetch('/api/teste')}>GET</button>
         <ul className="mb-6 mt-6 flex max-h-[400px] flex-col gap-2 overflow-auto">
           {searchResult &&
             searchResult.map((product) => {
