@@ -2,7 +2,7 @@ import { getEnv } from '@vercel/functions'
 
 export const runtime = 'edge'
 
-export const preferredRegion = ['gru1', 'iad1']
+export const preferredRegion = ['gru1']
 
 export async function GET() {
   const { VERCEL_REGION } = getEnv()
