@@ -1,5 +1,4 @@
 import { productFragment } from '../fragments/product'
-import { ProductVariantFragment } from '../fragments/variants'
 
 export const getCollectionProductsQuery = /* GraphQL */ `
   query getCollectionProducts($handle: String!, $sortKey: ProductCollectionSortKeys, $reverse: Boolean, $first: Int) {
@@ -31,17 +30,10 @@ export const searchProductsQuery = /* GraphQL */ `
     search(query: $query, first: $first, types: PRODUCT) {
       edges {
         node {
-          ... on Product {
-            id
-            title
-            handle
-            variants(first: $first) {
-              ...ProductVariant
-            }
-          }
+          ...Product
         }
       }
     }
   }
-  ${ProductVariantFragment}
+  ${productFragment}
 `

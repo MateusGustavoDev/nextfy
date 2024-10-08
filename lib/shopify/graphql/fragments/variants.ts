@@ -1,4 +1,4 @@
-export const ProductVariantFragment = /* GraphQL */ `
+export const productVariantFragment = /* GraphQL */ `
   fragment ProductVariant on ProductVariantConnection {
     edges {
       node {

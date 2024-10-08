@@ -1,3 +1,6 @@
+'use client'
+import { useSearchParams } from 'next/navigation'
+import { ProductCard } from '@/components/categories/product-card'
 import {
   Pagination,
   PaginationContent,
@@ -8,40 +11,48 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination'
 import { Wrapper } from '@/components/wrapper'
-import { getCollectionProducts } from '@/lib/shopify/fetch/products'
-import { ProductCard } from '@/components/collections/product-card'
-import { Filter } from '@/components/collections/filter'
-const { SITE_NAME } = process.env
+import { useEffect, useState } from 'react'
+import { searchProductsAction } from '@/actions/search'
+import { ProductType } from '@/lib/shopify/fetch/types'
 
-interface Props {
-  params: { handle: string }
-}
+export default function Search() {
+  const params = useSearchParams()
+  const queryParams = params.get('query')
+  const [pending, setPending] = useState(true)
+  const [products, setProducts] = useState<ProductType[] | undefined>(undefined)
 
-export async function generateMetadata({ params }: Props) {
-  return {
-    title: `${params.handle} | ${SITE_NAME}`,
-  }
-}
+  useEffect(() => {
+    searchProductsAction(queryParams, 5).then((data) => {
+      setPending(false)
+      setProducts(data)
+    })
+  }, [queryParams])
 
-export default async function Collection({ params }: Props) {
-  const products = await getCollectionProducts({ collection: params.handle, first: 10 })
+  if (pending) return <span className="text-black">Carregando...</span>
+
+  if (products && products?.length <= 0)
+    return (
+      <span className="text-black">
+        Nenhum resultado para <strong>{queryParams}</strong>
+      </span>
+    )
 
   return (
     <Wrapper>
       <div className="w-full">
         <div className="items-between mt-10 flex w-full gap-6">
-          <div className="shrink-0">
-            <Filter />
-          </div>
+          {/* <div className="shrink-0">
+        <Filter />
+      </div> */}
           <div>
             <ul className="flex w-full flex-wrap gap-3">
-              {products?.products.edges.map((product) => (
-                <li key={product.node.id}>
-                  <ProductCard product={product.node} />
+              {products?.map((product) => (
+                <li key={product.id}>
+                  <ProductCard product={product} />
                 </li>
               ))}
             </ul>
-            {products?.products.edges && products.products.edges.length >= 9 && (
+            {products && products.length >= 9 && (
               <Pagination className="my-10">
                 <PaginationContent>
                   <PaginationItem>

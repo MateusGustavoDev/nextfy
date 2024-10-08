@@ -6,7 +6,7 @@ export const cartFragment = /* GraphQL */ `
     createdAt
     updatedAt
     checkoutUrl
-    lines(first: 10) {
+    lines(first: 100) {
       edges {
         node {
           id

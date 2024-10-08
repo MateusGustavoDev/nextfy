@@ -1,15 +1,20 @@
 import { SHOPIFY_GRAPHQL_API_ENDPOINT } from '@/lib/constants'
-const { SHOPIFY_STORE_DOMAIN } = process.env
+const { SHOPIFY_STORE_DOMAIN, SHOPIFY_STOREFRONT_ACCESS_TOKEN } = process.env
+import { z } from 'zod'
 
 const endpoint = `https://${SHOPIFY_STORE_DOMAIN}${SHOPIFY_GRAPHQL_API_ENDPOINT}`
-const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN
+const key = SHOPIFY_STOREFRONT_ACCESS_TOKEN
 
-export interface ResponseErrors {
-  networkStatusCode?: number
-  message?: string
-  graphQLErrors?: any[]
-  response?: Response
-}
+const ErrorsSchema = z.object({
+  errors: z.array(
+    z.object({
+      message: z.string(),
+      extensions: z.object({
+        code: z.string(),
+      }),
+    }),
+  ),
+})
 
 type Variables = object | undefined
 
@@ -25,7 +30,7 @@ export async function shopifyFetch<T>({
   query: string
   tags?: string[]
   variables?: Variables
-}): Promise<{ errors: ResponseErrors | string | undefined; data: T | undefined }> {
+}): Promise<{ errors: { message: string } | undefined; data: T | undefined }> {
   try {
     const result = await fetch(endpoint, {
       method: 'POST',
@@ -44,22 +49,22 @@ export async function shopifyFetch<T>({
 
     const body = await result.json()
 
-    if (body.data) {
-      return {
-        data: body.data,
-        errors: undefined,
-      }
+    const errorParseResult = ErrorsSchema.safeParse(body)
+
+    if (errorParseResult.success) {
+      throw new Error(`API returned error code:  + ${body.errors[0].extensions.code}`)
     }
 
     return {
-      data: undefined,
-      errors: { message: 'shopifyFetch error' },
+      data: body.data,
+      errors: undefined,
     }
-  } catch (error) {
-    console.error('shopifyFetch error: ' + error)
+  } catch (e) {
+    const error = e as Error
+    console.error('shopifyFetch error: ' + error.message)
     return {
       data: undefined,
-      errors: { message: 'shopifyFetch error' },
+      errors: { message: `shopifyFetch error: ' + ${error.message}` },
     }
   }
 }

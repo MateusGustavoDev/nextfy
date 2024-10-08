@@ -1,6 +1,8 @@
-import { updateItemQuantity } from '@/lib/shopify/fetch/cart'
-import { Minus, Plus } from 'lucide-react'
-import { useFormState } from 'react-dom'
+'use client'
+import { updateItemQuantityAction } from '@/actions/cart'
+import { LoaderCircle, Minus, Plus } from 'lucide-react'
+import { useActionState, useOptimistic, useState } from 'react'
+import { useFormStatus } from 'react-dom'
 
 interface EditItemQuantityButtonProps {
   id: string
@@ -17,19 +19,35 @@ export function EditItemQuantityButton({
   type,
   quantityAvailable,
 }: EditItemQuantityButtonProps) {
-  const [status, formAction] = useFormState(updateItemQuantity, null)
+  const [optimisticQuantity, setOptimisticQuantity] = useOptimistic(
+    quantity,
+    (state: number, change: number) => state + change,
+  )
 
-  const payload = {
-    lineId: id,
-    variantId: merchandiseId,
-    quantity: type === 'plus' ? quantity + 1 : quantity - 1,
+  async function handleUpdateItemQuantity() {
+    const change = type === 'plus' ? 1 : -1
+    setOptimisticQuantity(change)
+
+    const payload = {
+      lineId: id,
+      variantId: merchandiseId,
+      quantity: optimisticQuantity + change,
+    }
+
+    const { error } = await updateItemQuantityAction(payload)
+
+    if (error) {
+      return { error: true }
+    }
+
+    return { error: false }
   }
 
-  const actionWithVariant = formAction.bind(null, payload)
+  const [error, formAction] = useActionState(handleUpdateItemQuantity, { error: false })
 
   return (
-    <form action={actionWithVariant} className="flex items-center">
-      <SubmitButton type={type} quantity={quantity} quantityAvailable={quantityAvailable} />
+    <form action={formAction} className="flex items-center">
+      <SubmitButton type={type} quantity={optimisticQuantity} quantityAvailable={quantityAvailable} />
     </form>
   )
 }
@@ -41,23 +59,40 @@ interface SubmitButtonProps {
 }
 
 function SubmitButton({ type, quantity, quantityAvailable }: SubmitButtonProps) {
-  return (
-    <>
-      {type === 'minus' && (
-        <button type="submit">
-          <Minus size={18} />
-        </button>
-      )}
-      {type === 'plus' && (
-        <button
-          type="submit"
-          disabled={quantity === quantityAvailable}
-          data-max-quantity={quantity === quantityAvailable}
-          className="data-[max-quantity=true]:text-zinc-400"
-        >
-          <Plus size={18} />
-        </button>
-      )}
-    </>
-  )
+  const { pending } = useFormStatus()
+
+  if (type === 'minus') {
+    {
+      return (
+        <>
+          {pending ? (
+            <LoaderCircle className="h-4 w-4 animate-spin" />
+          ) : (
+            <button type="submit">
+              <Minus size={18} />
+            </button>
+          )}
+        </>
+      )
+    }
+  }
+
+  if (type === 'plus') {
+    return (
+      <>
+        {pending ? (
+          <LoaderCircle className="h-4 w-4 animate-spin" />
+        ) : (
+          <button
+            type="submit"
+            disabled={quantity === quantityAvailable}
+            data-max-quantity={quantity === quantityAvailable}
+            className="data-[max-quantity=true]:text-zinc-400"
+          >
+            <Plus size={18} />
+          </button>
+        )}
+      </>
+    )
+  }
 }

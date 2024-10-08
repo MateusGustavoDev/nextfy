@@ -1,9 +1,9 @@
-import { type ClassValue, clsx } from 'clsx'
+import { clsx, type ClassValue } from 'clsx'
 import { ReadonlyURLSearchParams } from 'next/navigation'
 import { twMerge } from 'tailwind-merge'
-import { SelectedOption } from './shopify/types/storefront.types'
+import { ProductVariantType } from './shopify/fetch/types'
 import { DEFAULT_OPTION } from './constants'
-import { ProductVariantsType } from './shopify/fetch/types'
+import { SelectedOption } from './shopify/types/storefront.types'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -24,8 +24,12 @@ export function formatPriceBrl(price: string): string {
   })
 }
 
-export function firstProductVariantUrl(variants: ProductVariantsType, productHandle: string) {
+export function firstProductVariantUrl(variants: ProductVariantType[], productHandle: string) {
+  console.log('====== ')
+  console.log(variants)
+
   const firstVariant = variants[0]
+
   const firstVariantIsDefault = Boolean(
     firstVariant.selectedOptions.find(
       (option: SelectedOption) => option.name === 'Title' && option.value === DEFAULT_OPTION,

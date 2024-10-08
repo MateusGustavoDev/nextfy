@@ -2,21 +2,23 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Wrapper } from '@/components/wrapper'
 import { firstProductVariantUrl, formatPriceBrl, removeEdgesAndNodes } from '@/lib/utils'
-import { CollectionType } from '@/lib/shopify/fetch/types'
+import { getCollectionProducts } from '@/lib/shopify/fetch/products'
 
 interface CollectionProps {
-  collection: CollectionType
+  category: string
 }
 
-export function Carousel({ collection }: CollectionProps) {
-  const products = removeEdgesAndNodes(collection.products)
+export async function Carousel({ category }: CollectionProps) {
+  const data = await getCollectionProducts({ collection: category, first: 10 })
+
+  if (!data) return null
 
   return (
     <Wrapper>
       <div className="flex w-full flex-col gap-4">
-        <span className="text-2xl">{collection.title}</span>
+        <span className="text-2xl">{data.title}</span>
         <ul className="relative flex w-full gap-5 overflow-x-scroll">
-          {products.map((product) => {
+          {data.products.map((product) => {
             const minPrice = product.priceRange.minVariantPrice
             const compareAtPrice = product.compareAtPriceRange.maxVariantPrice
             const productUrl = firstProductVariantUrl(removeEdgesAndNodes(product.variants), product.handle)

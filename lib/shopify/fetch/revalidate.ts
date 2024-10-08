@@ -2,6 +2,7 @@ import { TAGS } from '@/lib/constants'
 import { revalidateTag } from 'next/cache'
 import { headers } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
+const { SHOPIFY_REVALIDATION_SECRET } = process.env
 
 export async function revalidate(req: NextRequest): Promise<NextResponse> {
   // We always need to respond with a 200 status code to Shopify,
@@ -13,7 +14,7 @@ export async function revalidate(req: NextRequest): Promise<NextResponse> {
   const isCollectionUpdate = collectionWebhooks.includes(topic)
   const isProductUpdate = productWebhooks.includes(topic)
 
-  if (!secret || secret !== process.env.SHOPIFY_REVALIDATION_SECRET) {
+  if (!secret || secret !== SHOPIFY_REVALIDATION_SECRET) {
     console.error('Invalid revalidation secret.')
     return NextResponse.json({ status: 200 })
   }

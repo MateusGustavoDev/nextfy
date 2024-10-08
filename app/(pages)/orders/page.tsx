@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { Metadata } from 'next'
 const { SITE_NAME } = process.env
+import { Wrapper } from '@/components/wrapper'
+import { ProfileCard } from '@/components/profile/profile-card'
 import {
   Pagination,
   PaginationContent,
@@ -10,8 +12,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
-import { Wrapper } from '@/components/wrapper'
-import { ProfileCard } from '@/components/profile/profile-card'
 
 export const metadata: Metadata = {
   title: `Pedidos | ${SITE_NAME}`,

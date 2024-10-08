@@ -1,5 +1,5 @@
 import { imageFragment } from './image'
-import { ProductVariantFragment } from './variants'
+import { productVariantFragment } from './variants'
 
 export const productFragment = /* GraphQL */ `
   fragment Product on Product {
@@ -46,6 +46,6 @@ export const productFragment = /* GraphQL */ `
     tags
     updatedAt
   }
-  ${ProductVariantFragment}
+  ${productVariantFragment}
   ${imageFragment}
 `

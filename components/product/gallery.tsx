@@ -1,17 +1,17 @@
 'use client'
-import { ImagesType, ProductOptionsType } from '@/lib/shopify/fetch/types'
+import { ImageType, ProductOptionType } from '@/lib/shopify/fetch/types'
 import { createUrl } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
 
 interface GalleryProps {
-  images: ImagesType
-  options: ProductOptionsType
+  images: ImageType[]
+  options: ProductOptionType[]
   title: string
 }
 
-function productImagesBySelectedColor(images: ImagesType, colorParam: string | null) {
+function productImagesBySelectedColor(images: ImageType[], colorParam: string | null) {
   if (!colorParam) return [images[0]]
 
   const imagesByColor = images.filter((image) => image.altText === colorParam)

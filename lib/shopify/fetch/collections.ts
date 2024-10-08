@@ -1,7 +1,6 @@
-'use server'
 import { TAGS } from '@/lib/constants'
-import { getCollectionQuery } from '../graphql/queries/collections'
-import { GetCollectionsQuery } from '../types/storefront.generated'
+import { getCollectionsQuery } from '@/lib/shopify/graphql/queries/collections'
+import { GetCollectionsQuery } from '@/lib/shopify/types/storefront.generated'
 import { shopifyFetch } from './shopify-fetch'
 import { CollectionsType } from './types'
 
@@ -11,7 +10,7 @@ type GetCollections = {
 
 export async function getCollections({ first }: GetCollections): Promise<CollectionsType | undefined> {
   const { data, errors } = await shopifyFetch<GetCollectionsQuery>({
-    query: getCollectionQuery,
+    query: getCollectionsQuery,
     tags: [TAGS.collections],
     variables: {
       first: first,
@@ -22,7 +21,15 @@ export async function getCollections({ first }: GetCollections): Promise<Collect
     return undefined
   }
 
-  if (data.collections) {
-    return data.collections
+  const formattedData = data.collections.edges.map((data) => ({
+    cursor: data.cursor,
+    id: data.node.id,
+    title: data.node.title,
+    handle: data.node.handle,
+  }))
+
+  return {
+    collections: formattedData,
+    pageInfo: data.collections.pageInfo,
   }
 }

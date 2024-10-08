@@ -1,4 +1,4 @@
-export const getCollectionQuery = /* GraphQL */ `
+export const getCollectionsQuery = /* GraphQL */ `
   query getCollections($first: Int) {
     collections(first: $first) {
       edges {

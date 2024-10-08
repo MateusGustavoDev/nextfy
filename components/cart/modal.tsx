@@ -30,25 +30,27 @@ export async function CartModal() {
         <SheetHeader>
           <SheetTitle className="text-black">Carrinho de compras</SheetTitle>
         </SheetHeader>
-        {cart && cart.lines.edges.length > 0 ? (
+        {cart && cart.lines.length > 0 ? (
           <div className="flex h-full flex-col justify-between">
             <ul className="mt-6 flex flex-col gap-4 overflow-auto py-2">
-              {cart.lines.edges.map((item) => {
-                const selectedVariant = item.node.merchandise.product.variants.edges.find(
-                  (variant) => variant.node.id === item.node.merchandise.id,
+              {cart.lines.map((item) => {
+                const selectedVariant = item.merchandise.product.variants.edges.find(
+                  (variant) => variant.node.id === item.merchandise.id,
                 )
 
+                if (item.quantity <= 0) return
+
                 return (
-                  <li key={item.node.id}>
+                  <li key={item.id}>
                     <CartItem
-                      id={item.node.id}
-                      merchandiseId={item.node.merchandise.id}
-                      cartId={cart.id as string}
-                      title={item.node.merchandise.product.title}
-                      variantTitle={item.node.merchandise.title}
+                      id={item.id}
+                      cartId={cart.id}
+                      merchandiseId={item.merchandise.id}
+                      title={item.merchandise.product.title}
+                      variantTitle={item.merchandise.title}
                       price={selectedVariant?.node.price.amount}
                       image={selectedVariant?.node.image?.url}
-                      quantity={item.node.quantity}
+                      quantity={item.quantity}
                       quantityAvailable={selectedVariant?.node.quantityAvailable as number}
                     />
                   </li>
@@ -58,6 +60,7 @@ export async function CartModal() {
             <CartResume
               subtotal={cart.cost.subtotalAmount.amount}
               total={cart.cost.totalAmount.amount}
+              cart={cart}
               fee={cart.cost.totalTaxAmount?.amount}
               checkoutUrl={cart.checkoutUrl}
             />
