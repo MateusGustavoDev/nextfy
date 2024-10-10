@@ -3,6 +3,7 @@ import { shopifyFetch } from './shopify-fetch'
 import { GetCollectionProductsQuery, GetProductByHandleQuery, SearchProductsQuery } from '../types/storefront.generated'
 import { CollectionProductType, ProductType } from './types'
 import { removeEdgesAndNodes } from '@/lib/utils'
+import { TAGS } from '@/lib/constants'
 
 type GetCollectionProducts = {
   collection: string
@@ -20,6 +21,7 @@ export async function getCollectionProducts({
     variables: {
       handle: collection,
       first: first,
+      tags: TAGS.products,
     },
   })
 
@@ -38,6 +40,7 @@ export async function getProductByHandle({ handle }: { handle: string }): Promis
     query: getProductByHandleQuery,
     variables: {
       handle: handle,
+      tags: TAGS.products,
     },
   })
 
