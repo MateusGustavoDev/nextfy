@@ -25,9 +25,6 @@ export function formatPriceBrl(price: string): string {
 }
 
 export function firstProductVariantUrl(variants: ProductVariantType[], productHandle: string) {
-  console.log('====== ')
-  console.log(variants)
-
   const firstVariant = variants[0]
 
   const firstVariantIsDefault = Boolean(

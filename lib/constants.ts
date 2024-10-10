@@ -6,3 +6,11 @@ export const TAGS = {
   products: 'products',
   cart: 'cart',
 }
+
+export const ERROR_MESSAGES = {
+  addProductToCart: 'Erro ao adicionar o produto ao carrinho',
+  updateCart: 'Erro ao atualizar o carrinho',
+  updateItemQuantity: 'Erro ao atualizar a quantidade do produto',
+}
+
+export const cartIdCookie = 'CartId'

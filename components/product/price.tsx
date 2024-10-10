@@ -1,13 +1,13 @@
 'use client'
 import { DEFAULT_OPTION } from '@/lib/constants'
-import { ProductOptionsType, ProductVariantsType } from '@/lib/shopify/fetch/types'
+import { ProductOptionType, ProductVariantType } from '@/lib/shopify/fetch/types'
 import { formatPriceBrl } from '@/lib/utils'
 import { useSearchParams } from 'next/navigation'
 
 interface PriceProps {
   amount: string
-  variants: ProductVariantsType
-  options: ProductOptionsType
+  variants: ProductVariantType[]
+  options: ProductOptionType[]
 }
 
 type ParamsObj = {

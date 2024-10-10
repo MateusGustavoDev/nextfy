@@ -6,7 +6,7 @@ import { EditItemQuantityButton } from './edit-item-quantity'
 import { removeCartItemAction } from '@/actions/cart'
 import { useFormStatus } from 'react-dom'
 import { LoaderCircle } from 'lucide-react'
-import { ReactNode } from 'react'
+import { ComponentProps } from 'react'
 
 interface CartItemProps {
   id: string
@@ -31,17 +31,14 @@ export function CartItem({
   quantity,
   quantityAvailable,
 }: CartItemProps) {
+  const removeCartItemWithIds = removeCartItemAction.bind(null, cartId, id)
+
   return (
-    <div className="flex w-full gap-3">
+    <div className="relative flex w-full gap-3">
       <div className="relative h-24 w-24 shrink-0 border border-black bg-white">
         <Image src={image} alt={title} fill sizes="96px" style={{ objectFit: 'contain', padding: '8px' }} />
-        <form action={() => removeCartItemAction(cartId, id)}>
-          <button
-            type="submit"
-            className="absolute -right-2 -top-2 z-50 flex h-5 w-5 items-center justify-center rounded-full bg-black p-1 text-xs text-white"
-          >
-            <Loading>X</Loading>
-          </button>
+        <form action={removeCartItemWithIds}>
+          <RemoveItemButton type="submit">X</RemoveItemButton>
         </form>
       </div>
       <div className="flex w-full justify-between">
@@ -70,8 +67,18 @@ export function CartItem({
   )
 }
 
-export function Loading({ children }: { children: ReactNode }) {
+type RemoveItemButtonProps = ComponentProps<'button'>
+
+export function RemoveItemButton({ children, ...props }: RemoveItemButtonProps) {
   const { pending } = useFormStatus()
 
-  return pending ? <LoaderCircle className="h-4 w-4 animate-spin text-white" /> : children
+  return (
+    <button
+      {...props}
+      disabled={pending}
+      className="absolute -right-2 -top-2 z-10 flex h-5 w-5 items-center justify-center rounded-full bg-black p-1 text-white"
+    >
+      {pending ? <LoaderCircle className="h-4 w-4 animate-spin" /> : children}
+    </button>
+  )
 }

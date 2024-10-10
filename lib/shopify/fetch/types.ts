@@ -59,3 +59,8 @@ export type CollectionsType = {
   collections: Collection[]
   pageInfo: Pick<PageInfo, 'hasNextPage' | 'hasPreviousPage'>
 }
+
+export type ActionStatusType = {
+  success: boolean
+  message?: string
+}

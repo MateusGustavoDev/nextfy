@@ -5,9 +5,10 @@ import { CartItem } from './item'
 import { cookies } from 'next/headers'
 import { getCart } from '@/lib/shopify/fetch/cart'
 import { CartType } from '@/lib/shopify/fetch/types'
+import { cartIdCookie } from '@/lib/constants'
 
 export async function CartModal() {
-  const cartId = cookies().get('cartId')?.value
+  const cartId = cookies().get(cartIdCookie)?.value
   let cart: CartType | undefined
 
   if (cartId) {
@@ -38,6 +39,8 @@ export async function CartModal() {
                   (variant) => variant.node.id === item.merchandise.id,
                 )
 
+                const quantityAvailable = selectedVariant?.node.quantityAvailable
+
                 if (item.quantity <= 0) return
 
                 return (
@@ -51,7 +54,7 @@ export async function CartModal() {
                       price={selectedVariant?.node.price.amount}
                       image={selectedVariant?.node.image?.url}
                       quantity={item.quantity}
-                      quantityAvailable={selectedVariant?.node.quantityAvailable as number}
+                      quantityAvailable={quantityAvailable ? quantityAvailable : 0}
                     />
                   </li>
                 )

@@ -7,8 +7,8 @@ import {
   EditCartItemsMutation,
 } from '../types/storefront.generated'
 import { shopifyFetch } from '@/lib/shopify/fetch/shopify-fetch'
-import { TAGS } from '@/lib/constants'
-import { CartType } from './types'
+import { ERROR_MESSAGES, TAGS } from '@/lib/constants'
+import { ActionStatusType, CartType } from './types'
 
 export async function createCart(): Promise<CartType | undefined> {
   const { data, errors } = await shopifyFetch<CreateCartMutation>({ query: createCartMutation })
@@ -72,28 +72,34 @@ export async function getCart(cartId: string): Promise<CartType | undefined> {
   }
 }
 
-export async function addCartLine(cartId: string, merchandiseId: string): Promise<{ error: boolean }> {
+export async function addCartLine(cartId: string, merchandiseId: string): Promise<ActionStatusType> {
   const { data, errors } = await shopifyFetch<AddCartLinesMutation>({
     query: addCartLinesMutation,
     variables: { cartId: cartId, lines: { merchandiseId: merchandiseId, quantity: 1 } },
     cache: 'no-store',
   })
 
-  if (!data?.cartLinesAdd?.cart || errors || data.cartLinesAdd.userErrors[0]) {
-    return { error: true }
+  if (!data?.cartLinesAdd || errors) {
+    return { success: false, message: ERROR_MESSAGES.addProductToCart }
   }
 
-  if (data.cartLinesAdd.cart) {
-    return { error: false }
+  if (data.cartLinesAdd.userErrors[0]) {
+    return {
+      success: false,
+      message: data.cartLinesAdd.userErrors[0].message,
+    }
   }
 
-  return { error: true }
+  return { success: true }
 }
 
-export async function updateCart(
-  cartId: string,
-  lines: { id: string; merchandiseId: string; quantity: number }[],
-): Promise<{ error: boolean }> {
+type Lines = {
+  id: string
+  merchandiseId: string
+  quantity: number
+}[]
+
+export async function updateCart(cartId: string, lines: Lines): Promise<ActionStatusType> {
   const { data, errors } = await shopifyFetch<EditCartItemsMutation>({
     query: editCartItemsMutation,
     variables: {
@@ -103,11 +109,9 @@ export async function updateCart(
     cache: 'no-store',
   })
 
-  if (errors) {
-    return { error: true }
+  if (!data?.cartLinesUpdate?.cart || errors) {
+    return { success: false, message: ERROR_MESSAGES.updateCart }
   }
 
-  if (data?.cartLinesUpdate?.cart) return { error: false }
-
-  return { error: true }
+  return { success: true }
 }

@@ -14,27 +14,28 @@ import { Wrapper } from '@/components/wrapper'
 import { useEffect, useState } from 'react'
 import { searchProductsAction } from '@/actions/search'
 import { ProductType } from '@/lib/shopify/fetch/types'
+import { LoaderCircle } from 'lucide-react'
 
 export default function Search() {
   const params = useSearchParams()
   const queryParams = params.get('query')
   const [pending, setPending] = useState(true)
-  const [products, setProducts] = useState<ProductType[] | undefined>(undefined)
+  const [products, setProducts] = useState<ProductType[] | null>(null)
 
   useEffect(() => {
     searchProductsAction(queryParams, 5).then((data) => {
       setPending(false)
-      setProducts(data)
+      setProducts(data ? data : null)
     })
   }, [queryParams])
 
-  if (pending) return <span className="text-black">Carregando...</span>
+  if (pending) return <LoaderCircle size={30} className="m-auto my-10 animate-spin text-black" />
 
   if (products && products?.length <= 0)
     return (
-      <span className="text-black">
+      <div className="m-auto my-10 w-max text-black">
         Nenhum resultado para <strong>{queryParams}</strong>
-      </span>
+      </div>
     )
 
   return (

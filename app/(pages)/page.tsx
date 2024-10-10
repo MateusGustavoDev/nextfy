@@ -27,7 +27,7 @@ export default function Home() {
 
 function Loading() {
   return (
-    <div className="flex w-full justify-center py-10">
+    <div className="flex h-[385px] w-full items-center justify-center py-10">
       <LoaderCircle className="h-10 w-10 animate-spin text-black" />
     </div>
   )

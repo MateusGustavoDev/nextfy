@@ -106,7 +106,7 @@ export function SearchModal() {
         {searchResults && searchResults.length >= 5 && (
           <div className="flex w-full justify-end">
             <DialogClose asChild>
-              <Link href="#" className="hover:underline">
+              <Link href={`/search?query=${inputValue}`} className="hover:underline">
                 Ver todos: <strong>{inputValue}</strong>
               </Link>
             </DialogClose>

@@ -1,19 +1,20 @@
 'use client'
 import { addProductToCartAction } from '@/actions/cart'
-import { ProductVariantsType } from '@/lib/shopify/fetch/types'
+import { ProductVariantType } from '@/lib/shopify/fetch/types'
 import { Image } from '@/lib/shopify/types/storefront.types'
 import { useSearchParams } from 'next/navigation'
-import { Loading } from './item'
+import { ComponentProps } from 'react'
+import { useFormStatus } from 'react-dom'
+import { LoaderCircle } from 'lucide-react'
 
 interface AddToCartProps {
-  variants: ProductVariantsType
+  variants: ProductVariantType[]
   availableForSale: boolean | undefined
   images?: Image
 }
 
-export function AddToCartButton({ variants, availableForSale }: AddToCartProps) {
+export function AddToCart({ variants, availableForSale }: AddToCartProps) {
   const searchParams = useSearchParams()
-
   const defaultVariantId = variants.length === 1 ? variants[0]?.id : undefined
 
   const variant = variants.find((variant) =>
@@ -24,7 +25,7 @@ export function AddToCartButton({ variants, availableForSale }: AddToCartProps) 
 
   if (!availableForSale) {
     return (
-      <button aria-disabled disabled className="cursor-not-allowed bg-black/70 py-2 text-white">
+      <button aria-disabled disabled className="bg-black/70 py-2 text-white">
         Fora de estoque
       </button>
     )
@@ -32,28 +33,34 @@ export function AddToCartButton({ variants, availableForSale }: AddToCartProps) 
 
   if (!selectedVariantId) {
     return (
-      <button
-        aria-label="Selecione a variante"
-        aria-disabled
-        disabled
-        className="cursor-not-allowed bg-black/70 py-2 text-white"
-      >
-        <div className="absolute left-0 ml-4"></div>
+      <button aria-label="Selecione a variante" aria-disabled disabled className="bg-black/70 py-2 text-white">
         Selecione a variante
       </button>
     )
   }
 
   async function handleAddProductToCart() {
-    const { error } = await addProductToCartAction(selectedVariantId as string)
-    if (error) alert('Erro ao adicionar o produto ao carrinho')
+    const { success, message } = await addProductToCartAction(selectedVariantId as string)
+    if (!success) alert(message)
   }
 
   return (
     <form action={handleAddProductToCart} className="w-full">
-      <button type="submit" aria-label="Adicionar ao carrinho" className="w-full bg-black py-2 text-white">
-        <Loading>Adicionar ao carrinho</Loading>
-      </button>
+      <AddToCartButton type="submit" aria-label="Adicionar ao carrinho">
+        Adicionar ao carrinho
+      </AddToCartButton>
     </form>
+  )
+}
+
+type AddToCartButtonProps = ComponentProps<'button'>
+
+export function AddToCartButton({ children, ...props }: AddToCartButtonProps) {
+  const { pending } = useFormStatus()
+
+  return (
+    <button {...props} disabled={pending} className="w-full bg-black py-2 text-white">
+      {pending ? <LoaderCircle className="m-auto animate-spin" /> : children}
+    </button>
   )
 }

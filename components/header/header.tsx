@@ -4,6 +4,7 @@ import { CircleUserRound } from 'lucide-react'
 import { SearchModal } from './search'
 import { getCollections } from '@/lib/shopify/fetch/collections'
 import { CartModal } from '@/components/cart/modal'
+const { SITE_NAME } = process.env
 
 export async function Header() {
   const data = await getCollections({ first: 10 })
@@ -13,7 +14,7 @@ export async function Header() {
       <Wrapper>
         <div className="flex h-[70px] w-full items-center justify-around">
           <Link href="/" className="text-2xl font-semibold">
-            Nextfy
+            {SITE_NAME}
           </Link>
           <ul className="flex w-full justify-center gap-8">
             {data?.collections.map((collection) => (
