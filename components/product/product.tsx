@@ -5,13 +5,18 @@ import { AddToCart } from '@/components/cart/add-to-cart'
 import { Gallery } from './gallery'
 import { removeEdgesAndNodes } from '@/lib/utils'
 import { Price } from './price'
-import { ProductType } from '@/lib/shopify/fetch/types'
+import { use } from 'react'
+import { getProductByHandle } from '@/actions/products'
 
 interface ProductItemProps {
-  product: ProductType
+  handle: string
 }
 
-export function Product({ product }: ProductItemProps) {
+export function Product({ handle }: ProductItemProps) {
+  const product = use(getProductByHandle({ handle: handle }))
+
+  if (!product) return
+
   const price = product.priceRange.minVariantPrice.amount
   const variants = removeEdgesAndNodes(product.variants)
   const images = removeEdgesAndNodes(product.images)
@@ -19,7 +24,7 @@ export function Product({ product }: ProductItemProps) {
 
   return (
     <Wrapper>
-      <div className="relative mt-10 flex h-max w-full gap-2">
+      <div className="relative flex h-max w-full gap-2">
         <Gallery images={images} options={options} title={product.title} />
         <div className="flex aspect-[700/600] w-full max-w-[600px] flex-col justify-between border border-black bg-white p-5">
           <div>

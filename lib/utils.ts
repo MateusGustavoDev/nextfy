@@ -16,7 +16,7 @@ export const createUrl = (pathname: string, params: URLSearchParams | ReadonlyUR
   return `${pathname}${queryString}`
 }
 
-export function formatPriceBrl(price: string): string {
+export function formatPriceToBrl(price: string): string {
   const priceNumber = Number(price)
   return priceNumber.toLocaleString('pt-BR', {
     style: 'currency',

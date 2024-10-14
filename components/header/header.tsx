@@ -7,7 +7,7 @@ import { CartModal } from '@/components/cart/modal'
 const { SITE_NAME } = process.env
 
 export async function Header() {
-  const data = await getCollections({ first: 10 })
+  const data = await getCollections({ first: 3 })
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-black bg-white">
@@ -19,11 +19,16 @@ export async function Header() {
           <ul className="flex w-full justify-center gap-8">
             {data?.collections.map((collection) => (
               <li key={collection.id}>
-                <Link href={`/categories/${collection.handle}`} className="hover:underline">
+                <Link href={`/collections/${collection.handle}`} className="hover:underline">
                   {collection.title}
                 </Link>
               </li>
             ))}
+            <li>
+              <Link href={`/search`} className="hover:underline">
+                Todos
+              </Link>
+            </li>
           </ul>
           <div className="flex shrink-0 items-center gap-7">
             <SearchModal />

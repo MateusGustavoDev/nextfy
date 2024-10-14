@@ -3,6 +3,12 @@ import { Image, Maybe, MoneyV2, PageInfo, ProductOption, SelectedOption } from '
 
 export type ProductType = ProductFragment
 
+export type ProductOptionType = Pick<ProductOption, 'id' | 'name' | 'values'>
+
+export type ImageType = Pick<Image, 'url' | 'altText' | 'height' | 'width'>
+
+export type PageInfoType = Pick<PageInfo, 'hasNextPage' | 'hasPreviousPage' | 'endCursor' | 'startCursor'>
+
 export type ProductVariantType = {
   id: string
   availableForSale: boolean
@@ -13,13 +19,10 @@ export type ProductVariantType = {
   image?: Maybe<Pick<Image, 'url'>>
 }
 
-export type ProductOptionType = Pick<ProductOption, 'id' | 'name' | 'values'>
-
-export type ImageType = Pick<Image, 'url' | 'altText' | 'height' | 'width'>
-
 export type CollectionProductType = {
   title: string
   products: ProductType[]
+  pageInfo: PageInfoType
 }
 
 type LineType = {
@@ -57,7 +60,6 @@ type Collection = {
 
 export type CollectionsType = {
   collections: Collection[]
-  pageInfo: Pick<PageInfo, 'hasNextPage' | 'hasPreviousPage'>
 }
 
 export type ActionStatusType = {

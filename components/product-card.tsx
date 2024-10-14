@@ -1,5 +1,5 @@
 import { ProductType } from '@/lib/shopify/fetch/types'
-import { firstProductVariantUrl, formatPriceBrl, removeEdgesAndNodes } from '@/lib/utils'
+import { firstProductVariantUrl, formatPriceToBrl, removeEdgesAndNodes } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -25,7 +25,7 @@ export function ProductCard({ product }: ProductCardProps) {
         <div className="flex w-full max-w-[370px] flex-col">
           <span className="text-lg">{product.title}</span>
         </div>
-        <span>{formatPriceBrl(product.priceRange.minVariantPrice.amount)}</span>
+        <span>{formatPriceToBrl(product.priceRange.minVariantPrice.amount)}</span>
       </div>
     </Link>
   )

@@ -1,5 +1,7 @@
 import { Product } from '@/components/product/product'
-import { getProductByHandle } from '@/lib/shopify/fetch/products'
+import { getProductByHandle } from '@/actions/products'
+import { Suspense } from 'react'
+import { LoaderCircle } from 'lucide-react'
 const { SITE_NAME } = process.env
 
 export async function generateMetadata({ params }: Props) {
@@ -15,12 +17,11 @@ interface Props {
 }
 
 export default async function ProductPage({ params }: Props) {
-  const product = await getProductByHandle({ handle: params.handle })
-
   return (
-    <div className="w-full">
-      {product && <Product product={product} />}
-      <div className="mt-10">{/* <Collection /> */}</div>
+    <div className="mt-10 w-full">
+      <Suspense fallback={<LoaderCircle size={50} className="m-auto animate-spin" />}>
+        <Product handle={params.handle} />
+      </Suspense>
     </div>
   )
 }

@@ -9,10 +9,6 @@ export const getCollectionsQuery = /* GraphQL */ `
           handle
         }
       }
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-      }
     }
   }
 `

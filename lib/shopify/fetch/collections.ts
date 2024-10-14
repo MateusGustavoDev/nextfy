@@ -28,8 +28,5 @@ export async function getCollections({ first }: GetCollections): Promise<Collect
     handle: data.node.handle,
   }))
 
-  return {
-    collections: formattedData,
-    pageInfo: data.collections.pageInfo,
-  }
+  return { collections: formattedData }
 }

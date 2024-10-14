@@ -1,15 +1,15 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Wrapper } from '@/components/wrapper'
-import { firstProductVariantUrl, formatPriceBrl, removeEdgesAndNodes } from '@/lib/utils'
-import { getCollectionProducts } from '@/lib/shopify/fetch/products'
+import { firstProductVariantUrl, formatPriceToBrl, removeEdgesAndNodes } from '@/lib/utils'
+import { getCollectionProducts } from '@/actions/products'
 
 interface CollectionProps {
   category: string
 }
 
 export async function Carousel({ category }: CollectionProps) {
-  const data = await getCollectionProducts({ collection: category, first: 10 })
+  const data = await getCollectionProducts({ collection: category, numProducts: 10 })
 
   if (!data) return null
 
@@ -38,9 +38,9 @@ export async function Carousel({ category }: CollectionProps) {
                   <div className="flex flex-col gap-2 py-2">
                     <span className="flex w-[270px] text-balance">{product.title}</span>
                     <div className="flex gap-2">
-                      <span className="text-lg font-bold">{formatPriceBrl(minPrice.amount)}</span>
+                      <span className="text-lg font-bold">{formatPriceToBrl(minPrice.amount)}</span>
                       {compareAtPrice.amount > minPrice.amount && (
-                        <span className="line-through">{formatPriceBrl(compareAtPrice.amount)}</span>
+                        <span className="line-through">{formatPriceToBrl(compareAtPrice.amount)}</span>
                       )}
                     </div>
                   </div>

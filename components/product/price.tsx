@@ -1,7 +1,7 @@
 'use client'
 import { DEFAULT_OPTION } from '@/lib/constants'
 import { ProductOptionType, ProductVariantType } from '@/lib/shopify/fetch/types'
-import { formatPriceBrl } from '@/lib/utils'
+import { formatPriceToBrl } from '@/lib/utils'
 import { useSearchParams } from 'next/navigation'
 
 interface PriceProps {
@@ -43,7 +43,7 @@ export function Price({ amount, variants, options }: PriceProps) {
 
   return (
     <div>
-      <div>{<span className="text-3xl font-bold">{formatPriceBrl(price)}</span>}</div>
+      <div>{<span className="text-3xl font-bold">{formatPriceToBrl(price)}</span>}</div>
     </div>
   )
 }

@@ -14,7 +14,7 @@ export function SearchModal() {
   const [searchResults, setSearchResults] = useState<ProductType[] | null>(null)
   const [recentSearches, setRecentSearches] = useState<string[] | null>(null)
   const [isOpen, setIsOpen] = useState(false)
-  const [pending, setPending] = useState(false)
+  const [isPending, setIsPending] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
@@ -26,10 +26,12 @@ export function SearchModal() {
 
     async function handleSearchProducts(query: string) {
       setSearchResults(null)
-      setPending(true)
-      const products = await searchProductsAction(query, 5)
-      setPending(false)
-      setSearchResults(products ? products : null)
+      setIsPending(true)
+      const products = await searchProductsAction({ query: inputValue, numProducts: 5 })
+      if (products) {
+        setSearchResults(products.products)
+      }
+      setIsPending(false)
     }
 
     const timeoutId = setTimeout(() => {
@@ -87,7 +89,7 @@ export function SearchModal() {
           />
         </form>
         <ul className="my-6 flex flex-col gap-2">
-          {pending && <LoaderCircle className="animate-spin" />}
+          {isPending && <LoaderCircle className="animate-spin" />}
           {searchResults && searchResults.length <= 0 && <span>Nenhum resultado encontrado</span>}
           {searchResults?.map((product) => {
             const productUrl = firstProductVariantUrl(removeEdgesAndNodes(product.variants), product.handle)
@@ -124,7 +126,7 @@ export function SearchModal() {
               {recentSearches.map((item, index) => (
                 <li key={index}>
                   <DialogClose asChild>
-                    <Link href={`/search?query=${item}`} className="flex items-center gap-2 text-sm">
+                    <Link href={`/search?query=${item}`} className="flex items-center gap-2 text-sm hover:underline">
                       <SearchIcon size={14} />
                       {item}
                     </Link>
