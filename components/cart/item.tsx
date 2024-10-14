@@ -38,7 +38,7 @@ export function CartItem({
       <div className="relative h-24 w-24 shrink-0 border border-black bg-white">
         <Image src={image} alt={title} fill sizes="96px" style={{ objectFit: 'contain', padding: '8px' }} />
         <form action={removeCartItemWithIds}>
-          <RemoveItemButton type="submit">X</RemoveItemButton>
+          <RemoveItemButton />
         </form>
       </div>
       <div className="flex w-full justify-between">
@@ -69,16 +69,17 @@ export function CartItem({
 
 type RemoveItemButtonProps = ComponentProps<'button'>
 
-export function RemoveItemButton({ children, ...props }: RemoveItemButtonProps) {
+export function RemoveItemButton({ ...props }: RemoveItemButtonProps) {
   const { pending } = useFormStatus()
 
   return (
     <button
       {...props}
       disabled={pending}
+      type="submit"
       className="absolute -right-2 -top-2 z-10 flex h-5 w-5 items-center justify-center rounded-full bg-black p-1 text-white"
     >
-      {pending ? <LoaderCircle className="h-4 w-4 animate-spin" /> : children}
+      {pending ? <LoaderCircle className="h-4 w-4 animate-spin" /> : 'X'}
     </button>
   )
 }

@@ -31,18 +31,18 @@ export function EditItemQuantityButton({
 
   return (
     <form action={handleUpdateItemQuantity} className="flex items-center">
-      <SubmitButton type={type} quantity={quantity} quantityAvailable={quantityAvailable} />
+      <UpdateItemQuantityButton type={type} quantity={quantity} quantityAvailable={quantityAvailable} />
     </form>
   )
 }
 
-interface SubmitButtonProps {
+interface UpdateItemQuantityButtonProps {
   type: 'minus' | 'plus'
   quantity: number
   quantityAvailable: number | undefined
 }
 
-function SubmitButton({ type, quantity, quantityAvailable }: SubmitButtonProps) {
+function UpdateItemQuantityButton({ type, quantity, quantityAvailable }: UpdateItemQuantityButtonProps) {
   const { pending } = useFormStatus()
 
   if (pending) return <LoaderCircle className="h-4 w-4 animate-spin" />

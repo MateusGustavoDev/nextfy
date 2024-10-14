@@ -43,7 +43,7 @@ export function Price({ amount, variants, options }: PriceProps) {
 
   return (
     <div>
-      <div>{<span className="text-3xl font-bold">{formatPriceToBrl(price)}</span>}</div>
+      <span className="text-3xl font-bold">{formatPriceToBrl(price)}</span>
     </div>
   )
 }

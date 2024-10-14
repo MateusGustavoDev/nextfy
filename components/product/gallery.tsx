@@ -56,7 +56,7 @@ export function Gallery({ images, options, title }: GalleryProps) {
                   href={createUrl(pathname, imageSearchParams)}
                   scroll={false}
                   data-active={isActive}
-                  className="relative flex h-[80px] w-[80px] items-center justify-center border border-black bg-white p-2 data-[active=true]:border-2"
+                  className="relative flex h-[80px] w-[80px] items-center justify-center border border-black bg-white p-2 data-[active=true]:pointer-events-none data-[active=true]:border-2"
                 >
                   <Image src={image.url} alt={title} fill style={{ objectFit: 'contain', padding: '8px' }} />
                 </Link>

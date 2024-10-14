@@ -14,11 +14,12 @@ export function SearchResults() {
   const [endCursor, setEndCursor] = useState<string>('')
   const [hasNextPage, setHasNextPage] = useState(true)
   const [isPending, startTransition] = useTransition()
+  const numberOfProducts = 3
 
   useEffect(() => {
     if (!queryParams) {
       startTransition(async () => {
-        const data = await getAllProducts({ numProducts: 2 })
+        const data = await getAllProducts({ numProducts: numberOfProducts })
 
         if (data) {
           setProducts(data.products)
@@ -28,7 +29,7 @@ export function SearchResults() {
       })
     } else {
       startTransition(async () => {
-        const data = await searchProductsAction({ query: queryParams, numProducts: 2 })
+        const data = await searchProductsAction({ query: queryParams, numProducts: numberOfProducts })
 
         if (data) {
           setProducts(data?.products)
@@ -41,7 +42,7 @@ export function SearchResults() {
 
   async function handleOnLoadMore() {
     if (!queryParams) {
-      const data = await getAllProducts({ numProducts: 2, cursor: endCursor })
+      const data = await getAllProducts({ numProducts: numberOfProducts, cursor: endCursor })
 
       if (data) {
         setProducts(products ? [...products, ...data.products] : products)
@@ -49,7 +50,7 @@ export function SearchResults() {
         setHasNextPage(data.pageInfo.hasNextPage)
       }
     } else {
-      const data = await searchProductsAction({ query: queryParams, numProducts: 2, cursor: endCursor })
+      const data = await searchProductsAction({ query: queryParams, numProducts: numberOfProducts, cursor: endCursor })
 
       if (data) {
         setProducts(products ? [...products, ...data.products] : null)

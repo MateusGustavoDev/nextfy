@@ -39,6 +39,14 @@ export function AddToCart({ variants, availableForSale }: AddToCartProps) {
     )
   }
 
+  if (variant && !variant.availableForSale) {
+    return (
+      <button aria-label="Selecione a variante" aria-disabled disabled className="bg-black/70 py-2 text-white">
+        Variante naõ disponível
+      </button>
+    )
+  }
+
   async function handleAddProductToCart() {
     const { success, message } = await addProductToCartAction(selectedVariantId as string)
     if (!success) alert(message)
@@ -46,21 +54,19 @@ export function AddToCart({ variants, availableForSale }: AddToCartProps) {
 
   return (
     <form action={handleAddProductToCart} className="w-full">
-      <AddToCartButton type="submit" aria-label="Adicionar ao carrinho">
-        Adicionar ao carrinho
-      </AddToCartButton>
+      <AddToCartButton aria-label="Adicionar ao carrinho" />
     </form>
   )
 }
 
 type AddToCartButtonProps = ComponentProps<'button'>
 
-export function AddToCartButton({ children, ...props }: AddToCartButtonProps) {
+export function AddToCartButton({ ...props }: AddToCartButtonProps) {
   const { pending } = useFormStatus()
 
   return (
-    <button {...props} disabled={pending} className="w-full bg-black py-2 text-white">
-      {pending ? <LoaderCircle className="m-auto animate-spin" /> : children}
+    <button {...props} disabled={pending} type="submit" className="w-full bg-black py-2 text-white">
+      {pending ? <LoaderCircle className="m-auto animate-spin" /> : 'Adicionar ao carrinho'}
     </button>
   )
 }
