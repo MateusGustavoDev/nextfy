@@ -7,6 +7,7 @@ import { removeEdgesAndNodes } from '@/lib/utils'
 import { Price } from './price'
 import { use } from 'react'
 import { getProductByHandle } from '@/actions/products'
+import { notFound } from 'next/navigation'
 
 interface ProductItemProps {
   handle: string
@@ -15,7 +16,7 @@ interface ProductItemProps {
 export function Product({ handle }: ProductItemProps) {
   const product = use(getProductByHandle({ handle: handle }))
 
-  if (!product) return
+  if (!product) notFound()
 
   const price = product.priceRange.minVariantPrice.amount
   const variants = removeEdgesAndNodes(product.variants)
