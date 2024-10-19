@@ -8,12 +8,12 @@ import {
 } from '../types/storefront.generated'
 import { shopifyFetch } from '@/lib/shopify/fetch/shopify-fetch'
 import { ERROR_MESSAGES, TAGS } from '@/lib/constants'
-import { ActionStatusType, CartType } from './types'
+import { ActionStateType, CartType } from './types'
 
 export async function createCart(): Promise<CartType | undefined> {
-  const { data, errors } = await shopifyFetch<CreateCartMutation>({ query: createCartMutation })
+  const { data, error } = await shopifyFetch<CreateCartMutation>({ query: createCartMutation })
 
-  if (!data?.cartCreate?.cart || errors || data.cartCreate.userErrors[0]) {
+  if (!data?.cartCreate?.cart || error || data.cartCreate.userErrors[0]) {
     return undefined
   }
 
@@ -40,13 +40,13 @@ export async function createCart(): Promise<CartType | undefined> {
 }
 
 export async function getCart(cartId: string): Promise<CartType | undefined> {
-  const { data, errors } = await shopifyFetch<CartQueryQuery>({
+  const { data, error } = await shopifyFetch<CartQueryQuery>({
     query: getCartQuery,
     variables: { cartId },
     tags: [TAGS.cart],
   })
 
-  if (!data?.cart || errors) {
+  if (!data?.cart || error) {
     return undefined
   }
 
@@ -72,25 +72,24 @@ export async function getCart(cartId: string): Promise<CartType | undefined> {
   }
 }
 
-export async function addCartLine(cartId: string, merchandiseId: string): Promise<ActionStatusType> {
-  const { data, errors } = await shopifyFetch<AddCartLinesMutation>({
+export async function addCartLine(cartId: string, merchandiseId: string): Promise<ActionStateType> {
+  const { data, error } = await shopifyFetch<AddCartLinesMutation>({
     query: addCartLinesMutation,
     variables: { cartId: cartId, lines: { merchandiseId: merchandiseId, quantity: 1 } },
     cache: 'no-store',
   })
 
-  if (!data?.cartLinesAdd || errors) {
-    return { success: false, message: ERROR_MESSAGES.addProductToCart }
+  if (!data?.cartLinesAdd || error) {
+    return { errors: { message: ERROR_MESSAGES.addProductToCart } }
   }
 
   if (data.cartLinesAdd.userErrors[0]) {
     return {
-      success: false,
-      message: data.cartLinesAdd.userErrors[0].message,
+      errors: { message: data.cartLinesAdd.userErrors[0].message },
     }
   }
 
-  return { success: true }
+  return { errors: undefined }
 }
 
 type Lines = {
@@ -99,8 +98,8 @@ type Lines = {
   quantity: number
 }[]
 
-export async function updateCart(cartId: string, lines: Lines): Promise<ActionStatusType> {
-  const { data, errors } = await shopifyFetch<EditCartItemsMutation>({
+export async function updateCart(cartId: string, lines: Lines): Promise<ActionStateType> {
+  const { data, error } = await shopifyFetch<EditCartItemsMutation>({
     query: editCartItemsMutation,
     variables: {
       cartId,
@@ -109,9 +108,9 @@ export async function updateCart(cartId: string, lines: Lines): Promise<ActionSt
     cache: 'no-store',
   })
 
-  if (!data?.cartLinesUpdate?.cart || errors) {
-    return { success: false, message: ERROR_MESSAGES.updateCart }
+  if (!data?.cartLinesUpdate?.cart || error) {
+    return { errors: { message: ERROR_MESSAGES.updateCart } }
   }
 
-  return { success: true }
+  return { errors: undefined }
 }

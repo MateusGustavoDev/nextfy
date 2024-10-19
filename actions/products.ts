@@ -26,7 +26,7 @@ export async function getCollectionProducts({
   numProducts,
   cursor,
 }: GetCollectionProducts): Promise<CollectionProductType | undefined> {
-  const { data, errors } = await shopifyFetch<GetCollectionProductsQuery>({
+  const { data, error } = await shopifyFetch<GetCollectionProductsQuery>({
     query: getCollectionProductsQuery,
     tags: [TAGS.products],
     variables: {
@@ -36,7 +36,7 @@ export async function getCollectionProducts({
     },
   })
 
-  if (!data?.collection || errors) {
+  if (!data?.collection || error) {
     return undefined
   }
 
@@ -48,7 +48,7 @@ export async function getCollectionProducts({
 }
 
 export async function getProductByHandle({ handle }: { handle: string }): Promise<ProductType | undefined> {
-  const { data, errors } = await shopifyFetch<GetProductByHandleQuery>({
+  const { data, error } = await shopifyFetch<GetProductByHandleQuery>({
     query: getProductByHandleQuery,
     tags: [TAGS.products],
     variables: {
@@ -56,7 +56,7 @@ export async function getProductByHandle({ handle }: { handle: string }): Promis
     },
   })
 
-  if (!data?.product || errors) {
+  if (!data?.product || error) {
     return undefined
   }
 
@@ -74,7 +74,7 @@ type GetAllProductsType = {
 }
 
 export async function getAllProducts({ numProducts, cursor }: GetAllProducts): Promise<GetAllProductsType | undefined> {
-  const { data, errors } = await shopifyFetch<GetProductsAndVariantsQuery>({
+  const { data, error } = await shopifyFetch<GetProductsAndVariantsQuery>({
     query: getAllProductsQuery,
     tags: [TAGS.products],
     variables: {
@@ -83,7 +83,7 @@ export async function getAllProducts({ numProducts, cursor }: GetAllProducts): P
     },
   })
 
-  if (!data?.products || errors) {
+  if (!data?.products || error) {
     return undefined
   }
 

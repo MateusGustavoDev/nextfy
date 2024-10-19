@@ -5,7 +5,8 @@ import { LoaderCircle } from 'lucide-react'
 const { SITE_NAME } = process.env
 
 export async function generateMetadata({ params }: Props) {
-  const product = await getProductByHandle({ handle: params.handle })
+  const handle = (await params).handle
+  const product = await getProductByHandle({ handle: handle })
 
   return {
     title: `${product?.title} | ${SITE_NAME}`,
@@ -13,14 +14,16 @@ export async function generateMetadata({ params }: Props) {
 }
 
 interface Props {
-  params: { handle: string }
+  params: Promise<{ handle: string }>
 }
 
 export default async function ProductPage({ params }: Props) {
+  const handle = (await params).handle
+
   return (
     <div className="mt-10 w-full">
       <Suspense fallback={<LoaderCircle size={50} className="m-auto animate-spin" />}>
-        <Product handle={params.handle} />
+        <Product handle={handle} />
       </Suspense>
     </div>
   )

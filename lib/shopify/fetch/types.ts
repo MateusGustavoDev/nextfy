@@ -62,7 +62,6 @@ export type CollectionsType = {
   collections: Collection[]
 }
 
-export type ActionStatusType = {
-  success: boolean
-  message?: string
+export type ActionStateType = {
+  errors: { message: string } | undefined
 }

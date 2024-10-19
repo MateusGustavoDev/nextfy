@@ -3,19 +3,23 @@ import { Suspense } from 'react'
 const { SITE_NAME } = process.env
 
 export async function generateMetadata({ params }: Props) {
+  const handle = (await params).handle
+
   return {
-    title: `${params.handle} | ${SITE_NAME}`,
+    title: `${handle} | ${SITE_NAME}`,
   }
 }
 
 interface Props {
-  params: { handle: string }
+  params: Promise<{ handle: string }>
 }
 
 export default async function Collection({ params }: Props) {
+  const handle = (await params).handle
+
   return (
     <Suspense fallback={<span className="text-3xl text-black">Carregando...</span>}>
-      <InitialCollectionProducts handle={params.handle} />
+      <InitialCollectionProducts handle={handle} />
     </Suspense>
   )
 }

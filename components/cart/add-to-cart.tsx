@@ -48,8 +48,8 @@ export function AddToCart({ variants, availableForSale }: AddToCartProps) {
   }
 
   async function handleAddProductToCart() {
-    const { success, message } = await addProductToCartAction(selectedVariantId as string)
-    if (!success) alert(message)
+    const { errors } = await addProductToCartAction(selectedVariantId as string)
+    if (errors) alert(errors.message)
   }
 
   return (

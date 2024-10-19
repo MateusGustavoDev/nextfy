@@ -5,11 +5,12 @@ import { NextRequest, NextResponse } from 'next/server'
 const { SHOPIFY_REVALIDATION_SECRET } = process.env
 
 export async function revalidate(req: NextRequest): Promise<NextResponse> {
+  const headersList = await headers()
   // We always need to respond with a 200 status code to Shopify,
   // otherwise it will continue to retry the request.
   const collectionWebhooks = ['collections/create', 'collections/delete', 'collections/update']
   const productWebhooks = ['products/create', 'products/delete', 'products/update']
-  const topic = headers().get('x-shopify-topic') || 'unknown'
+  const topic = headersList.get('x-shopify-topic') || 'unknown'
   const secret = req.nextUrl.searchParams.get('secret')
   const isCollectionUpdate = collectionWebhooks.includes(topic)
   const isProductUpdate = productWebhooks.includes(topic)

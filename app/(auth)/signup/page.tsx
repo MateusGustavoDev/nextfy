@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Metadata } from 'next'
+import { SignupForm } from '@/components/auth-form/signup'
 const { SITE_NAME } = process.env
 
 export const metadata: Metadata = {
@@ -14,18 +15,8 @@ export default function SignUp() {
         Nextfy
       </Link>
       <div className="absolute left-1/2 top-1/2 w-full max-w-[500px] -translate-x-1/2 -translate-y-1/2">
-        <h1 className="mb-4">Criar conta</h1>
-        <form className="flex flex-col gap-4">
-          <input placeholder="Nome" className="w-full border border-zinc-700 px-4 py-2" />
-          <input placeholder="Sobrenome" className="w-full border border-zinc-700 px-4 py-2" />
-          <input placeholder="Email" className="w-full border border-zinc-700 px-4 py-2" />
-          <input placeholder="Senha" className="w-full border border-zinc-700 px-4 py-2" />
-
-          <button className="bg-black py-2 text-white">Criar conta</button>
-          <Link href="/login" className="text-sm underline">
-            Fazer login
-          </Link>
-        </form>
+        <h1 className="mb-4 text-center text-2xl font-semibold">Criar uma conta</h1>
+        <SignupForm />
       </div>
     </div>
   )

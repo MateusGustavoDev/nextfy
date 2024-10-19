@@ -11,6 +11,7 @@ export const ERROR_MESSAGES = {
   addProductToCart: 'Erro ao adicionar o produto ao carrinho',
   updateCart: 'Erro ao atualizar o carrinho',
   updateItemQuantity: 'Erro ao atualizar a quantidade do produto',
+  customerCreateAccount: 'Ocorreu algum erro ao criar sua conta.',
 }
 
 export const cartIdCookie = 'CartId'

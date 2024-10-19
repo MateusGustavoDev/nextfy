@@ -25,8 +25,8 @@ export function EditItemQuantityButton({
   }
 
   async function handleUpdateItemQuantity() {
-    const { success, message } = await updateItemQuantityAction(payload)
-    if (!success) alert(message)
+    const { errors } = await updateItemQuantityAction(payload)
+    if (errors) alert(errors.message)
   }
 
   return (

@@ -2,14 +2,22 @@
 import { cartIdCookie, ERROR_MESSAGES, TAGS } from '@/lib/constants'
 import { addCartLine, createCart, getCart, updateCart } from '@/lib/shopify/fetch/cart'
 import { shopifyFetch } from '@/lib/shopify/fetch/shopify-fetch'
-import { ActionStatusType, CartType } from '@/lib/shopify/fetch/types'
+import { ActionStateType, CartType } from '@/lib/shopify/fetch/types'
 import { removeFromCartMutation } from '@/lib/shopify/graphql/mutations/cart'
 import { RemoveFromCartMutation } from '@/lib/shopify/types/storefront.generated'
 import { revalidateTag } from 'next/cache'
 import { cookies } from 'next/headers'
 
-export async function addProductToCartAction(merchandiseId: string): Promise<ActionStatusType> {
-  let cartId = cookies().get(cartIdCookie)?.value
+export async function getCartId() {
+  const cookieStore = await cookies()
+  const cartId = cookieStore.get(cartIdCookie)?.value
+
+  return cartId
+}
+
+export async function addProductToCartAction(merchandiseId: string): Promise<ActionStateType> {
+  const cookieStore = await cookies()
+  let cartId = await getCartId()
   let cart: CartType | undefined
 
   if (cartId) {
@@ -20,22 +28,22 @@ export async function addProductToCartAction(merchandiseId: string): Promise<Act
     cart = await createCart()
     if (cart) {
       cartId = cart.id
-      cookies().set(cartIdCookie, cartId, { maxAge: 604800 })
+      cookieStore.set(cartIdCookie, cartId, { maxAge: 604800 })
     }
   }
 
   if (!cartId) {
-    return { success: false, message: ERROR_MESSAGES.addProductToCart }
+    return { errors: { message: ERROR_MESSAGES.addProductToCart } }
   }
 
-  const { success, message } = await addCartLine(cartId, merchandiseId)
+  const { errors } = await addCartLine(cartId, merchandiseId)
 
-  if (!success) {
-    return { success: false, message: message }
+  if (errors) {
+    return { errors: { message: errors?.message } }
   }
 
   revalidateTag(TAGS.cart)
-  return { success: true }
+  return { errors: undefined }
 }
 
 type Payload = {
@@ -44,27 +52,27 @@ type Payload = {
   quantity: number
 }
 
-export async function updateItemQuantityAction({ lineId, variantId, quantity }: Payload): Promise<ActionStatusType> {
-  const cartId = cookies().get(cartIdCookie)?.value
+export async function updateItemQuantityAction({ lineId, variantId, quantity }: Payload): Promise<ActionStateType> {
+  const cartId = await getCartId()
 
   if (!cartId) {
-    return { success: false, message: ERROR_MESSAGES.updateItemQuantity }
+    return { errors: { message: ERROR_MESSAGES.updateItemQuantity } }
   }
 
   if (quantity <= 0) {
     await removeCartItemAction(cartId, lineId)
     revalidateTag(TAGS.cart)
-    return { success: true }
+    return { errors: undefined }
   }
 
-  const { success, message } = await updateCart(cartId, [{ id: lineId, merchandiseId: variantId, quantity }])
+  const { errors } = await updateCart(cartId, [{ id: lineId, merchandiseId: variantId, quantity }])
 
-  if (!success) {
-    return { success: false, message: message }
+  if (errors) {
+    return { errors: { message: 'sd' } }
   }
 
   revalidateTag(TAGS.cart)
-  return { success: true }
+  return { errors: undefined }
 }
 
 export async function removeCartItemAction(cartId: string, lineId: string) {

@@ -30,7 +30,7 @@ export async function shopifyFetch<T>({
   query: string
   tags?: string[]
   variables?: Variables
-}): Promise<{ errors: { message: string } | undefined; data: T | undefined }> {
+}): Promise<{ error: { message: string } | undefined; data: T | undefined }> {
   try {
     const result = await fetch(endpoint, {
       method: 'POST',
@@ -55,16 +55,20 @@ export async function shopifyFetch<T>({
       throw new Error(`API returned error code:  + ${body.errors[0].extensions.code}`)
     }
 
-    return {
-      data: body.data,
-      errors: undefined,
+    if (body.data) {
+      return {
+        data: body.data,
+        error: undefined,
+      }
     }
+
+    throw new Error('Error with data returned from API')
   } catch (e) {
     const error = e as Error
     console.error('shopifyFetch error: ' + error.message)
     return {
       data: undefined,
-      errors: { message: `shopifyFetch error: ' + ${error.message}` },
+      error: { message: `shopifyFetch error: ' + ${error.message}` },
     }
   }
 }

@@ -9,7 +9,7 @@ type GetCollections = {
 }
 
 export async function getCollections({ first }: GetCollections): Promise<CollectionsType | undefined> {
-  const { data, errors } = await shopifyFetch<GetCollectionsQuery>({
+  const { data, error } = await shopifyFetch<GetCollectionsQuery>({
     query: getCollectionsQuery,
     tags: [TAGS.collections],
     variables: {
@@ -17,7 +17,7 @@ export async function getCollections({ first }: GetCollections): Promise<Collect
     },
   })
 
-  if (!data?.collections || errors) {
+  if (!data?.collections || error) {
     return undefined
   }
 

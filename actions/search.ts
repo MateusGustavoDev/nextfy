@@ -24,7 +24,7 @@ export async function searchProductsAction({
 }: SearchProductsAction): Promise<SearchProducts | undefined> {
   if (!query) return
 
-  const { data, errors } = await shopifyFetch<SearchProductsQuery>({
+  const { data, error } = await shopifyFetch<SearchProductsQuery>({
     query: searchProductsQuery,
     variables: {
       query: query,
@@ -33,7 +33,7 @@ export async function searchProductsAction({
     },
   })
 
-  if (!data?.search || errors) {
+  if (!data?.search || error) {
     return undefined
   }
 

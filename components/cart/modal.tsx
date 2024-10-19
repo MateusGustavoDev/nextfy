@@ -2,13 +2,13 @@ import { ShoppingBag } from 'lucide-react'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { CartResume } from './resume'
 import { CartItem } from './item'
-import { cookies } from 'next/headers'
 import { getCart } from '@/lib/shopify/fetch/cart'
 import { CartType } from '@/lib/shopify/fetch/types'
-import { cartIdCookie } from '@/lib/constants'
+import { getCartId } from '@/actions/cart'
 
 export async function CartModal() {
-  const cartId = cookies().get(cartIdCookie)?.value
+  const cartId = await getCartId()
+
   let cart: CartType | undefined
 
   if (cartId) {
