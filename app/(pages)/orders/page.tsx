@@ -12,12 +12,13 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
+import { verifySession } from '@/actions/auth/session'
 
 export const metadata: Metadata = {
   title: `Pedidos | ${SITE_NAME}`,
 }
 
-export default function Orders() {
+export default async function Orders() {
   return (
     <Wrapper>
       <div className="mt-10 flex w-full gap-4">

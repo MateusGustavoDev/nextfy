@@ -1,6 +1,5 @@
 'use client'
 import { LoginFormErrors, LoginFormScheme } from '@/lib/zod/auth'
-import Link from 'next/link'
 import { ActionButton } from '../action-button'
 import { useActionState } from 'react'
 import { Input, InputError } from '../input'
@@ -19,11 +18,11 @@ export function LoginForm() {
 
     const { email, password } = validateFields.data
 
-    const { errors } = await loginAction({ customerEmail: email, customerPassword: password })
+    const { errors, formErrors } = await loginAction({ customerEmail: email, customerPassword: password })
 
-    if (errors) {
-      alert(errors.message)
-    }
+    if (formErrors) return formErrors
+
+    if (errors) alert(errors.message)
   }, undefined)
 
   return (
@@ -36,9 +35,6 @@ export function LoginForm() {
         {formErrors?.password && <InputError>{formErrors.password}</InputError>}
       </div>
       <ActionButton>Login</ActionButton>
-      <Link href="/signup" className="text-sm underline">
-        Criar conta
-      </Link>
     </form>
   )
 }

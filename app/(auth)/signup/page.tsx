@@ -14,9 +14,12 @@ export default function SignUp() {
       <Link href="/" className="m-auto my-5 flex w-max text-lg font-semibold">
         Nextfy
       </Link>
-      <div className="absolute left-1/2 top-1/2 w-full max-w-[500px] -translate-x-1/2 -translate-y-1/2">
+      <div className="absolute left-1/2 top-1/2 flex w-full max-w-[500px] -translate-x-1/2 -translate-y-1/2 flex-col gap-2">
         <h1 className="mb-4 text-center text-2xl font-semibold">Criar uma conta</h1>
         <SignupForm />
+        <Link href="/login" className="text-sm underline">
+          Fazer login
+        </Link>
       </div>
     </div>
   )

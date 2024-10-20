@@ -1,3 +1,4 @@
+import { deleteSession } from '@/actions/auth/session'
 import Link from 'next/link'
 
 export function ProfileCard() {
@@ -25,7 +26,11 @@ export function ProfileCard() {
         </div>
       </div>
       <div>
-        <button className="w-max">Sair da conta</button>
+        <form action={deleteSession}>
+          <button type="submit" className="w-max">
+            Sair da conta
+          </button>
+        </form>
       </div>
     </div>
   )

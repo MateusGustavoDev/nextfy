@@ -4,10 +4,14 @@ import { shopifyFetch } from '@/lib/shopify/fetch/shopify-fetch'
 import { ActionStateType } from '@/lib/shopify/fetch/types'
 import { createCustomerAccountMutation } from '@/lib/shopify/graphql/mutations/customer'
 import { CreateCustomerAccountMutation } from '@/lib/shopify/types/storefront.generated'
-import { SignupFormScheme } from '@/lib/zod/auth'
+import { SignupFormErrors, SignupFormScheme } from '@/lib/zod/auth'
 import { loginAction } from './login'
 
-export async function signupAction(formData: FormData): Promise<ActionStateType> {
+type SignupAction = ActionStateType & {
+  formErrors?: SignupFormErrors
+}
+
+export async function signupAction(formData: FormData): Promise<SignupAction> {
   const validateFields = SignupFormScheme.safeParse({
     firstName: formData.get('firstName'),
     lastName: formData.get('lastName'),
@@ -18,6 +22,7 @@ export async function signupAction(formData: FormData): Promise<ActionStateType>
   if (!validateFields.success) {
     return {
       errors: { message: ERROR_MESSAGES.customerCreateAccount },
+      formErrors: validateFields.error.flatten().fieldErrors,
     }
   }
 

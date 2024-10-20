@@ -1,7 +1,6 @@
 'use client'
 import { signupAction } from '@/actions/auth/signup'
 import { SignupFormErrors, SignupFormScheme } from '@/lib/zod/auth'
-import Link from 'next/link'
 import { ActionButton } from '../action-button'
 import { useActionState } from 'react'
 import { Input, InputError } from '../input'
@@ -19,11 +18,11 @@ export function SignupForm() {
       return validateFields.error.flatten().fieldErrors
     }
 
-    const { errors } = await signupAction(formData)
+    const { errors, formErrors } = await signupAction(formData)
 
-    if (errors) {
-      alert(errors.message)
-    }
+    if (formErrors) return formErrors
+
+    if (errors) alert(errors.message)
   }, undefined)
 
   return (
@@ -53,9 +52,6 @@ export function SignupForm() {
         )}
       </div>
       <ActionButton>Criar conta</ActionButton>
-      <Link href="/login" className="text-sm underline">
-        Fazer login
-      </Link>
     </form>
   )
 }
