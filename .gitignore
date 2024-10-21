@@ -35,4 +35,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-/lib/shopify/types
+# graphql-codegen types
+lib/shopify/types
