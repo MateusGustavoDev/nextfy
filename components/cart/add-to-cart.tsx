@@ -3,9 +3,7 @@ import { addProductToCartAction } from '@/actions/cart'
 import { ProductVariantType } from '@/lib/shopify/fetch/types'
 import { Image } from '@/lib/shopify/types/storefront.types'
 import { useSearchParams } from 'next/navigation'
-import { ComponentProps } from 'react'
-import { useFormStatus } from 'react-dom'
-import { LoaderCircle } from 'lucide-react'
+import { ActionButton } from '../action-button'
 
 interface AddToCartProps {
   variants: ProductVariantType[]
@@ -25,7 +23,7 @@ export function AddToCart({ variants, availableForSale }: AddToCartProps) {
 
   if (!availableForSale) {
     return (
-      <button aria-disabled disabled className="bg-black/70 py-2 text-white">
+      <button aria-disabled className="bg-black/70 py-2 text-white">
         Fora de estoque
       </button>
     )
@@ -54,19 +52,7 @@ export function AddToCart({ variants, availableForSale }: AddToCartProps) {
 
   return (
     <form action={handleAddProductToCart} className="w-full">
-      <AddToCartButton aria-label="Adicionar ao carrinho" />
+      <ActionButton>Adicionar ao carrinho</ActionButton>
     </form>
-  )
-}
-
-type AddToCartButtonProps = ComponentProps<'button'>
-
-export function AddToCartButton({ ...props }: AddToCartButtonProps) {
-  const { pending } = useFormStatus()
-
-  return (
-    <button {...props} disabled={pending} type="submit" className="w-full bg-black py-2 text-white">
-      {pending ? <LoaderCircle className="m-auto animate-spin" /> : 'Adicionar ao carrinho'}
-    </button>
   )
 }

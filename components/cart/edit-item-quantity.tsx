@@ -59,9 +59,9 @@ function UpdateItemQuantityButton({ type, quantity, quantityAvailable }: UpdateI
     return (
       <button
         type="submit"
-        disabled={quantity === quantityAvailable}
+        aria-disabled={quantity === quantityAvailable}
         data-max-quantity={quantity === quantityAvailable}
-        className="data-[max-quantity=true]:text-zinc-400"
+        className="aria-disabled:pointer-events-none data-[max-quantity=true]:text-zinc-400"
       >
         <Plus size={18} />
       </button>

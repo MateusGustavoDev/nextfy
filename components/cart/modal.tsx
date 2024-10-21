@@ -63,7 +63,6 @@ export async function CartModal() {
             <CartResume
               subtotal={cart.cost.subtotalAmount.amount}
               total={cart.cost.totalAmount.amount}
-              cart={cart}
               fee={cart.cost.totalTaxAmount?.amount}
               checkoutUrl={cart.checkoutUrl}
             />

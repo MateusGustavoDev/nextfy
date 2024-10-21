@@ -1,23 +1,17 @@
+import 'server-only'
 import { TAGS } from '@/lib/constants'
 import { getCollectionsQuery } from '@/lib/shopify/graphql/queries/collections'
 import { GetCollectionsQuery } from '@/lib/shopify/types/storefront.generated'
 import { shopifyFetch } from './shopify-fetch'
 import { CollectionsType } from './types'
 
-type GetCollections = {
-  first: number
-}
-
-export async function getCollections({ first }: GetCollections): Promise<CollectionsType | undefined> {
-  const { data, error } = await shopifyFetch<GetCollectionsQuery>({
+export async function getCollections(): Promise<CollectionsType | undefined> {
+  const { data, errors } = await shopifyFetch<GetCollectionsQuery>({
     query: getCollectionsQuery,
     tags: [TAGS.collections],
-    variables: {
-      first: first,
-    },
   })
 
-  if (!data?.collections || error) {
+  if (!data?.collections || errors) {
     return undefined
   }
 

@@ -4,14 +4,13 @@ import { Wrapper } from './wrapper'
 import { getCollectionProducts } from '@/actions/products'
 
 export async function InitialCollectionProducts({ handle }: { handle: string }) {
-  const numberOfProducts = 3
-  const collection = await getCollectionProducts({ collection: handle, numProducts: numberOfProducts })
+  const collection = await getCollectionProducts({ collection: handle })
 
   if (!collection) notFound()
 
   return (
     <Wrapper>
-      <CollectionProducts collection={collection} numProducts={numberOfProducts} />
+      <CollectionProducts collection={collection} />
     </Wrapper>
   )
 }

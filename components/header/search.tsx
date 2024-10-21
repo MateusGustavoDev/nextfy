@@ -2,7 +2,7 @@
 import { Dialog, DialogClose, DialogContent, DialogOverlay, DialogTitle, DialogTrigger } from '@radix-ui/react-dialog'
 import { DialogHeader } from '../ui/dialog'
 import { LoaderCircle, SearchIcon } from 'lucide-react'
-import { FormEvent, useEffect, useState } from 'react'
+import { FormEvent, useEffect, useState, useTransition } from 'react'
 import Link from 'next/link'
 import { ProductType } from '@/lib/shopify/fetch/types'
 import { firstProductVariantUrl, removeEdgesAndNodes } from '@/lib/utils'
@@ -14,7 +14,7 @@ export function SearchModal() {
   const [searchResults, setSearchResults] = useState<ProductType[] | null>(null)
   const [recentSearches, setRecentSearches] = useState<string[] | null>(null)
   const [isOpen, setIsOpen] = useState(false)
-  const [isPending, setIsPending] = useState(false)
+  const [isPending, startTransition] = useTransition()
   const router = useRouter()
 
   useEffect(() => {
@@ -22,23 +22,20 @@ export function SearchModal() {
   }, [])
 
   useEffect(() => {
-    if (inputValue === '') setSearchResults(null)
+    if (inputValue !== '') {
+      const timeoutId = setTimeout(async () => {
+        setSearchResults(null)
+        startTransition(async () => {
+          const products = await searchProductsAction({ query: inputValue })
+          if (products) {
+            setSearchResults(products.products)
+          }
+        })
+      }, 500)
 
-    async function handleSearchProducts(query: string) {
-      setSearchResults(null)
-      setIsPending(true)
-      const products = await searchProductsAction({ query: inputValue, numProducts: 5 })
-      if (products) {
-        setSearchResults(products.products)
-      }
-      setIsPending(false)
+      return () => clearTimeout(timeoutId)
     }
-
-    const timeoutId = setTimeout(() => {
-      handleSearchProducts(inputValue)
-    }, 1000)
-
-    return () => clearTimeout(timeoutId)
+    setSearchResults(null)
   }, [inputValue])
 
   function handleSubmit(event: FormEvent) {
@@ -48,7 +45,7 @@ export function SearchModal() {
 
     let recentSearches: string[] = JSON.parse(localStorage.getItem('recentSearches') || '[]')
 
-    if (!recentSearches.includes(inputValue)) {
+    if (!recentSearches.includes(inputValue) && inputValue !== '') {
       recentSearches.push(inputValue)
     }
 
@@ -60,7 +57,7 @@ export function SearchModal() {
 
     setRecentSearches(recentSearches.reverse())
 
-    router.push(`/search?query=${inputValue}`)
+    router.push(inputValue ? `/search?query=${inputValue}` : '/search')
   }
 
   function handleClearRecentSearches() {
@@ -81,12 +78,22 @@ export function SearchModal() {
           <DialogTitle>Pesquisar produtos</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
-          <input
-            placeholder="Nome do produto"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            className="w-full border border-zinc-600 bg-white px-4 py-2"
-          />
+          <div className="relative flex w-full">
+            <input
+              placeholder="Nome do produto"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              className="w-full border border-zinc-600 py-2 pl-4"
+            />
+            <button
+              type="button"
+              data-active={inputValue !== ''}
+              onClick={() => setInputValue('')}
+              className="absolute right-4 top-1/2 hidden -translate-y-1/2 data-[active=true]:block"
+            >
+              X
+            </button>
+          </div>
         </form>
         <ul className="my-6 flex flex-col gap-2">
           {isPending && <LoaderCircle className="animate-spin" />}

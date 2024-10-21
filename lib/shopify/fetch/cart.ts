@@ -1,3 +1,4 @@
+import 'server-only'
 import { addCartLinesMutation, createCartMutation, editCartItemsMutation } from '@/lib/shopify/graphql/mutations/cart'
 import { getCartQuery } from '@/lib/shopify/graphql/queries/cart'
 import {
@@ -11,9 +12,9 @@ import { ERROR_MESSAGES, TAGS } from '@/lib/constants'
 import { ActionStateType, CartType } from './types'
 
 export async function createCart(): Promise<CartType | undefined> {
-  const { data, error } = await shopifyFetch<CreateCartMutation>({ query: createCartMutation })
+  const { data, errors } = await shopifyFetch<CreateCartMutation>({ query: createCartMutation })
 
-  if (!data?.cartCreate?.cart || error || data.cartCreate.userErrors[0]) {
+  if (!data?.cartCreate?.cart || errors || data.cartCreate.userErrors[0]) {
     return undefined
   }
 
@@ -40,13 +41,13 @@ export async function createCart(): Promise<CartType | undefined> {
 }
 
 export async function getCart(cartId: string): Promise<CartType | undefined> {
-  const { data, error } = await shopifyFetch<CartQueryQuery>({
+  const { data, errors } = await shopifyFetch<CartQueryQuery>({
     query: getCartQuery,
     variables: { cartId },
     tags: [TAGS.cart],
   })
 
-  if (!data?.cart || error) {
+  if (!data?.cart || errors) {
     return undefined
   }
 
@@ -73,13 +74,13 @@ export async function getCart(cartId: string): Promise<CartType | undefined> {
 }
 
 export async function addCartLine(cartId: string, merchandiseId: string): Promise<ActionStateType> {
-  const { data, error } = await shopifyFetch<AddCartLinesMutation>({
+  const { data, errors } = await shopifyFetch<AddCartLinesMutation>({
     query: addCartLinesMutation,
     variables: { cartId: cartId, lines: { merchandiseId: merchandiseId, quantity: 1 } },
     cache: 'no-store',
   })
 
-  if (!data?.cartLinesAdd || error) {
+  if (!data?.cartLinesAdd || errors) {
     return { errors: { message: ERROR_MESSAGES.addProductToCart } }
   }
 
@@ -99,7 +100,7 @@ type Lines = {
 }[]
 
 export async function updateCart(cartId: string, lines: Lines): Promise<ActionStateType> {
-  const { data, error } = await shopifyFetch<EditCartItemsMutation>({
+  const { data, errors } = await shopifyFetch<EditCartItemsMutation>({
     query: editCartItemsMutation,
     variables: {
       cartId,
@@ -108,7 +109,7 @@ export async function updateCart(cartId: string, lines: Lines): Promise<ActionSt
     cache: 'no-store',
   })
 
-  if (!data?.cartLinesUpdate?.cart || error) {
+  if (!data?.cartLinesUpdate?.cart || errors) {
     return { errors: { message: ERROR_MESSAGES.updateCart } }
   }
 

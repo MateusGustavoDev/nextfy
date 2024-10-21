@@ -13,9 +13,12 @@ export function ActionButton({ children, className, ...props }: ActionButtonProp
       {...props}
       aria-disabled={pending}
       type="submit"
-      className={cn('bg-black py-2 text-white aria-disabled:pointer-events-none', className)}
+      className={cn(
+        'flex w-full items-center justify-center bg-black py-2 text-white aria-disabled:pointer-events-none',
+        className,
+      )}
     >
-      {pending ? <LoaderCircle className="m-auto animate-spin text-white" /> : children}
+      {pending ? <LoaderCircle className="relative animate-spin text-white" /> : children}
     </button>
   )
 }

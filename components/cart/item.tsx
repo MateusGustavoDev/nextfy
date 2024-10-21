@@ -4,9 +4,7 @@ import { formatPriceToBrl } from '@/lib/utils'
 import Image from 'next/image'
 import { EditItemQuantityButton } from './edit-item-quantity'
 import { removeCartItemAction } from '@/actions/cart'
-import { useFormStatus } from 'react-dom'
-import { LoaderCircle } from 'lucide-react'
-import { ComponentProps } from 'react'
+import { ActionButton } from '../action-button'
 
 interface CartItemProps {
   id: string
@@ -38,7 +36,9 @@ export function CartItem({
       <div className="relative h-24 w-24 shrink-0 border border-black bg-white">
         <Image src={image} alt={title} fill sizes="96px" style={{ objectFit: 'contain', padding: '8px' }} />
         <form action={removeCartItemWithIds}>
-          <RemoveItemButton />
+          <ActionButton className="absolute -right-2 -top-2 z-10 flex h-5 w-5 items-center justify-center rounded-full p-1">
+            X
+          </ActionButton>
         </form>
       </div>
       <div className="flex w-full justify-between">
@@ -64,22 +64,5 @@ export function CartItem({
         </div>
       </div>
     </div>
-  )
-}
-
-type RemoveItemButtonProps = ComponentProps<'button'>
-
-export function RemoveItemButton({ ...props }: RemoveItemButtonProps) {
-  const { pending } = useFormStatus()
-
-  return (
-    <button
-      {...props}
-      disabled={pending}
-      type="submit"
-      className="absolute -right-2 -top-2 z-10 flex h-5 w-5 items-center justify-center rounded-full bg-black p-1 text-white"
-    >
-      {pending ? <LoaderCircle className="h-4 w-4 animate-spin" /> : 'X'}
-    </button>
   )
 }

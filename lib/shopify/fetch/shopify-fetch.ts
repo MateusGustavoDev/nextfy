@@ -1,3 +1,4 @@
+import 'server-only'
 import { SHOPIFY_GRAPHQL_API_ENDPOINT } from '@/lib/constants'
 const { SHOPIFY_STORE_DOMAIN, SHOPIFY_STOREFRONT_ACCESS_TOKEN } = process.env
 import { z } from 'zod'
@@ -30,7 +31,7 @@ export async function shopifyFetch<T>({
   query: string
   tags?: string[]
   variables?: Variables
-}): Promise<{ error: { message: string } | undefined; data: T | undefined }> {
+}): Promise<{ errors: { message: string } | undefined; data: T | undefined }> {
   try {
     const result = await fetch(endpoint, {
       method: 'POST',
@@ -58,7 +59,7 @@ export async function shopifyFetch<T>({
     if (body.data) {
       return {
         data: body.data,
-        error: undefined,
+        errors: undefined,
       }
     }
 
@@ -68,7 +69,7 @@ export async function shopifyFetch<T>({
     console.error('shopifyFetch error: ' + error.message)
     return {
       data: undefined,
-      error: { message: `shopifyFetch error: ' + ${error.message}` },
+      errors: { message: `shopifyFetch error: ' + ${error.message}` },
     }
   }
 }

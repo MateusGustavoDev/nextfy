@@ -28,7 +28,7 @@ export async function signupAction(formData: FormData): Promise<SignupAction> {
 
   const { firstName, lastName, email, password } = validateFields.data
 
-  const { data, error } = await shopifyFetch<CreateCustomerAccountMutation>({
+  const { data, errors } = await shopifyFetch<CreateCustomerAccountMutation>({
     query: createCustomerAccountMutation,
     variables: {
       input: {
@@ -40,7 +40,7 @@ export async function signupAction(formData: FormData): Promise<SignupAction> {
     },
   })
 
-  if (error) {
+  if (errors) {
     return {
       errors: { message: ERROR_MESSAGES.customerCreateAccount },
     }

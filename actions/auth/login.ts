@@ -31,7 +31,7 @@ export async function loginAction({ customerEmail, customerPassword }: LoginActi
 
   const { email, password } = validateFields.data
 
-  const { data, error } = await shopifyFetch<CustomerAccessTokenCreateMutation>({
+  const { data, errors } = await shopifyFetch<CustomerAccessTokenCreateMutation>({
     query: customerAccessTokenCreateMutation,
     variables: {
       input: {
@@ -41,7 +41,7 @@ export async function loginAction({ customerEmail, customerPassword }: LoginActi
     },
   })
 
-  if (error) {
+  if (errors) {
     return {
       errors: { message: ERROR_MESSAGES.customerLogin },
     }

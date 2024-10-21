@@ -7,7 +7,7 @@ import { CartModal } from '@/components/cart/modal'
 const { SITE_NAME } = process.env
 
 export async function Header() {
-  const data = await getCollections({ first: 3 })
+  const data = await getCollections()
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-black bg-white">

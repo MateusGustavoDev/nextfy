@@ -5,11 +5,11 @@ import { firstProductVariantUrl, formatPriceToBrl, removeEdgesAndNodes } from '@
 import { getCollectionProducts } from '@/actions/products'
 
 interface CollectionProps {
-  category: string
+  collection: string
 }
 
-export async function Carousel({ category }: CollectionProps) {
-  const data = await getCollectionProducts({ collection: category, numProducts: 10 })
+export async function Carousel({ collection }: CollectionProps) {
+  const data = await getCollectionProducts({ collection: collection })
 
   if (!data) return null
 

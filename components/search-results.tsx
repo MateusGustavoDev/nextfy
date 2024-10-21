@@ -14,22 +14,21 @@ export function SearchResults() {
   const [endCursor, setEndCursor] = useState<string>('')
   const [hasNextPage, setHasNextPage] = useState(true)
   const [isPending, startTransition] = useTransition()
-  const numberOfProducts = 3
 
   useEffect(() => {
     if (!queryParams) {
       startTransition(async () => {
-        const data = await getAllProducts({ numProducts: numberOfProducts })
+        const data = await getAllProducts({})
 
         if (data) {
           setProducts(data.products)
-          setEndCursor(data?.pageInfo.endCursor ? data.pageInfo.endCursor : '')
+          setEndCursor(data.pageInfo.endCursor ? data.pageInfo.endCursor : '')
           setHasNextPage(data.pageInfo.hasNextPage)
         }
       })
     } else {
       startTransition(async () => {
-        const data = await searchProductsAction({ query: queryParams, numProducts: numberOfProducts })
+        const data = await searchProductsAction({ query: queryParams })
 
         if (data) {
           setProducts(data?.products)
@@ -42,7 +41,7 @@ export function SearchResults() {
 
   async function handleOnLoadMore() {
     if (!queryParams) {
-      const data = await getAllProducts({ numProducts: numberOfProducts, cursor: endCursor })
+      const data = await getAllProducts({ cursor: endCursor })
 
       if (data) {
         setProducts(products ? [...products, ...data.products] : products)
@@ -50,10 +49,10 @@ export function SearchResults() {
         setHasNextPage(data.pageInfo.hasNextPage)
       }
     } else {
-      const data = await searchProductsAction({ query: queryParams, numProducts: numberOfProducts, cursor: endCursor })
+      const data = await searchProductsAction({ query: queryParams, cursor: endCursor })
 
       if (data) {
-        setProducts(products ? [...products, ...data.products] : null)
+        setProducts(products ? [...products, ...data.products] : products)
         setEndCursor(data.pageInfo.endCursor ? data.pageInfo.endCursor : '')
         setHasNextPage(data.pageInfo.hasNextPage)
       }

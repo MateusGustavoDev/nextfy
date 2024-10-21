@@ -17,26 +17,23 @@ import { PageInfo } from '@/lib/shopify/types/storefront.types'
 
 type GetCollectionProducts = {
   collection: string
-  numProducts: number
   cursor?: string
 }
 
 export async function getCollectionProducts({
   collection,
-  numProducts,
   cursor,
 }: GetCollectionProducts): Promise<CollectionProductType | undefined> {
-  const { data, error } = await shopifyFetch<GetCollectionProductsQuery>({
+  const { data, errors } = await shopifyFetch<GetCollectionProductsQuery>({
     query: getCollectionProductsQuery,
     tags: [TAGS.products],
     variables: {
       handle: collection,
-      first: numProducts,
       cursor: cursor,
     },
   })
 
-  if (!data?.collection || error) {
+  if (!data?.collection || errors) {
     return undefined
   }
 
@@ -48,7 +45,7 @@ export async function getCollectionProducts({
 }
 
 export async function getProductByHandle({ handle }: { handle: string }): Promise<ProductType | undefined> {
-  const { data, error } = await shopifyFetch<GetProductByHandleQuery>({
+  const { data, errors } = await shopifyFetch<GetProductByHandleQuery>({
     query: getProductByHandleQuery,
     tags: [TAGS.products],
     variables: {
@@ -56,7 +53,7 @@ export async function getProductByHandle({ handle }: { handle: string }): Promis
     },
   })
 
-  if (!data?.product || error) {
+  if (!data?.product || errors) {
     return undefined
   }
 
@@ -64,7 +61,6 @@ export async function getProductByHandle({ handle }: { handle: string }): Promis
 }
 
 type GetAllProducts = {
-  numProducts: number
   cursor?: string
 }
 
@@ -73,17 +69,16 @@ type GetAllProductsType = {
   pageInfo: PageInfo
 }
 
-export async function getAllProducts({ numProducts, cursor }: GetAllProducts): Promise<GetAllProductsType | undefined> {
-  const { data, error } = await shopifyFetch<GetProductsAndVariantsQuery>({
+export async function getAllProducts({ cursor }: GetAllProducts): Promise<GetAllProductsType | undefined> {
+  const { data, errors } = await shopifyFetch<GetProductsAndVariantsQuery>({
     query: getAllProductsQuery,
     tags: [TAGS.products],
     variables: {
-      first: numProducts,
       cursor: cursor,
     },
   })
 
-  if (!data?.products || error) {
+  if (!data?.products || errors) {
     return undefined
   }
 

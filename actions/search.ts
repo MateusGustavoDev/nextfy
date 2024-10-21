@@ -13,27 +13,24 @@ type SearchProducts = {
 
 type SearchProductsAction = {
   query: string | null
-  numProducts: number
   cursor?: string
 }
 
 export async function searchProductsAction({
   query,
-  numProducts,
   cursor,
 }: SearchProductsAction): Promise<SearchProducts | undefined> {
   if (!query) return
 
-  const { data, error } = await shopifyFetch<SearchProductsQuery>({
+  const { data, errors } = await shopifyFetch<SearchProductsQuery>({
     query: searchProductsQuery,
     variables: {
       query: query,
-      first: numProducts,
       cursor: cursor,
     },
   })
 
-  if (!data?.search || error) {
+  if (!data?.search || errors) {
     return undefined
   }
 

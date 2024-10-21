@@ -2,10 +2,10 @@ import { pageInfoFragment } from '../fragments/page-info'
 import { productFragment } from '../fragments/product'
 
 export const getCollectionProductsQuery = /* GraphQL */ `
-  query getCollectionProducts($handle: String!, $first: Int, $cursor: String) {
+  query getCollectionProducts($handle: String!, $cursor: String) {
     collection(handle: $handle) {
       title
-      products(first: $first, after: $cursor) {
+      products(first: 3, after: $cursor) {
         edges {
           node {
             ...Product
@@ -31,8 +31,8 @@ export const getProductByHandleQuery = /* GraphQL */ `
 `
 
 export const searchProductsQuery = /* GraphQL */ `
-  query searchProducts($query: String!, $first: Int, $cursor: String) {
-    search(query: $query, first: $first, types: PRODUCT, after: $cursor) {
+  query searchProducts($query: String!, $cursor: String) {
+    search(query: $query, first: 5, types: PRODUCT, after: $cursor) {
       edges {
         node {
           ...Product
@@ -48,8 +48,8 @@ export const searchProductsQuery = /* GraphQL */ `
 `
 
 export const getAllProductsQuery = /* GraphQL */ `
-  query getProductsAndVariants($first: Int!, $cursor: String) {
-    products(first: $first, after: $cursor) {
+  query getProductsAndVariants($cursor: String) {
+    products(first: 3, after: $cursor) {
       edges {
         cursor
         node {

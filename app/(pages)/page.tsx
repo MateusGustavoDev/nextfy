@@ -14,10 +14,10 @@ export default function Home() {
       <div className="flex w-full flex-col gap-20">
         <div className="flex w-full flex-col gap-14">
           <Suspense fallback={<Loading />}>
-            <Carousel category="Smartphones" />
+            <Carousel collection="Smartphones" />
           </Suspense>
           <Suspense fallback={<Loading />}>
-            <Carousel category="Watches" />
+            <Carousel collection="Watches" />
           </Suspense>
         </div>
       </div>
