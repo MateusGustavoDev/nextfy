@@ -20,7 +20,7 @@ export function ProductList({ products, onLoadMore, hasNextPage }: ProductListPr
       </ul>
       {hasNextPage && (
         <form action={onLoadMore} className="m-auto mt-10">
-          <ActionButton className="w-32">Carregar mais</ActionButton>
+          <ActionButton>Carregar mais</ActionButton>
         </form>
       )}
     </div>

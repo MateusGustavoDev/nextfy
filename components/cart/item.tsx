@@ -4,7 +4,8 @@ import { formatPriceToBrl } from '@/lib/utils'
 import Image from 'next/image'
 import { EditItemQuantityButton } from './edit-item-quantity'
 import { removeCartItemAction } from '@/actions/cart'
-import { ActionButton } from '../action-button'
+import { useFormStatus } from 'react-dom'
+import { LoaderCircle } from 'lucide-react'
 
 interface CartItemProps {
   id: string
@@ -36,9 +37,7 @@ export function CartItem({
       <div className="relative h-24 w-24 shrink-0 border border-black bg-white">
         <Image src={image} alt={title} fill sizes="96px" style={{ objectFit: 'contain', padding: '8px' }} />
         <form action={removeCartItemWithIds}>
-          <ActionButton className="absolute -right-2 -top-2 z-10 flex h-5 w-5 items-center justify-center rounded-full p-1">
-            X
-          </ActionButton>
+          <RemoveCartItemButton />
         </form>
       </div>
       <div className="flex w-full justify-between">
@@ -64,5 +63,19 @@ export function CartItem({
         </div>
       </div>
     </div>
+  )
+}
+
+function RemoveCartItemButton() {
+  const { pending } = useFormStatus()
+
+  return (
+    <button
+      aria-disabled={pending}
+      type="submit"
+      className="absolute -right-4 -top-4 z-50 h-7 w-7 rounded-full bg-black text-white aria-disabled:pointer-events-none"
+    >
+      {pending ? <LoaderCircle className="animate-spin" /> : 'X'}
+    </button>
   )
 }

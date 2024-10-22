@@ -1,7 +1,7 @@
 import { Wrapper } from '@/components/wrapper'
 import { VariantSelector } from './variant-selector'
 import { Description } from './description'
-import { AddToCart } from '@/components/cart/add-to-cart'
+import { AddToCartButton } from '@/components/cart/add-to-cart'
 import { Gallery } from './gallery'
 import { removeEdgesAndNodes } from '@/lib/utils'
 import { Price } from './price'
@@ -36,7 +36,7 @@ export function Product({ handle }: ProductItemProps) {
             <VariantSelector variants={variants} options={options} />
             <Description />
           </div>
-          <AddToCart variants={variants} availableForSale={product.availableForSale} />
+          <AddToCartButton variants={variants} availableForSale={product.availableForSale} />
         </div>
       </div>
     </Wrapper>

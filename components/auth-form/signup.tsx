@@ -51,7 +51,7 @@ export function SignupForm() {
           </div>
         )}
       </div>
-      <ActionButton>Criar conta</ActionButton>
+      <ActionButton full>Criar conta</ActionButton>
     </form>
   )
 }

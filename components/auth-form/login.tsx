@@ -34,7 +34,7 @@ export function LoginForm() {
         <Input name="password" label="Senha" placeholder="Digite uma senha" />
         {formErrors?.password && <InputError>{formErrors.password}</InputError>}
       </div>
-      <ActionButton>Login</ActionButton>
+      <ActionButton full>Login</ActionButton>
     </form>
   )
 }

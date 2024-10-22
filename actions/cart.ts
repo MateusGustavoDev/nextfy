@@ -20,11 +20,7 @@ export async function addProductToCartAction(merchandiseId: string): Promise<Act
   let cartId = await getCartId()
   let cart: CartType | undefined
 
-  if (cartId) {
-    cart = await getCart(cartId)
-  }
-
-  if (!cartId || !cart) {
+  if (!cartId) {
     cart = await createCart()
     if (cart) {
       cartId = cart.id
@@ -39,7 +35,7 @@ export async function addProductToCartAction(merchandiseId: string): Promise<Act
   const { errors } = await addCartLine(cartId, merchandiseId)
 
   if (errors) {
-    return { errors: { message: errors?.message } }
+    return { errors: { message: errors.message } }
   }
 
   revalidateTag(TAGS.cart)
