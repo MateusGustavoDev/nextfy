@@ -33,7 +33,7 @@ export async function CartModal() {
         </SheetHeader>
         {cart && cart.lines.length > 0 ? (
           <div className="flex h-full flex-col justify-between">
-            <ul className="mt-6 flex flex-col gap-4 overflow-auto py-2">
+            <ul className="flex flex-col gap-4 overflow-auto pt-6">
               {cart.lines.map((item) => {
                 const selectedVariant = item.merchandise.product.variants.edges.find(
                   (variant) => variant.node.id === item.merchandise.id,

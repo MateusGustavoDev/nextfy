@@ -1,5 +1,5 @@
 import { LoaderCircle } from 'lucide-react'
-import { ReactNode } from 'react'
+import { ElementType, ReactNode } from 'react'
 import { useFormStatus } from 'react-dom'
 import { tv, VariantProps } from 'tailwind-variants'
 
@@ -14,7 +14,10 @@ const button = tv({
       square: 'rounded-none',
     },
     disabled: {
-      true: 'aria-disabled:pointer-events-none',
+      true: 'pointer-events-none bg-neutral-200 text-neutral-700 border border-neutral-300',
+    },
+    svgOnly: {
+      true: 'px-0',
     },
     full: {
       true: 'w-full',
@@ -27,9 +30,19 @@ const button = tv({
   },
   compoundVariants: [
     {
-      color: 'primary',
-      disabled: true,
-      className: 'bg-neutral-400',
+      svgOnly: true,
+      size: 'sm',
+      className: 'h-6 w-6',
+    },
+    {
+      svgOnly: true,
+      size: 'md',
+      className: 'w-8 h-8',
+    },
+    {
+      svgOnly: true,
+      size: 'lg',
+      className: 'w-10 h-10',
     },
   ],
   defaultVariants: {
@@ -37,14 +50,17 @@ const button = tv({
     size: 'md',
     shape: 'square',
     full: false,
+    svgOnly: false,
+    disabled: false,
   },
 })
 
 type ActionButtonProps = VariantProps<typeof button> & {
-  children: ReactNode
+  children?: ReactNode
+  icon?: ElementType
 }
 
-export function ActionButton({ children, size, color, shape, disabled, full }: ActionButtonProps) {
+export function ActionButton({ children, size, color, icon, svgOnly, shape, disabled, full }: ActionButtonProps) {
   const { pending } = useFormStatus()
 
   return (
@@ -52,16 +68,32 @@ export function ActionButton({ children, size, color, shape, disabled, full }: A
       aria-disabled={pending || disabled}
       data-pending={pending}
       type="submit"
-      className={button({ size, color, shape, disabled, full })}
+      className={button({ size, color, shape, disabled, svgOnly, full })}
     >
-      {pending && <Loader size={size} />}
-      {children}
+      {pending ? (
+        svgOnly ? (
+          <div>
+            <Loader />
+          </div>
+        ) : (
+          <>
+            <Loader size={size} />
+            {children}
+          </>
+        )
+      ) : svgOnly && icon ? (
+        <div>
+          <Icon icon={icon} />
+        </div>
+      ) : (
+        children
+      )}
     </button>
   )
 }
 
 const loader = tv({
-  base: 'relative animate-spin',
+  base: 'animate-spin text-white',
   variants: {
     size: {
       sm: 'h-4 w-4',
@@ -69,8 +101,9 @@ const loader = tv({
       lg: 'h-7 w-7 ',
     },
   },
+
   defaultVariants: {
-    size: 'sm',
+    size: 'md',
   },
 })
 
@@ -78,4 +111,29 @@ type LoaderProps = VariantProps<typeof loader>
 
 function Loader({ size }: LoaderProps) {
   return <LoaderCircle className={loader({ size })} />
+}
+
+const icon = tv({
+  base: 'text-white',
+  variants: {
+    size: {
+      sm: 'h-4 w-4',
+      md: 'h-4 w-4',
+      lg: 'h-7 w-7 ',
+    },
+    color: {
+      primary: 'text-white',
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+})
+
+type IconProps = VariantProps<typeof icon> & {
+  icon: ElementType
+}
+
+export function Icon({ icon: Icon, size }: IconProps) {
+  return <Icon className={icon({ size })} />
 }
