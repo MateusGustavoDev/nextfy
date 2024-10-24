@@ -2,7 +2,7 @@
 import { DEFAULT_OPTION } from '@/lib/constants'
 import { formatPriceToBrl } from '@/lib/utils'
 import Image from 'next/image'
-import { EditItemQuantityButton } from './edit-item-quantity'
+import { EditItemQuantity } from './edit-item-quantity'
 import { removeCartItemAction } from '@/actions/cart'
 import { X } from 'lucide-react'
 import { ActionButton } from '@/components/action-button'
@@ -50,17 +50,12 @@ export function CartItem({
           </div>
           <div className="flex flex-col">
             <span>{formatPriceToBrl(price)}</span>
-            <div className="mt-2 flex h-max items-center justify-center gap-4 border border-black py-1">
-              <EditItemQuantityButton type="minus" id={id} merchandiseId={merchandiseId} quantity={quantity} />
-              <span>{quantity}</span>
-              <EditItemQuantityButton
-                type="plus"
-                id={id}
-                merchandiseId={merchandiseId}
-                quantity={quantity}
-                quantityAvailable={quantityAvailable}
-              />
-            </div>
+            <EditItemQuantity
+              id={id}
+              merchandiseId={merchandiseId}
+              quantity={quantity}
+              quantityAvailable={quantityAvailable}
+            />
           </div>
         </div>
       </div>

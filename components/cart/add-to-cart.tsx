@@ -22,7 +22,7 @@ export function AddToCartButton({ variants, availableForSale }: AddToCartProps) 
   if (!availableForSale) {
     return (
       <ActionButton full disabled>
-        Fora de estoque
+        Produto indisponível
       </ActionButton>
     )
   }

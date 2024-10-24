@@ -5,7 +5,7 @@ export const getCollectionProductsQuery = /* GraphQL */ `
   query getCollectionProducts($handle: String!, $cursor: String) {
     collection(handle: $handle) {
       title
-      products(first: 3, after: $cursor) {
+      products(first: 5, after: $cursor) {
         edges {
           node {
             ...Product
@@ -49,7 +49,7 @@ export const searchProductsQuery = /* GraphQL */ `
 
 export const getAllProductsQuery = /* GraphQL */ `
   query getProductsAndVariants($cursor: String) {
-    products(first: 3, after: $cursor) {
+    products(first: 5, after: $cursor) {
       edges {
         cursor
         node {

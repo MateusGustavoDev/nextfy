@@ -1,70 +1,70 @@
 'use client'
 import { updateItemQuantityAction } from '@/actions/cart'
-import { LoaderCircle, Minus, Plus } from 'lucide-react'
+import { LoaderCircle, MinusIcon, PlusIcon } from 'lucide-react'
 import { useFormStatus } from 'react-dom'
 
-interface EditItemQuantityButtonProps {
+interface EditItemQuantityProps {
   id: string
   merchandiseId: string
   quantity: number
-  type: 'minus' | 'plus'
-  quantityAvailable?: number
+  quantityAvailable: number
 }
 
-export function EditItemQuantityButton({
-  id,
-  merchandiseId,
-  quantity,
-  type,
-  quantityAvailable,
-}: EditItemQuantityButtonProps) {
-  const payload = {
-    lineId: id,
-    variantId: merchandiseId,
-    quantity: type === 'plus' ? quantity + 1 : quantity - 1,
-  }
+export function EditItemQuantity({ id, merchandiseId, quantity, quantityAvailable }: EditItemQuantityProps) {
+  return (
+    <SelectItemQuantity
+      id={id}
+      merchandiseId={merchandiseId}
+      quantity={quantity}
+      quantityAvailable={quantityAvailable}
+    />
+  )
+}
 
-  async function handleUpdateItemQuantity() {
+export function SelectItemQuantity({ merchandiseId, id, quantity, quantityAvailable }: EditItemQuantityProps) {
+  async function handleUpdateItemQuantity(type: 'plus' | 'minus') {
+    const payload = {
+      lineId: id,
+      variantId: merchandiseId,
+      quantity: type === 'plus' ? quantity + 1 : quantity - 1,
+    }
+
     const { errors } = await updateItemQuantityAction(payload)
     if (errors) alert(errors.message)
   }
 
+  const handleIncrementQuantity = handleUpdateItemQuantity.bind(null, 'plus')
+  const handleDecrementQuantity = handleUpdateItemQuantity.bind(null, 'minus')
+
   return (
-    <form action={handleUpdateItemQuantity} className="flex items-center">
-      <UpdateItemQuantityButton type={type} quantity={quantity} quantityAvailable={quantityAvailable} />
-    </form>
+    <div className="mt-2 flex justify-center gap-3 border border-black py-1">
+      <form action={handleDecrementQuantity} className="flex items-center">
+        <Button type="minus" />
+      </form>
+      <span className="text-sm">{quantity}</span>
+      <form action={handleIncrementQuantity} className="flex items-center">
+        <Button type="plus" disabled={quantity === quantityAvailable} />
+      </form>
+    </div>
   )
 }
 
-interface UpdateItemQuantityButtonProps {
+interface ButtonProps {
   type: 'minus' | 'plus'
-  quantity: number
-  quantityAvailable: number | undefined
+  disabled?: boolean
 }
 
-function UpdateItemQuantityButton({ type, quantity, quantityAvailable }: UpdateItemQuantityButtonProps) {
+export function Button({ type, disabled }: ButtonProps) {
   const { pending } = useFormStatus()
 
   if (pending) return <LoaderCircle className="h-4 w-4 animate-spin" />
 
-  if (type === 'minus') {
-    return (
-      <button type="submit">
-        <Minus size={18} />
-      </button>
-    )
-  }
-
-  if (type === 'plus') {
-    return (
-      <button
-        type="submit"
-        aria-disabled={quantity === quantityAvailable}
-        data-max-quantity={quantity === quantityAvailable}
-        className="aria-disabled:pointer-events-none data-[max-quantity=true]:text-zinc-400"
-      >
-        <Plus size={18} />
-      </button>
-    )
-  }
+  return (
+    <button
+      aria-disabled={pending || disabled}
+      className="aria-disabled:pointer-events-none aria-disabled:text-neutral-400"
+    >
+      {type === 'minus' ? <MinusIcon size={20} /> : <PlusIcon size={20} />}
+    </button>
+  )
 }

@@ -8,11 +8,11 @@ export const TAGS = {
 }
 
 export const ERROR_MESSAGES = {
-  addProductToCart: 'Erro ao adicionar o produto ao carrinho',
-  updateCart: 'Erro ao atualizar o carrinho',
-  updateItemQuantity: 'Erro ao atualizar a quantidade do produto',
-  customerCreateAccount: 'Ocorreu algum erro ao criar sua conta.',
-  customerLogin: 'Não foi possivel fazer o login',
+  addProductToCart: 'Não foi possível adicionar o produto ao carrinho.',
+  updateCart: 'Não foi possível atualizar o carrinho.',
+  updateItemQuantity: 'Não foi possível atualizar a quantidade do produto.',
+  customerCreateAccount: 'Não foi possível criar sua conta.',
+  customerLogin: 'Não foi possível realizar o login.',
 }
 
 export const cartIdCookie = 'CartId'

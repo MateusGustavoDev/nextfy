@@ -31,7 +31,7 @@ export async function CartModal() {
         <SheetHeader>
           <SheetTitle className="text-black">Carrinho de compras</SheetTitle>
         </SheetHeader>
-        {cart && cart.lines.length > 0 ? (
+        {cart && cart.totalQuantity > 0 ? (
           <div className="flex h-full flex-col justify-between">
             <ul className="flex flex-col gap-4 overflow-auto pt-6">
               {cart.lines.map((item) => {
