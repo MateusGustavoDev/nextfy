@@ -5,7 +5,6 @@ import { AddToCartButton } from '@/components/cart/add-to-cart'
 import { Gallery } from './gallery'
 import { removeEdgesAndNodes } from '@/lib/utils'
 import { Price } from './price'
-import { use } from 'react'
 import { getProductByHandle } from '@/actions/products'
 import { notFound } from 'next/navigation'
 
@@ -13,8 +12,8 @@ interface ProductItemProps {
   handle: string
 }
 
-export function Product({ handle }: ProductItemProps) {
-  const product = use(getProductByHandle({ handle: handle }))
+export async function Product({ handle }: ProductItemProps) {
+  const product = await getProductByHandle({ handle: handle })
 
   if (!product) notFound()
 

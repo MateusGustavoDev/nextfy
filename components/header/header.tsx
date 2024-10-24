@@ -2,13 +2,10 @@ import Link from 'next/link'
 import { Wrapper } from '@/components/wrapper'
 import { CircleUserRound } from 'lucide-react'
 import { SearchModal } from './search'
-import { getCollections } from '@/lib/shopify/fetch/collections'
 import { CartModal } from '@/components/cart/modal'
 const { SITE_NAME } = process.env
 
-export async function Header() {
-  const data = await getCollections()
-
+export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-black bg-white">
       <Wrapper>
@@ -17,15 +14,23 @@ export async function Header() {
             {SITE_NAME}
           </Link>
           <ul className="flex w-full justify-center gap-8">
-            {data?.collections.map((collection) => (
-              <li key={collection.id}>
-                <Link href={`/collections/${collection.handle}`} className="hover:underline">
-                  {collection.title}
-                </Link>
-              </li>
-            ))}
             <li>
-              <Link href={`/search`} className="hover:underline">
+              <Link href="/collections/smartphones" className="hover:underline">
+                Smartphones
+              </Link>
+            </li>
+            <li>
+              <Link href="/collections/watches" className="hover:underline">
+                Watches
+              </Link>
+            </li>
+            <li>
+              <Link href="/collections/novidades" className="hover:underline">
+                Novidades
+              </Link>
+            </li>
+            <li>
+              <Link href="/search" className="hover:underline">
                 Todos
               </Link>
             </li>
