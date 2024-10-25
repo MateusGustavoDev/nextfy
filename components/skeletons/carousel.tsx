@@ -1,18 +1,15 @@
 import { Skeleton } from '../ui/skeleton'
-import { Wrapper } from '../wrapper'
 
 export function CarouselSkeleton() {
   return (
-    <Wrapper>
-      <div className="flex flex-col gap-4">
-        <Skeleton className="h-7 w-[200px]" />
-        <div className="relative flex w-full gap-5 overflow-hidden">
-          {[1, 2, 3, 4, 5].map((_, index) => (
-            <CarouselItemSkeleton key={index} />
-          ))}
-        </div>
+    <div className="flex flex-col gap-4">
+      <Skeleton className="h-7 w-[200px]" />
+      <div className="relative flex w-full gap-5 overflow-hidden">
+        {[1, 2, 3, 4, 5].map((_, index) => (
+          <CarouselItemSkeleton key={index} />
+        ))}
       </div>
-    </Wrapper>
+    </div>
   )
 }
 

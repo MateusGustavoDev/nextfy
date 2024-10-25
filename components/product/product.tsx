@@ -1,4 +1,3 @@
-import { Wrapper } from '@/components/wrapper'
 import { VariantSelector } from './variant-selector'
 import { Description } from './description'
 import { AddToCartButton } from '@/components/cart/add-to-cart'
@@ -23,21 +22,19 @@ export async function Product({ handle }: ProductItemProps) {
   const options = product.options
 
   return (
-    <Wrapper>
-      <div className="relative flex h-max w-full gap-2">
-        <Gallery images={images} options={options} title={product.title} />
-        <div className="flex aspect-[700/600] w-full max-w-[600px] flex-col justify-between border border-black bg-white p-5">
-          <div>
-            <div className="flex flex-col gap-2">
-              <span className="text-3xl">{product.title}</span>
-              <Price amount={price} variants={variants} options={options} />
-            </div>
-            <VariantSelector variants={variants} options={options} />
-            <Description />
+    <div className="relative flex h-max w-full gap-2">
+      <Gallery images={images} options={options} title={product.title} />
+      <div className="flex aspect-[700/600] w-full max-w-[600px] flex-col justify-between border border-black bg-white p-5">
+        <div>
+          <div className="flex flex-col gap-2">
+            <span className="text-3xl">{product.title}</span>
+            <Price amount={price} variants={variants} options={options} />
           </div>
-          <AddToCartButton variants={variants} availableForSale={product.availableForSale} />
+          <VariantSelector variants={variants} options={options} />
+          <Description />
         </div>
+        <AddToCartButton variants={variants} availableForSale={product.availableForSale} />
       </div>
-    </Wrapper>
+    </div>
   )
 }

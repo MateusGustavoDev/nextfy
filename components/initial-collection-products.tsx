@@ -8,9 +8,5 @@ export async function InitialCollectionProducts({ handle }: { handle: string }) 
 
   if (!collection) notFound()
 
-  return (
-    <Wrapper>
-      <CollectionProducts collection={collection} />
-    </Wrapper>
-  )
+  return <CollectionProducts collection={collection} />
 }

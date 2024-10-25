@@ -65,3 +65,8 @@ export type CollectionsType = {
 export type ActionStateType = {
   errors: { message: string } | undefined
 }
+
+export type SearchProductsType = {
+  products: ProductType[]
+  pageInfo: PageInfo
+}

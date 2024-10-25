@@ -1,72 +1,38 @@
 'use client'
-import { useSearchParams } from 'next/navigation'
-import { LoaderCircle } from 'lucide-react'
+import { notFound } from 'next/navigation'
 import { searchProductsAction } from '@/actions/search'
-import { useEffect, useState, useTransition } from 'react'
-import { ProductType } from '@/lib/shopify/fetch/types'
+import { useState } from 'react'
+import { SearchProductsType } from '@/lib/shopify/fetch/types'
 import { ProductList } from '@/components/product-list'
-import { getAllProducts } from '@/actions/products'
 
-export function SearchResults() {
-  const params = useSearchParams()
-  const queryParams = params.get('query')
-  const [products, setProducts] = useState<ProductType[] | null>(null)
-  const [endCursor, setEndCursor] = useState<string>('')
-  const [hasNextPage, setHasNextPage] = useState(true)
-  const [isPending, startTransition] = useTransition()
+interface SearchResultsProps {
+  data: SearchProductsType | undefined
+  query: string | undefined
+}
 
-  useEffect(() => {
-    if (!queryParams) {
-      startTransition(async () => {
-        const data = await getAllProducts({})
-
-        if (data) {
-          setProducts(data.products)
-          setEndCursor(data.pageInfo.endCursor ? data.pageInfo.endCursor : '')
-          setHasNextPage(data.pageInfo.hasNextPage)
-        }
-      })
-    } else {
-      startTransition(async () => {
-        const data = await searchProductsAction({ query: queryParams })
-
-        if (data) {
-          setProducts(data?.products)
-          setEndCursor(data?.pageInfo.endCursor ? data.pageInfo.endCursor : '')
-          setHasNextPage(data.pageInfo.hasNextPage)
-        }
-      })
-    }
-  }, [queryParams])
+export function SearchResults({ data, query }: SearchResultsProps) {
+  if (!data) notFound()
+  const [products, setProducts] = useState(data.products)
+  const [endCursor, setEndCursor] = useState(data.pageInfo.endCursor)
+  const [hasNextPage, setHasNextPage] = useState(data.pageInfo.hasNextPage)
 
   async function handleOnLoadMore() {
-    if (!queryParams) {
-      const data = await getAllProducts({ cursor: endCursor })
+    const data = await searchProductsAction({
+      query: query ? query : '',
+      cursor: endCursor ? endCursor : 'null',
+    })
 
-      if (data) {
-        setProducts(products ? [...products, ...data.products] : products)
-        setEndCursor(data?.pageInfo.endCursor ? data.pageInfo.endCursor : '')
-        setHasNextPage(data.pageInfo.hasNextPage)
-      }
-    } else {
-      const data = await searchProductsAction({ query: queryParams, cursor: endCursor })
-
-      if (data) {
-        setProducts(products ? [...products, ...data.products] : products)
-        setEndCursor(data.pageInfo.endCursor ? data.pageInfo.endCursor : '')
-        setHasNextPage(data.pageInfo.hasNextPage)
-      }
+    if (data) {
+      setProducts([...products, ...data.products])
+      setEndCursor(data.pageInfo.endCursor)
+      setHasNextPage(data.pageInfo.hasNextPage)
     }
   }
-
-  if (!products) return null
-
-  if (isPending) return <LoaderCircle size={30} className="m-auto my-10 animate-spin text-black" />
 
   if (products && products?.length <= 0) {
     return (
       <div className="m-auto my-10 w-max text-black">
-        Nenhum resultado para: <strong>{queryParams}</strong>
+        Nenhum resultado para: <strong>{query}</strong>
       </div>
     )
   }

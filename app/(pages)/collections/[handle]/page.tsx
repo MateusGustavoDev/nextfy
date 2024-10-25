@@ -1,5 +1,6 @@
 import { InitialCollectionProducts } from '@/components/initial-collection-products'
 import { ProductListSkeleton } from '@/components/skeletons/product-list'
+import { Wrapper } from '@/components/wrapper'
 import { Suspense } from 'react'
 const { SITE_NAME } = process.env
 
@@ -19,10 +20,12 @@ export default async function Collection({ params }: Props) {
   const handle = (await params).handle
 
   return (
-    <Suspense fallback={<ProductListSkeleton />}>
-      <div className="mt-10">
-        <InitialCollectionProducts handle={handle} />
-      </div>
-    </Suspense>
+    <div className="mt-10">
+      <Wrapper>
+        <Suspense fallback={<ProductListSkeleton />}>
+          <InitialCollectionProducts handle={handle} />
+        </Suspense>
+      </Wrapper>
+    </div>
   )
 }
