@@ -1,17 +1,20 @@
 import { deleteSession } from '@/actions/auth/session'
 import Link from 'next/link'
 
-export function ProfileCard() {
+interface ProfileCardProps {
+  firstName: string
+  lastName: string
+  email: string
+}
+
+export function ProfileCard({ firstName, lastName, email }: ProfileCardProps) {
   return (
     <div className="flex w-full max-w-[260px] flex-col justify-between border border-black bg-white px-5 py-10">
       <div>
         <div className="mb-10 flex flex-col gap-2">
-          <div className="flex h-14 w-14 items-center justify-center bg-zinc-300">
-            <span>MG</span>
-          </div>
           <div className="flex flex-col">
-            <span>Mateus Gustavo</span>
-            <span>mateus@gmail.com</span>
+            <span>{`${firstName} ${lastName}`}</span>
+            <span>{email}</span>
           </div>
         </div>
         <div>

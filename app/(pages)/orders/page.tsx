@@ -13,16 +13,33 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination'
 import { verifySession } from '@/actions/auth/session'
+import { getCustomerOrdersAction } from '@/actions/customer'
+import { cookies } from 'next/headers'
+import { notFound } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: `Pedidos | ${SITE_NAME}`,
 }
 
 export default async function Orders() {
+  const cookieStore = await cookies()
+  const customerAccessToken = cookieStore.get('customerAuth')
+
+  if (!customerAccessToken) notFound()
+
+  const data = await getCustomerOrdersAction(customerAccessToken.value)
+
+  if (!data) notFound()
+
   return (
     <Wrapper>
+      <pre>{JSON.stringify(data.orders, null, 2)}</pre>
       <div className="mt-10 flex w-full gap-4">
-        <ProfileCard />
+        <ProfileCard
+          firstName={data.firstName as string}
+          lastName={data.lastName as string}
+          email={data.email as string}
+        />
         <div className="h-[600px] w-full border border-black p-5">
           <span className="text-xl uppercase">Seus pedidos</span>
           <div className="flex h-full flex-col justify-between">
