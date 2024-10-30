@@ -1,6 +1,13 @@
 'use client'
-import { Dialog, DialogClose, DialogContent, DialogOverlay, DialogTitle, DialogTrigger } from '@radix-ui/react-dialog'
-import { DialogHeader } from '../ui/dialog'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogOverlay,
+  DialogTitle,
+  DialogTrigger,
+} from '../ui/dialog'
 import { LoaderCircle, SearchIcon } from 'lucide-react'
 import { FormEvent, useEffect, useState, useTransition } from 'react'
 import Link from 'next/link'
@@ -72,7 +79,7 @@ export function SearchModal() {
           <SearchIcon size={24} />
         </button>
       </DialogTrigger>
-      <DialogOverlay className="fixed inset-0 z-50 bg-black/80" />
+
       <DialogContent className="absolute left-1/2 top-20 z-50 w-full max-w-[700px] -translate-x-1/2 translate-y-0 flex-col bg-white p-6">
         <DialogHeader className="mb-4">
           <DialogTitle>Pesquisar produtos</DialogTitle>
