@@ -9,6 +9,7 @@
     "lint": "next lint",
     "prepare": "husky",
     "graphql-codegen": "graphql-codegen",
+    "prebuild": "graphql-codegen",
     "predev": "graphql-codegen",
     "prestart": "graphql-codegen"
   },
