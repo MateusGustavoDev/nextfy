@@ -24,7 +24,7 @@ export async function addProductToCartAction(merchandiseId: string): Promise<Act
     cart = await createCart()
     if (cart) {
       cartId = cart.id
-      cookieStore.set(cartIdCookie, cartId, { maxAge: 604800 })
+      cookieStore.set(cartIdCookie, cartId)
     }
   }
 
