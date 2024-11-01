@@ -37,7 +37,7 @@ export function Header() {
           </ul>
           <div className="flex shrink-0 items-center gap-7">
             <SearchModal />
-            <Link href="/orders" className="hover:underline">
+            <Link href="/account/orders" className="hover:underline">
               <CircleUserRound size={24} />
             </Link>
             <CartModal />

@@ -58,3 +58,14 @@ type Edge<T> = {
 export const removeEdgesAndNodes = <T>(array: Connection<T>) => {
   return array.edges.map((edge) => edge?.node)
 }
+
+export function formateDateToBr(dataISO: string) {
+  const data = new Date(dataISO)
+
+  return new Intl.DateTimeFormat('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(data)
+}

@@ -1,9 +1,11 @@
+import { cn } from '@/lib/utils'
 import { ReactNode } from 'react'
 
 interface WrapperProps {
   children: ReactNode
+  className?: string
 }
 
-export function Wrapper({ children }: WrapperProps) {
-  return <div className="m-auto w-full max-w-screen-wrapper px-5">{children}</div>
+export function Wrapper({ children, className }: WrapperProps) {
+  return <div className={cn('m-auto w-full max-w-screen-wrapper px-5', className)}>{children}</div>
 }
