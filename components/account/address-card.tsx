@@ -15,7 +15,6 @@ export function AddressCard() {
             <button>Editar</button>
           </DialogTrigger>
           <DialogOverlay />
-
           <DialogContent className="absolute left-1/2 top-1/2 z-50 flex w-full max-w-[500px] -translate-x-1/2 -translate-y-1/2 flex-col gap-3 border border-black bg-white p-5">
             <span>Editar Endereço</span>
             <div className="flex w-full flex-col gap-3">

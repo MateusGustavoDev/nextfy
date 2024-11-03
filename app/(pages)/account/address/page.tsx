@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: `Endereços | ${SITE_NAME} `,
 }
 
-export default function Address() {
+export default function AddressPage() {
   return (
     <div className="relative h-[600px] w-full border border-black p-5">
       <span className="text-xl uppercase">Seus Endereços</span>

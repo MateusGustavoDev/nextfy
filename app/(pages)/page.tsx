@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: SITE_NAME,
 }
 
-export default function Home() {
+export default function HomePage() {
   return (
     <Wrapper>
       <div className="mt-10">

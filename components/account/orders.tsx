@@ -26,7 +26,7 @@ export async function CustomerOrders({ page }: CustomerOrdersProps) {
 
   return (
     <div className="w-full">
-      <pre className="bg-neutral-200">{JSON.stringify(data.orders, null, 2)}</pre>
+      {/* <pre className="bg-neutral-200">{JSON.stringify(data.orders, null, 2)}</pre> */}
       {data.orders.length > 0 ? (
         <div className="relative flex h-full flex-col justify-between">
           <div className="flex flex-col gap-4 overflow-y-auto">
@@ -48,7 +48,7 @@ export async function CustomerOrders({ page }: CustomerOrdersProps) {
                         <tr className="text-center text-sm">
                           <td className="text-neutral-600">#{order.orderNumber}</td>
                           <td className="text-neutral-600">{formateDateToBr(order.processedAt)}</td>
-                          <td className="text-neutral-600">
+                          <td>
                             {order.fulfillmentStatus === 'FULFILLED' ? (
                               <p className="text-green-500">Confirmado</p>
                             ) : (

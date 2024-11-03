@@ -16,7 +16,7 @@ interface Props {
   params: Promise<{ handle: string }>
 }
 
-export default async function Collection({ params }: Props) {
+export default async function CollectionPage({ params }: Props) {
   const handle = (await params).handle
 
   return (

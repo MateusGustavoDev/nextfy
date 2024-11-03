@@ -3,7 +3,7 @@ import { searchProductsAction } from '@/actions/search'
 
 type SearchParams = Promise<{ query: string | undefined }>
 
-export default async function Search(props: { searchParams: SearchParams }) {
+export default async function SearchPage(props: { searchParams: SearchParams }) {
   const searchParams = await props.searchParams
   const query = searchParams.query
   const data = await searchProductsAction({ query: query ? query : '' })
