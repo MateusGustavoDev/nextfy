@@ -14,7 +14,12 @@ export async function Carousel({ collection }: CollectionProps) {
 
   return (
     <div className="flex w-full flex-col gap-4">
-      <span className="text-2xl">{data.title}</span>
+      <div className="flex w-full justify-between">
+        <span className="text-2xl">{data.title}</span>
+        <Link href={`/collections/${data.title.toLowerCase()}`} className="font-semibold">
+          Ver todos
+        </Link>
+      </div>
       <ul className="relative flex w-full gap-5 overflow-x-scroll">
         {data.products.map((product) => {
           const minPrice = product.priceRange.minVariantPrice

@@ -1,4 +1,4 @@
-import { customerInfoFragment } from '../fragments/customer'
+import { pageInfoFragment } from '../fragments/page-info'
 
 export const verifyCustomerAccessToken = /* GraphQL */ `
   query CustomerMetafields($customerAccessToken: String!) {
@@ -8,10 +8,10 @@ export const verifyCustomerAccessToken = /* GraphQL */ `
   }
 `
 export const getCustomerOrdersQuery = /* GraphQL */ `
-  query getCustomerOrders($customerAccessToken: String!) {
+  query getCustomerOrders($customerAccessToken: String!, $numOfOrders: Int) {
     customer(customerAccessToken: $customerAccessToken) {
-      ...Customer
-      orders(first: 5) {
+      id
+      orders(first: $numOfOrders) {
         edges {
           node {
             orderNumber
@@ -31,13 +31,7 @@ export const getCustomerOrdersQuery = /* GraphQL */ `
               amount
               currencyCode
             }
-            successfulFulfillments {
-              trackingCompany
-              trackingInfo {
-                number
-                url
-              }
-            }
+            fulfillmentStatus
             processedAt
             lineItems(first: 10) {
               edges {
@@ -64,10 +58,14 @@ export const getCustomerOrdersQuery = /* GraphQL */ `
               }
             }
             statusUrl
+            customerUrl
           }
+        }
+        pageInfo {
+          ...PageInfo
         }
       }
     }
   }
-  ${customerInfoFragment}
+  ${pageInfoFragment}
 `

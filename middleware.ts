@@ -6,11 +6,11 @@ export async function middleware(request: NextRequest) {
   const customerAccessToken = request.cookies.get('customerAuth')?.value
   const { isAuth } = await verifySessionMiddleware(customerAccessToken)
 
-  if (pathname.startsWith('/orders') && !isAuth) {
+  if (pathname.startsWith('/account/orders') && !isAuth) {
     return NextResponse.redirect(new URL('/login', request.nextUrl))
   }
 
-  if (pathname.startsWith('/address') && !isAuth) {
+  if (pathname.startsWith('/account/address') && !isAuth) {
     return NextResponse.redirect(new URL('/login', request.nextUrl))
   }
 
@@ -24,5 +24,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/login/:path*', '/signup/:path*', '/orders/:path*', '/address/:path*'],
+  matcher: ['/login/:path*', '/signup/:path*', '/account/orders/:path*', '/account/address/:path*'],
 }

@@ -3,11 +3,17 @@ import { shopifyFetch } from '@/lib/shopify/fetch/shopify-fetch'
 import { getCustomerOrdersQuery } from '@/lib/shopify/graphql/queries/customer'
 import { GetCustomerOrdersQuery } from '@/lib/shopify/types/storefront.generated'
 
-export async function getCustomerOrdersAction(customerAccessToken: string) {
+type GetCustomerOrdersAction = {
+  customerAccessToken: string
+  page: number | undefined
+}
+
+export async function getCustomerOrdersAction({ customerAccessToken, page }: GetCustomerOrdersAction) {
   const { data, errors } = await shopifyFetch<GetCustomerOrdersQuery>({
     query: getCustomerOrdersQuery,
     variables: {
       customerAccessToken: customerAccessToken,
+      numOfOrders: page ? page * 10 : 10,
     },
   })
 
@@ -21,10 +27,7 @@ export async function getCustomerOrdersAction(customerAccessToken: string) {
     totalTax: item.node.totalTax,
     processedAt: item.node.processedAt,
     statusUrl: item.node.statusUrl,
-    successfulFulfillments: item.node.successfulFulfillments?.map((item) => ({
-      trackingCompany: item.trackingCompany,
-      trackingInfo: item.trackingInfo,
-    })),
+    fulfillmentStatus: item.node.fulfillmentStatus,
     lineItems: item.node.lineItems.edges.map((item) => ({
       title: item.node.title,
       quantity: item.node.quantity,
@@ -38,5 +41,8 @@ export async function getCustomerOrdersAction(customerAccessToken: string) {
     })),
   }))
 
-  return formattedOrder
+  return {
+    orders: formattedOrder,
+    pageInfo: data.customer?.orders.pageInfo,
+  }
 }

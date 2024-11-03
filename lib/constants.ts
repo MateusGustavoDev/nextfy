@@ -16,3 +16,7 @@ export const ERROR_MESSAGES = {
 }
 
 export const cartIdCookie = 'CartId'
+
+export const ORDER_STATUS = {
+  FULFILLED: 'Confirmado',
+}
