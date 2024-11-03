@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import { searchProductsAction } from '@/actions/search'
 import { useState } from 'react'
 import { SearchProductsType } from '@/lib/shopify/fetch/types'
-import { ProductList } from '@/components/product-list'
+import { ProductList } from './product/product-list'
 
 interface SearchResultsProps {
   data: SearchProductsType | undefined

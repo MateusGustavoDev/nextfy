@@ -1,8 +1,8 @@
 'use client'
-import { ProductList } from '@/components/product-list'
 import { getCollectionProducts } from '@/actions/products'
 import { CollectionProductType } from '@/lib/shopify/fetch/types'
 import { useState } from 'react'
+import { ProductList } from './product-list'
 
 interface CollectionProductsProps {
   collection: CollectionProductType

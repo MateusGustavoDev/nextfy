@@ -1,6 +1,6 @@
 import { ProductType } from '@/lib/shopify/fetch/types'
+import { ActionButton } from '../action-button'
 import { ProductCard } from './product-card'
-import { ActionButton } from './action-button'
 
 interface ProductListProps {
   products: ProductType[]

@@ -1,4 +1,4 @@
-import { Carousel } from '@/components/carousel'
+import { Carousel } from '@/components/product/carousel'
 import { CarouselSkeleton } from '@/components/skeletons/carousel'
 import { Wrapper } from '@/components/wrapper'
 import { Metadata } from 'next'
