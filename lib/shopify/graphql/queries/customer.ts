@@ -1,16 +1,17 @@
+import { customerInfoFragment } from '../fragments/customer'
 import { pageInfoFragment } from '../fragments/page-info'
 
-export const verifyCustomerAccessToken = /* GraphQL */ `
+export const getCustomerInfoQuery = /* GraphQL */ `
   query CustomerMetafields($customerAccessToken: String!) {
     customer(customerAccessToken: $customerAccessToken) {
-      id
+      ...Customer
     }
   }
+  ${customerInfoFragment}
 `
 export const getCustomerOrdersQuery = /* GraphQL */ `
   query getCustomerOrders($customerAccessToken: String!, $numOfOrders: Int) {
     customer(customerAccessToken: $customerAccessToken) {
-      id
       orders(first: $numOfOrders) {
         edges {
           node {

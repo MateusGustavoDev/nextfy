@@ -3,15 +3,14 @@ import { notFound } from 'next/navigation'
 import { searchProductsAction } from '@/actions/search'
 import { useState } from 'react'
 import { SearchProductsType } from '@/lib/shopify/fetch/types'
-import { ProductList } from './product/product-list'
+import { ProductList } from '../collections/product-list'
 
 interface SearchResultsProps {
-  data: SearchProductsType | undefined
+  data: SearchProductsType
   query: string | undefined
 }
 
 export function SearchResults({ data, query }: SearchResultsProps) {
-  if (!data) notFound()
   const [products, setProducts] = useState(data.products)
   const [endCursor, setEndCursor] = useState(data.pageInfo.endCursor)
   const [hasNextPage, setHasNextPage] = useState(data.pageInfo.hasNextPage)

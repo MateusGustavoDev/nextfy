@@ -1,21 +1,22 @@
 import { deleteSession } from '@/actions/auth/session'
+import { getCustomerInfoAction } from '@/actions/customer'
 import Link from 'next/link'
 
-interface ProfileCardProps {
-  firstName: string
-  lastName: string
-  email: string
-}
+export async function CustomerCard() {
+  const data = await getCustomerInfoAction()
 
-export function CustomerCard({ firstName, lastName, email }: ProfileCardProps) {
+  if (!data) return undefined
+
   return (
     <div className="flex h-[700px] w-full max-w-[360px] flex-col justify-between border border-black bg-white p-5">
       <div>
         <div className="mb-10 flex gap-3">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-black text-xl text-white">MG</div>
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-black text-xl text-white">
+            {data.firstName && data.lastName ? data.firstName[0] + data.lastName[0] : ''}
+          </div>
           <div className="flex flex-col">
-            <span className="font-semibold">{`${firstName} ${lastName}`}</span>
-            <span className="text-sm text-neutral-500">{email}</span>
+            <span className="font-semibold">{`${data.firstName} ${data.lastName}`}</span>
+            <span className="text-sm text-neutral-500">{data.email}</span>
           </div>
         </div>
         <div className="flex flex-col gap-4">

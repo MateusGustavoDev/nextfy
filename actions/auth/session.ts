@@ -3,7 +3,7 @@ import 'server-only'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { shopifyFetch } from '@/lib/shopify/fetch/shopify-fetch'
-import { verifyCustomerAccessToken } from '@/lib/shopify/graphql/queries/customer'
+import { getCustomerInfoQuery } from '@/lib/shopify/graphql/queries/customer'
 import { CustomerMetafieldsQuery } from '@/lib/shopify/types/storefront.generated'
 
 export async function getCustomerAccessToken() {
@@ -20,7 +20,6 @@ export async function createSession(customerAccessToken: string, expiresAt: Date
     name: 'customerAuth',
     value: customerAccessToken,
     httpOnly: true,
-    expires: expiresAt,
     secure: true,
     path: '/',
   })
@@ -42,7 +41,7 @@ export async function verifySession() {
   if (!customerAccessToken) redirect('/login')
 
   const { data } = await shopifyFetch<CustomerMetafieldsQuery>({
-    query: verifyCustomerAccessToken,
+    query: getCustomerInfoQuery,
     variables: {
       customerAccessToken: customerAccessToken,
     },
@@ -57,7 +56,7 @@ export async function verifySessionMiddleware(customerAccessToken: string | unde
   if (!customerAccessToken) return { isAuth: false }
 
   const { data } = await shopifyFetch<CustomerMetafieldsQuery>({
-    query: verifyCustomerAccessToken,
+    query: getCustomerInfoQuery,
     variables: {
       customerAccessToken: customerAccessToken,
     },

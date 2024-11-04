@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Wrapper } from '@/components/wrapper'
 import { CircleUserRound } from 'lucide-react'
-import { SearchModal } from './search'
+import { SearchModal } from '../search/search-bar'
 import { CartModal } from '@/components/cart/modal'
 const { SITE_NAME } = process.env
 

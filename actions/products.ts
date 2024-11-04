@@ -14,7 +14,6 @@ import { CollectionProductType, ProductType } from '@/lib/shopify/fetch/types'
 import { removeEdgesAndNodes } from '@/lib/utils'
 import { TAGS } from '@/lib/constants'
 import { PageInfo } from '@/lib/shopify/types/storefront.types'
-import { cookies } from 'next/headers'
 
 type GetCollectionProducts = {
   collection: string

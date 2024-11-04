@@ -5,15 +5,17 @@ export function CarouselSkeleton() {
     <div className="flex flex-col gap-4">
       <Skeleton className="h-7 w-[200px]" />
       <div className="relative flex w-full gap-5 overflow-hidden">
-        {[1, 2, 3, 4, 5].map((_, index) => (
-          <CarouselItemSkeleton key={index} />
-        ))}
+        <CarouselItem />
+        <CarouselItem />
+        <CarouselItem />
+        <CarouselItem />
+        <CarouselItem />
       </div>
     </div>
   )
 }
 
-function CarouselItemSkeleton() {
+function CarouselItem() {
   return (
     <div className="flex flex-col pb-14">
       <Skeleton className="h-[270px] w-[270px] shrink-0" />

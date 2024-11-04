@@ -1,4 +1,4 @@
-import { InitialCollectionProducts } from '@/components/initial-collection-products'
+import { InitialCollectionProducts } from '@/components/collections/initial-collection-products'
 import { ProductListSkeleton } from '@/components/skeletons/product-list'
 import { Wrapper } from '@/components/wrapper'
 import { Suspense } from 'react'

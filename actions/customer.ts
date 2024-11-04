@@ -1,7 +1,8 @@
 'use server'
 import { shopifyFetch } from '@/lib/shopify/fetch/shopify-fetch'
-import { getCustomerOrdersQuery } from '@/lib/shopify/graphql/queries/customer'
-import { GetCustomerOrdersQuery } from '@/lib/shopify/types/storefront.generated'
+import { getCustomerInfoQuery, getCustomerOrdersQuery } from '@/lib/shopify/graphql/queries/customer'
+import { CustomerMetafieldsQuery, GetCustomerOrdersQuery } from '@/lib/shopify/types/storefront.generated'
+import { getCustomerAccessToken } from './auth/session'
 
 type GetCustomerOrdersAction = {
   customerAccessToken: string
@@ -45,4 +46,21 @@ export async function getCustomerOrdersAction({ customerAccessToken, page }: Get
     orders: formattedOrder,
     pageInfo: data.customer?.orders.pageInfo,
   }
+}
+
+export async function getCustomerInfoAction() {
+  const customerAccessToken = await getCustomerAccessToken()
+
+  if (!customerAccessToken) return undefined
+
+  const { data, errors } = await shopifyFetch<CustomerMetafieldsQuery>({
+    query: getCustomerInfoQuery,
+    variables: {
+      customerAccessToken: customerAccessToken,
+    },
+  })
+
+  if (!data?.customer || errors) return undefined
+
+  return data.customer
 }

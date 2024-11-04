@@ -2,6 +2,9 @@ import { Metadata } from 'next'
 import { CustomerOrders } from '@/components/account/orders'
 import { Wrapper } from '@/components/wrapper'
 import { CustomerCard } from '@/components/account/customer-card'
+import { OrdersSkeleton } from '@/components/skeletons/orders'
+import { Suspense } from 'react'
+import { CustomerCardSkeleton } from '@/components/skeletons/customer-card'
 const { SITE_NAME } = process.env
 
 export const metadata: Metadata = {
@@ -18,8 +21,12 @@ export default async function OrdersPage(props: { searchParams: SearchParams }) 
     <Wrapper className="mt-10 flex flex-col gap-5">
       <h1 className="text-2xl font-semibold">Meus pedidos</h1>
       <div className="flex gap-4">
-        <CustomerCard email="mateusgustavodev@gmail.com" firstName="Mateus" lastName="Gustavo" />
-        <CustomerOrders page={page} />
+        <Suspense fallback={<CustomerCardSkeleton />}>
+          <CustomerCard />
+        </Suspense>
+        <Suspense fallback={<OrdersSkeleton />}>
+          <CustomerOrders page={page} />
+        </Suspense>
       </div>
     </Wrapper>
   )
