@@ -34,7 +34,7 @@ export async function Carousel({ collection }: CollectionProps) {
                     src={product.featuredImage?.url}
                     alt={product.title}
                     fill
-                    sizes="270px"
+                    sizes="(max-width: 800px) 198px, 268px"
                     style={{ objectFit: 'contain' }}
                     className="p-4 tablet:p-6"
                   />
