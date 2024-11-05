@@ -38,8 +38,8 @@ export function VariantSelector({ options, variants }: VariantSelectorProps) {
         return (
           <div key={option.id}>
             <div className="flex flex-col gap-2">
-              <span className="text-sm">{option.name.toLocaleUpperCase()}</span>
-              <ul className="flex gap-4">
+              <span className="text-sm mobile:text-xs">{option.name.toLocaleUpperCase()}</span>
+              <ul className="flex flex-wrap gap-4">
                 {option.values.map((value) => {
                   const optionNameLowerCase = option.name.toLocaleLowerCase()
                   const optionSearchParams = new URLSearchParams(searchParams.toString())
@@ -63,7 +63,7 @@ export function VariantSelector({ options, variants }: VariantSelectorProps) {
                         href={optionUrl}
                         aria-disabled={!isAvailableForSale}
                         data-active={isActive}
-                        className={cn('w-max border border-black px-2 py-1 text-sm', {
+                        className={cn('w-max border border-black px-2 py-1 text-xs', {
                           'cursor-default bg-black text-white': isActive,
                           'hover:bg-neutral-200': !isActive && isAvailableForSale,
                           'pointer-events-none border-neutral-400 bg-neutral-200 text-neutral-400': !isAvailableForSale,

@@ -32,7 +32,7 @@ export function Gallery({ images, options, title }: GalleryProps) {
   const imageIndex = imageSearchParam ? parseInt(imageSearchParam) : 0
 
   return (
-    <div className="relative flex h-max w-full max-w-[700px] flex-col items-center justify-center border border-black p-10">
+    <div className="relative flex h-max w-full max-w-[700px] flex-col items-center justify-center border border-black p-10 tablet:p-4">
       <div className="relative aspect-[700/600] w-full">
         <Image
           src={productImages[imageIndex >= productImages.length || imageIndex < 0 ? 0 : imageIndex].url}
@@ -43,7 +43,7 @@ export function Gallery({ images, options, title }: GalleryProps) {
         />
       </div>
       {productImages.length > 1 && (
-        <ul className="mt-6 flex gap-5">
+        <ul className="mt-6 flex gap-2">
           {productImages?.map((image, index) => {
             const isActive = index === imageIndex
             const imageSearchParams = new URLSearchParams(searchParams.toString())

@@ -22,14 +22,15 @@ export async function Product({ handle }: ProductProps) {
   const options = product.options
 
   return (
-    <div className="relative flex h-max w-full gap-2">
+    <div className="relative flex h-max w-full gap-2 tablet:flex-col">
       <Gallery images={images} options={options} title={product.title} />
-      <div className="flex aspect-[700/600] w-full max-w-[600px] flex-col justify-between border border-black bg-white p-5">
+      <div className="flex aspect-[700/600] w-full max-w-[600px] flex-col justify-between border border-black bg-white p-5 tablet:aspect-auto tablet:max-w-full tablet:gap-10">
         <div>
           <div className="flex flex-col gap-2">
-            <span className="text-3xl">{product.title}</span>
+            <span className="text-3xl tablet:text-xl">{product.title}</span>
             <Price amount={price} variants={variants} options={options} />
           </div>
+
           <VariantSelector variants={variants} options={options} />
           <Description />
         </div>
