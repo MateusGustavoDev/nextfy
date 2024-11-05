@@ -5,7 +5,7 @@ import Link from 'next/link'
 export async function CustomerCard() {
   const data = await getCustomerInfoAction()
 
-  if (!data) return undefined
+  if (!data) return null
 
   return (
     <div className="flex h-[700px] w-full max-w-[360px] flex-col justify-between border border-black bg-white p-5">

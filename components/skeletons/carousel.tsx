@@ -5,17 +5,17 @@ export function CarouselSkeleton() {
     <div className="flex flex-col gap-4">
       <Skeleton className="h-7 w-[200px]" />
       <div className="relative flex w-full gap-5 overflow-hidden">
-        <CarouselItem />
-        <CarouselItem />
-        <CarouselItem />
-        <CarouselItem />
-        <CarouselItem />
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+        <Item />
       </div>
     </div>
   )
 }
 
-function CarouselItem() {
+function Item() {
   return (
     <div className="flex flex-col pb-14">
       <Skeleton className="h-[270px] w-[270px] shrink-0" />

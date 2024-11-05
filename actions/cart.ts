@@ -1,6 +1,6 @@
 'use server'
 import { cartIdCookie, ERROR_MESSAGES, TAGS } from '@/lib/constants'
-import { addCartLine, createCart, getCart, updateCart } from '@/lib/shopify/fetch/cart'
+import { addCartLine, createCart, updateCart } from '@/lib/shopify/fetch/cart'
 import { shopifyFetch } from '@/lib/shopify/fetch/shopify-fetch'
 import { ActionStateType, CartType } from '@/lib/shopify/fetch/types'
 import { removeFromCartMutation } from '@/lib/shopify/graphql/mutations/cart'
@@ -64,7 +64,7 @@ export async function updateItemQuantityAction({ lineId, variantId, quantity }: 
   const { errors } = await updateCart(cartId, [{ id: lineId, merchandiseId: variantId, quantity }])
 
   if (errors) {
-    return { errors: { message: 'sd' } }
+    return { errors: { message: ERROR_MESSAGES.updateItemQuantity } }
   }
 
   revalidateTag(TAGS.cart)

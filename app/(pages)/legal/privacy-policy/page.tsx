@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="m-auto mt-20 flex w-full max-w-[800px] flex-col gap-2">
+    <main className="m-auto mt-20 flex w-full max-w-[800px] flex-col gap-2">
       <h1 className="text-2xl">Politica de privacidade</h1>
       <p className="text-black">
         The standard Lorem Ipsum passage, used since the 1500s Lorem ipsum dolor sit amet, consectetur adipiscing elit,
@@ -26,6 +26,6 @@ export default function PrivacyPolicyPage() {
         qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas
         nulla pariatur?
       </p>
-    </div>
+    </main>
   )
 }

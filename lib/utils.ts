@@ -24,7 +24,7 @@ export function formatPriceToBrl(price: string): string {
   })
 }
 
-export function firstProductVariantUrl(variants: ProductVariantType[], productHandle: string) {
+export function productFirstVariantUrl(variants: ProductVariantType[], productHandle: string) {
   const firstVariant = variants[0]
 
   const firstVariantIsDefault = Boolean(

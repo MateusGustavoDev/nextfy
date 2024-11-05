@@ -1,15 +1,15 @@
 import 'server-only'
 import { addCartLinesMutation, createCartMutation, editCartItemsMutation } from '@/lib/shopify/graphql/mutations/cart'
 import { getCartQuery } from '@/lib/shopify/graphql/queries/cart'
+import { shopifyFetch } from '@/lib/shopify/fetch/shopify-fetch'
+import { ERROR_MESSAGES, TAGS } from '@/lib/constants'
+import { ActionStateType, CartType } from './types'
 import {
   AddCartLinesMutation,
   CartQueryQuery,
   CreateCartMutation,
   EditCartItemsMutation,
 } from '../types/storefront.generated'
-import { shopifyFetch } from '@/lib/shopify/fetch/shopify-fetch'
-import { ERROR_MESSAGES, TAGS } from '@/lib/constants'
-import { ActionStateType, CartType } from './types'
 
 export async function createCart(): Promise<CartType | undefined> {
   const { data, errors } = await shopifyFetch<CreateCartMutation>({ query: createCartMutation })
@@ -111,6 +111,10 @@ export async function updateCart(cartId: string, lines: Lines): Promise<ActionSt
 
   if (!data?.cartLinesUpdate?.cart || errors) {
     return { errors: { message: ERROR_MESSAGES.updateCart } }
+  }
+
+  if (data.cartLinesUpdate.userErrors[0]) {
+    return { errors: { message: data.cartLinesUpdate.userErrors[0].message } }
   }
 
   return { errors: undefined }

@@ -3,20 +3,20 @@ import { shopifyFetch } from '@/lib/shopify/fetch/shopify-fetch'
 import { ActionStateType } from '@/lib/shopify/fetch/types'
 import { customerAccessTokenCreateMutation } from '@/lib/shopify/graphql/mutations/customer'
 import { CustomerAccessTokenCreateMutation } from '@/lib/shopify/types/storefront.generated'
-import { LoginFormErrors, LoginFormScheme } from '@/lib/zod/auth'
+import { LoginFormState, LoginFormScheme } from '@/lib/zod/auth'
 import { createSession } from './session'
 import { ERROR_MESSAGES } from '@/lib/constants'
 
-type LoginActionProps = {
+type LoginActionArgs = {
   customerEmail: string
   customerPassword: string
 }
 
 type LoginAction = ActionStateType & {
-  formErrors?: LoginFormErrors
+  formErrors?: LoginFormState
 }
 
-export async function loginAction({ customerEmail, customerPassword }: LoginActionProps): Promise<LoginAction> {
+export async function loginAction({ customerEmail, customerPassword }: LoginActionArgs): Promise<LoginAction> {
   const validateFields = LoginFormScheme.safeParse({
     email: customerEmail,
     password: customerPassword,
@@ -25,7 +25,11 @@ export async function loginAction({ customerEmail, customerPassword }: LoginActi
   if (!validateFields.success) {
     return {
       errors: { message: ERROR_MESSAGES.customerLogin },
-      formErrors: validateFields.error.flatten().fieldErrors,
+      formErrors: {
+        email: customerEmail,
+        password: customerPassword,
+        errors: validateFields.error.flatten().fieldErrors,
+      },
     }
   }
 

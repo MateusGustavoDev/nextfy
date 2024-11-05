@@ -7,11 +7,11 @@ import { Price } from './price'
 import { getProductByHandle } from '@/actions/products'
 import { notFound } from 'next/navigation'
 
-interface ProductItemProps {
+interface ProductProps {
   handle: string
 }
 
-export async function Product({ handle }: ProductItemProps) {
+export async function Product({ handle }: ProductProps) {
   const product = await getProductByHandle({ handle: handle })
 
   if (!product) notFound()

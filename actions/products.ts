@@ -1,19 +1,19 @@
 'use server'
+import { shopifyFetch } from '@/lib/shopify/fetch/shopify-fetch'
+import { CollectionProductType, ProductType } from '@/lib/shopify/fetch/types'
+import { removeEdgesAndNodes } from '@/lib/utils'
+import { TAGS } from '@/lib/constants'
+import { PageInfo } from '@/lib/shopify/types/storefront.types'
 import {
   getAllProductsQuery,
   getCollectionProductsQuery,
   getProductByHandleQuery,
 } from '@/lib/shopify/graphql/queries/products'
-import { shopifyFetch } from '@/lib/shopify/fetch/shopify-fetch'
 import {
   GetCollectionProductsQuery,
   GetProductByHandleQuery,
   GetProductsAndVariantsQuery,
 } from '@/lib/shopify/types/storefront.generated'
-import { CollectionProductType, ProductType } from '@/lib/shopify/fetch/types'
-import { removeEdgesAndNodes } from '@/lib/utils'
-import { TAGS } from '@/lib/constants'
-import { PageInfo } from '@/lib/shopify/types/storefront.types'
 
 type GetCollectionProducts = {
   collection: string
@@ -60,16 +60,12 @@ export async function getProductByHandle({ handle }: { handle: string }): Promis
   return data.product
 }
 
-type GetAllProducts = {
-  cursor?: string
-}
-
 type GetAllProductsType = {
   products: ProductType[]
   pageInfo: PageInfo
 }
 
-export async function getAllProducts({ cursor }: GetAllProducts): Promise<GetAllProductsType | undefined> {
+export async function getAllProducts({ cursor }: { cursor: string }): Promise<GetAllProductsType | undefined> {
   const { data, errors } = await shopifyFetch<GetProductsAndVariantsQuery>({
     query: getAllProductsQuery,
     tags: [TAGS.products],

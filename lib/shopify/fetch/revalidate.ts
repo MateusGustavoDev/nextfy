@@ -2,6 +2,7 @@ import { TAGS } from '@/lib/constants'
 import { revalidateTag } from 'next/cache'
 import { headers } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
+
 const { SHOPIFY_REVALIDATION_SECRET } = process.env
 
 export async function revalidate(req: NextRequest): Promise<NextResponse> {

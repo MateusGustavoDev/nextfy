@@ -1,5 +1,5 @@
 import { ProductType } from '@/lib/shopify/fetch/types'
-import { firstProductVariantUrl, formatPriceToBrl, removeEdgesAndNodes } from '@/lib/utils'
+import { productFirstVariantUrl, formatPriceToBrl, removeEdgesAndNodes } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -8,7 +8,7 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const productUrl = firstProductVariantUrl(removeEdgesAndNodes(product.variants), product.handle)
+  const productUrl = productFirstVariantUrl(removeEdgesAndNodes(product.variants), product.handle)
 
   return (
     <Link href={productUrl}>

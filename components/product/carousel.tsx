@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { firstProductVariantUrl, formatPriceToBrl, removeEdgesAndNodes } from '@/lib/utils'
+import { productFirstVariantUrl, formatPriceToBrl, removeEdgesAndNodes } from '@/lib/utils'
 import { getCollectionProducts } from '@/actions/products'
 
 interface CollectionProps {
@@ -24,7 +24,7 @@ export async function Carousel({ collection }: CollectionProps) {
         {data.products.map((product) => {
           const minPrice = product.priceRange.minVariantPrice
           const compareAtPrice = product.compareAtPriceRange.maxVariantPrice
-          const productUrl = firstProductVariantUrl(removeEdgesAndNodes(product.variants), product.handle)
+          const productUrl = productFirstVariantUrl(removeEdgesAndNodes(product.variants), product.handle)
 
           return (
             <li key={product.id}>

@@ -17,18 +17,28 @@ export const LoginFormScheme = z.object({
   password: z.string().min(1, { message: 'A senha não pode ser vazio.' }),
 })
 
-export type SignupFormErrors =
-  | {
-      firstName?: string[] | undefined
-      lastName?: string[] | undefined
-      email?: string[] | undefined
-      password?: string[] | undefined
-    }
-  | undefined
+export type SignupFormState = {
+  firstName?: FormDataEntryValue | null
+  lastName?: FormDataEntryValue | null
+  email?: FormDataEntryValue | null
+  password?: FormDataEntryValue | null
+  errors:
+    | {
+        firstName?: string[] | undefined
+        lastName?: string[] | undefined
+        email?: string[] | undefined
+        password?: string[] | undefined
+      }
+    | undefined
+}
 
-export type LoginFormErrors =
-  | {
-      email?: string[] | undefined
-      password?: string[] | undefined
-    }
-  | undefined
+export type LoginFormState = {
+  email: FormDataEntryValue | null
+  password: FormDataEntryValue | null
+  errors:
+    | {
+        email?: string[] | undefined
+        password?: string[] | undefined
+      }
+    | undefined
+}

@@ -2,9 +2,9 @@ import '@/app/globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ReactNode } from 'react'
-const { SITE_NAME } = process.env
 
 const inter = Inter({ subsets: ['latin'] })
+const { SITE_NAME } = process.env
 
 export const metadata: Metadata = {
   title: SITE_NAME,

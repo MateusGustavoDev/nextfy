@@ -2,6 +2,7 @@ import { InitialCollectionProducts } from '@/components/collections/initial-coll
 import { ProductListSkeleton } from '@/components/skeletons/product-list'
 import { Wrapper } from '@/components/wrapper'
 import { Suspense } from 'react'
+
 const { SITE_NAME } = process.env
 
 export async function generateMetadata({ params }: Props) {

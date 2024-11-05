@@ -4,7 +4,7 @@ import { LoaderCircle, SearchIcon } from 'lucide-react'
 import { FormEvent, useEffect, useState, useTransition } from 'react'
 import Link from 'next/link'
 import { ProductType } from '@/lib/shopify/fetch/types'
-import { firstProductVariantUrl, removeEdgesAndNodes } from '@/lib/utils'
+import { productFirstVariantUrl, removeEdgesAndNodes } from '@/lib/utils'
 import { searchProductsAction } from '@/actions/search'
 import { useRouter } from 'next/navigation'
 
@@ -71,7 +71,6 @@ export function SearchModal() {
           <SearchIcon size={24} />
         </button>
       </DialogTrigger>
-
       <DialogContent className="absolute left-1/2 top-20 z-50 w-full max-w-[700px] -translate-x-1/2 translate-y-0 flex-col bg-white p-6">
         <DialogHeader className="mb-4">
           <DialogTitle>Pesquisar produtos</DialogTitle>
@@ -98,7 +97,7 @@ export function SearchModal() {
           {isPending && <LoaderCircle className="animate-spin" />}
           {searchResults && searchResults.length <= 0 && <span>Nenhum resultado encontrado</span>}
           {searchResults?.map((product) => {
-            const productUrl = firstProductVariantUrl(removeEdgesAndNodes(product.variants), product.handle)
+            const productUrl = productFirstVariantUrl(removeEdgesAndNodes(product.variants), product.handle)
 
             return (
               <li key={product.id}>

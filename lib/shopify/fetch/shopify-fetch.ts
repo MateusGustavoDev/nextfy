@@ -1,8 +1,8 @@
 import 'server-only'
 import { SHOPIFY_GRAPHQL_API_ENDPOINT } from '@/lib/constants'
-const { SHOPIFY_STORE_DOMAIN, SHOPIFY_STOREFRONT_ACCESS_TOKEN } = process.env
 import { z } from 'zod'
 
+const { SHOPIFY_STORE_DOMAIN, SHOPIFY_STOREFRONT_ACCESS_TOKEN } = process.env
 const endpoint = `https://${SHOPIFY_STORE_DOMAIN}${SHOPIFY_GRAPHQL_API_ENDPOINT}`
 const key = SHOPIFY_STOREFRONT_ACCESS_TOKEN
 

@@ -3,6 +3,7 @@ import { getProductByHandle } from '@/actions/products'
 import { Suspense } from 'react'
 import { ProductSkeleton } from '@/components/skeletons/product'
 import { Wrapper } from '@/components/wrapper'
+
 const { SITE_NAME } = process.env
 
 export async function generateMetadata({ params }: Props) {

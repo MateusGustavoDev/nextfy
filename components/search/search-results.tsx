@@ -1,5 +1,4 @@
 'use client'
-import { notFound } from 'next/navigation'
 import { searchProductsAction } from '@/actions/search'
 import { useState } from 'react'
 import { SearchProductsType } from '@/lib/shopify/fetch/types'
@@ -18,7 +17,7 @@ export function SearchResults({ data, query }: SearchResultsProps) {
   async function handleOnLoadMore() {
     const data = await searchProductsAction({
       query: query ? query : '',
-      cursor: endCursor ? endCursor : 'null',
+      cursor: endCursor ? endCursor : undefined,
     })
 
     if (data) {

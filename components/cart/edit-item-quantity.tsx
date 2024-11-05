@@ -10,23 +10,23 @@ interface EditItemQuantityProps {
   quantityAvailable: number
 }
 
-export function EditItemQuantity({ id, merchandiseId, quantity, quantityAvailable }: EditItemQuantityProps) {
+export function EditItemQuantity(props: EditItemQuantityProps) {
   return (
     <SelectItemQuantity
-      id={id}
-      merchandiseId={merchandiseId}
-      quantity={quantity}
-      quantityAvailable={quantityAvailable}
+      id={props.id}
+      merchandiseId={props.merchandiseId}
+      quantity={props.quantity}
+      quantityAvailable={props.quantityAvailable}
     />
   )
 }
 
-export function SelectItemQuantity({ merchandiseId, id, quantity, quantityAvailable }: EditItemQuantityProps) {
+export function SelectItemQuantity(props: EditItemQuantityProps) {
   async function handleUpdateItemQuantity(type: 'plus' | 'minus') {
     const payload = {
-      lineId: id,
-      variantId: merchandiseId,
-      quantity: type === 'plus' ? quantity + 1 : quantity - 1,
+      lineId: props.id,
+      variantId: props.merchandiseId,
+      quantity: type === 'plus' ? props.quantity + 1 : props.quantity - 1,
     }
 
     const { errors } = await updateItemQuantityAction(payload)
@@ -41,9 +41,9 @@ export function SelectItemQuantity({ merchandiseId, id, quantity, quantityAvaila
       <form action={handleDecrementQuantity} className="flex items-center">
         <Button type="minus" />
       </form>
-      <span className="text-sm">{quantity}</span>
+      <span className="text-sm">{props.quantity}</span>
       <form action={handleIncrementQuantity} className="flex items-center">
-        <Button type="plus" disabled={quantity === quantityAvailable} />
+        <Button type="plus" disabled={props.quantity === props.quantityAvailable} />
       </form>
     </div>
   )
