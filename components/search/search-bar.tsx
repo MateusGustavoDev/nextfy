@@ -67,7 +67,7 @@ export function SearchModal() {
   return (
     <Dialog open={isOpen} onOpenChange={() => setIsOpen(!isOpen)}>
       <DialogTrigger asChild>
-        <button className="outline-none">
+        <button aria-label="Pesquisar produto" className="outline-none">
           <SearchIcon size={24} />
         </button>
       </DialogTrigger>

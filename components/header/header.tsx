@@ -45,7 +45,7 @@ export function Header() {
             <div className="tablet:hidden">
               <SearchModal />
             </div>
-            <Link href="/account/orders" className="hover:underline">
+            <Link aria-label="Conta" href="/account/orders" className="hover:underline">
               <CircleUserRound size={24} />
             </Link>
             <CartModal />

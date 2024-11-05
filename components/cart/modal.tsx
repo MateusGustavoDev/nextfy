@@ -18,7 +18,7 @@ export async function CartModal() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <button className="relative">
+        <button aria-label="Carrinho" className="relative">
           {cart && cart.totalQuantity > 0 && (
             <div className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-black text-sm text-white">
               {cart.totalQuantity}
