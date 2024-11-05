@@ -12,20 +12,21 @@ export function ProductCard({ product }: ProductCardProps) {
 
   return (
     <Link href={productUrl}>
-      <div className="relative h-[370px] w-[370px] border border-black">
+      <div className="relative aspect-[370/370] w-full max-w-[370px] border border-black tablet:max-w-full">
         <Image
           src={product.featuredImage?.url}
           alt={product.title}
           fill
           sizes="370px"
-          style={{ objectFit: 'contain', padding: '16px' }}
+          style={{ objectFit: 'contain' }}
+          className="p-6"
         />
       </div>
       <div className="flex flex-col gap-2 py-2">
         <div className="flex w-full max-w-[370px] flex-col">
-          <span className="text-lg">{product.title}</span>
+          <span className="text-lg tablet:text-base">{product.title}</span>
         </div>
-        <span>{formatPriceToBrl(product.priceRange.minVariantPrice.amount)}</span>
+        <span className="tablet:text-sm">{formatPriceToBrl(product.priceRange.minVariantPrice.amount)}</span>
       </div>
     </Link>
   )

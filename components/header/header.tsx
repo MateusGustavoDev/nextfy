@@ -12,7 +12,7 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-black bg-white">
       <Wrapper>
         <div className="flex h-[70px] w-full items-center justify-between">
-          <div className="hidden items-center gap-3 tablet:flex">
+          <div className="hidden items-center gap-4 tablet:flex">
             <MobileMenu />
             <SearchModal />
           </div>
@@ -41,7 +41,7 @@ export function Header() {
               </Link>
             </li>
           </ul>
-          <div className="flex shrink-0 items-center gap-7">
+          <div className="flex shrink-0 items-center gap-7 tablet:gap-4">
             <div className="tablet:hidden">
               <SearchModal />
             </div>
